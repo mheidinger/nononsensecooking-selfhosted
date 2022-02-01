@@ -6,6 +6,6 @@ updates:
     schedule:
       interval: "weekly"
     reviewers:
-      - riesinger
+      - mheidinger
     labels:
       - "type:dependencies"

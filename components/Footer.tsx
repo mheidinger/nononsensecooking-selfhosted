@@ -1,8 +1,4 @@
-import { mdiRss } from "@mdi/js";
-import Icon from "@mdi/react";
-import { Trans, useTranslation } from "next-i18next";
-import Link from "next/link";
-import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
 import styled from "styled-components";
 
 const StyledFooter = styled.footer`
@@ -27,16 +23,6 @@ const StyledLink = styled.a`
   white-space: pre;
 `;
 
-const LicenseNotice = styled.span`
-  font-size: 1rem;
-  display: inline-block;
-  line-height: 1.5;
-
-  @media screen and (max-width: 800px) {
-    /* text-align: center; */
-  }
-`;
-
 const Nav = styled.nav`
   display: flex;
   justify-content: center;
@@ -51,36 +37,14 @@ const Nav = styled.nav`
 `;
 
 const Footer = () => {
-  const { t } = useTranslation("footer");
-  const router = useRouter();
   return (
     <StyledFooter>
-      <LicenseNotice>
-        <Trans t={t} i18nKey="licensenotice">
-          The content on this page is licensed under a{" "}
-          <a href="https://creativecommons.org/licenses/by/4.0/legalcode">
-            CC BY 4.0
-          </a>{" "}
-          license
-        </Trans>
-      </LicenseNotice>
       <Nav>
         <StyledLink
           href="https://github.com/riesinger/nononsensecooking"
           rel="noopener"
         >
           GitHub
-        </StyledLink>
-        <Link href="/legal" passHref prefetch={false}>
-          <StyledLink>{t("link.legal.text")}</StyledLink>
-        </Link>
-        <Link href="/donate" passHref prefetch={false}>
-          <StyledLink>{t("link.donate.text")}</StyledLink>
-        </Link>
-        <StyledLink
-          href={`/rss/feed.${router.locale || router.defaultLocale}.xml`}
-        >
-          <Icon path={mdiRss} size={1} title={t("link.rss.title")} />
         </StyledLink>
       </Nav>
     </StyledFooter>

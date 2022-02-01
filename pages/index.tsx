@@ -9,7 +9,6 @@ import Paragraph from "../components/Paragraph";
 import SEO from "../components/SEO";
 import Track from "../components/Track";
 import languageFrom from "../lib/languageFrom";
-import { orderRecipesByMostPopular } from "../lib/popularRecipes";
 import { getRecipesFromDiskOrIndex } from "../lib/recipes";
 import { Recipe } from "../models/Recipe";
 
@@ -35,16 +34,12 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const recipesOfTheDay = shuffle(allRecipes)
     .filter((r: Recipe) => !r.isDraft)
     .slice(0, 3);
-  const mostPopularRecipes = (await orderRecipesByMostPopular(locale, allRecipes))
-    .filter((r: Recipe) => !r.isDraft)
-    .slice(0, 3);
   const latestRecipes = allRecipes.sort(byPublishedAt).slice(0, 3);
 
   return {
     props: {
       ...(await serverSideTranslations(context.locale, ["common", "footer", "header"])),
       recipesOfTheDay,
-      mostPopularRecipes,
       latestRecipes,
     },
     revalidate: REVALIDATION_TIME,
@@ -59,7 +54,6 @@ const LinkText = ({ href, children }: { href: string; children?: ReactElement })
 
 export default function Home({
   recipesOfTheDay,
-  mostPopularRecipes,
   latestRecipes,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const { t } = useTranslation("common");
@@ -73,32 +67,12 @@ export default function Home({
           ))}
         </Track>
       </PaddedSection>
-      <PaddedSection title={t("home.mostpopularrecipes")} smallHeadings>
-        <Track sm={1} md={2} lg={3}>
-          {mostPopularRecipes.map((recipe: Recipe) => (
-            <DishCard {...recipe} key={recipe.id} />
-          ))}
-        </Track>
-      </PaddedSection>
       <PaddedSection title={t("home.latestrecipes")} smallHeadings>
         <Track sm={1} md={2} lg={3}>
           {latestRecipes.map((recipe: Recipe) => (
             <DishCard {...recipe} key={recipe.id} />
           ))}
         </Track>
-      </PaddedSection>
-      <PaddedSection width="narrow" title={t("home.about.sectiontitle")} smallHeadings>
-        <Paragraph>{t("home.about.introduction")}</Paragraph>
-        <Paragraph>{t("home.about.mission")}</Paragraph>
-        <Paragraph>
-          <Trans
-            i18nKey="home.about.cta"
-            components={{
-              rsslink: <LinkText href="/rss/" />,
-              donatelink: <LinkText href="/donate/" />,
-            }}
-          ></Trans>
-        </Paragraph>
       </PaddedSection>
     </>
   );

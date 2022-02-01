@@ -36,12 +36,6 @@ function MyApp({ Component, pageProps }) {
         <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5686f5" />
         <meta name="msapplication-TileColor" content="#5686f5" />
         <meta name="theme-color" content="#5686f5" />
-        <script
-          async
-          defer
-          data-domain="nononsense.cooking"
-          src="https://plausible.riesinger.dev/count.js"
-        ></script>
       </Head>
       <Header />
       <Main>
