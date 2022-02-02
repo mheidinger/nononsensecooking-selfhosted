@@ -1,16 +1,14 @@
-import { GetStaticProps, InferGetStaticPropsType } from "next";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import DishList from "../components/DishList";
 import DishListItem from "../components/DishListItem";
 import { PaddedSection } from "../components/PaddedSection";
 import PageTitle from "../components/PageTitle";
-import languageFrom from "../lib/languageFrom";
 import { fetchRecipeIndex } from "../lib/recipes";
 import { Recipe } from "../models/Recipe";
 
-export const getStaticProps: GetStaticProps = async (context) => {
-  const locale = languageFrom(context);
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const recipeIndex = await fetchRecipeIndex();
 
   return {
@@ -27,7 +25,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
 export default function Recipes({
   recipes,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { t } = useTranslation("common");
 
   return (

@@ -4,14 +4,15 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "npm run generate-recipe-index",
     "build": "next build",
     "start": "next start",
     "new-recipe": "ts-node ./scripts/new-recipe.ts",
-    "generate-recipe-index": "ts-node ./scripts/generate-recipe-index.ts",
     "check-translations": "ts-node ./scripts/check-translations.ts"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.49.0",
+    "@aws-sdk/s3-request-presigner": "^3.49.0",
+    "@aws-sdk/types": "^3.49.0",
     "@mdi/js": "^6.5.95",
     "@mdi/react": "^1.5.0",
     "babel-plugin-styled-components": "^2.0.2",

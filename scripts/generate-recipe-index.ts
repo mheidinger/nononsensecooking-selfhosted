@@ -1,4 +1,4 @@
-import fs from "fs/promises";
+/*import fs from "fs/promises";
 import path from "path";
 import { loadRecipesFromDisk } from "../lib/recipes";
 
@@ -28,4 +28,5 @@ async function generateIndex() {
   await fs.writeFile(targetFile, JSON.stringify(trimmedRecipes));
 }
 
-generateIndex().catch(console.error);
+generateIndex().catch(console.error);*/
+export {}

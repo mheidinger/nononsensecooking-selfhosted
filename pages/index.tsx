@@ -1,4 +1,4 @@
-import { GetStaticProps, InferGetStaticPropsType } from "next";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import DishCard from "../components/DishCard";
@@ -8,14 +8,6 @@ import Track from "../components/Track";
 import { fetchRecipeIndex } from "../lib/recipes";
 import { Recipe } from "../models/Recipe";
 
-const revalidationTimesInSeconds = {
-  development: 60,
-  preview: 2 * 60,
-  default: 26 * 60 * 60,
-};
-
-const REVALIDATION_TIME = revalidationTimesInSeconds[process.env.VERCEL_ENV || "default"];
-
 function shuffle(a: any[]) {
   for (let i = a.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -24,8 +16,9 @@ function shuffle(a: any[]) {
   return a;
 }
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const allRecipes = await fetchRecipeIndex();
+  // TODO: Cache this and refresh every day
   const recipesOfTheDay = shuffle(allRecipes)
     .slice(0, 3);
   const latestRecipes = allRecipes.sort(byPublishedAt).slice(0, 3);
@@ -35,15 +28,14 @@ export const getStaticProps: GetStaticProps = async (context) => {
       ...(await serverSideTranslations(context.locale, ["common", "footer", "header"])),
       recipesOfTheDay,
       latestRecipes,
-    },
-    revalidate: REVALIDATION_TIME,
+    }
   };
 };
 
 export default function Home({
   recipesOfTheDay,
   latestRecipes,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { t } = useTranslation("common");
   return (
     <>

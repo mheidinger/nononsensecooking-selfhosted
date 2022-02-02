@@ -11,13 +11,13 @@ import PageTitle from "../../components/PageTitle";
 import ServingsChooser from "../../components/ServingsChooser";
 import StepList from "../../components/StepList";
 import {
-  readSingleRecipeFromDisk,
+  fetchSingleRecipe,
 } from "../../lib/recipes";
 import { Recipe } from "../../models/Recipe";
 
 export const getServerSideProps: GetServerSideProps<Recipe> = async (context) => {
   const { id } = context.params;
-  const recipe = await readSingleRecipeFromDisk(id as string);
+  const recipe = await fetchSingleRecipe(id as string);
   return {
     props: {
       ...(await serverSideTranslations(context.locale, [
@@ -27,7 +27,7 @@ export const getServerSideProps: GetServerSideProps<Recipe> = async (context) =>
         "footer",
       ])),
       ...recipe,
-    },
+    }
   };
 };
 
