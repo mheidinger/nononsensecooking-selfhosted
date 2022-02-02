@@ -1,13 +1,10 @@
 import { GetStaticProps, InferGetStaticPropsType } from "next";
-import { Trans, useTranslation } from "next-i18next";
+import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import Link from "next/link";
-import { ReactElement } from "react";
 import DishCard from "../components/DishCard";
 import { PaddedSection } from "../components/PaddedSection";
 import Track from "../components/Track";
-import languageFrom from "../lib/languageFrom";
-import { getRecipesFromDiskOrIndex } from "../lib/recipes";
+import { fetchRecipeIndex } from "../lib/recipes";
 import { Recipe } from "../models/Recipe";
 
 const revalidationTimesInSeconds = {
@@ -27,8 +24,7 @@ function shuffle(a: any[]) {
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const locale = languageFrom(context);
-  const allRecipes = await getRecipesFromDiskOrIndex(locale);
+  const allRecipes = await fetchRecipeIndex();
   const recipesOfTheDay = shuffle(allRecipes)
     .filter((r: Recipe) => !r.isDraft)
     .slice(0, 3);
@@ -43,12 +39,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
     revalidate: REVALIDATION_TIME,
   };
 };
-
-const LinkText = ({ href, children }: { href: string; children?: ReactElement }) => (
-  <Link href={href}>
-    <a>{children}</a>
-  </Link>
-);
 
 export default function Home({
   recipesOfTheDay,

@@ -5,12 +5,12 @@ import DishList from "../components/DishList";
 import DishListItem from "../components/DishListItem";
 import { PaddedSection } from "../components/PaddedSection";
 import languageFrom from "../lib/languageFrom";
-import { loadRecipesFromDisk } from "../lib/recipes";
+import { fetchRecipeIndex } from "../lib/recipes";
 import { Recipe } from "../models/Recipe";
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const locale = languageFrom(context);
-  const recipeIndex = await loadRecipesFromDisk(locale);
+  const recipeIndex = await fetchRecipeIndex();
 
   return {
     props: {

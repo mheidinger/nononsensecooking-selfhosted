@@ -11,53 +11,32 @@ const recipeFilesBasePath = "public/recipes";
 
 /**
  * Retrieves the recipe index via HTTP. This function cannot be used during static generation, only in serverless mode!
- * @param lang The locale for which to load the recipe index
  * @returns The list of recipes in the index
  *
  * TODO: Error Handling
  */
-export async function fetchRecipeIndex(
-  lang: SupportedLanguage
-): Promise<RecipeInIndex[]> {
+export async function fetchRecipeIndex(): Promise<RecipeInIndex[]> {
   const baseUrl = VERCEL_URL
     ? `https://${VERCEL_URL}`
     : "http://localhost:3000";
-  const recipeIndexPath = `/recipes/index_${lang}.json`;
+  const recipeIndexPath = `/recipes/index.json`;
   const allRecipes = await (await fetch(baseUrl + recipeIndexPath)).json();
 
   return allRecipes;
 }
 
 /**
- * Retrieves the full recipe index via HTTP. This function cannot be used during static generation, only in serverless mode!
- * @returns The full recipe i
- *
- * TODO: Error Handling
- */
-export async function fetchFullRecipeIndex() {
-  const baseUrl = VERCEL_URL
-    ? `https://${VERCEL_URL}`
-    : "http://localhost:3000";
-  const recipeIndexPath = "/recipes/index.json";
-  const index = await (await fetch(baseUrl + recipeIndexPath)).json();
-  return index;
-}
-
-/**
  * Reads and parses all recipes found on disk for the given language. This function cannot be used in serverless mode, only during static generation!
- * @param locale The locale for which to load the recipes
  * @returns The fully parsed recipes
  */
-export async function loadRecipesFromDisk(
-  locale: SupportedLanguage
-): Promise<Recipe[]> {
+export async function loadRecipesFromDisk(): Promise<Recipe[]> {
   const recipeFiles = await fs.readdir(
-    path.join(process.cwd(), recipeFilesBasePath, locale)
+    path.join(process.cwd(), recipeFilesBasePath)
   );
   const allRecipes = await Promise.all(
     recipeFiles.map(async (filename) => {
       const file = await fs.readFile(
-        path.join(recipeFilesBasePath, locale, filename),
+        path.join(recipeFilesBasePath, filename),
         "utf-8"
       );
       const id = filename.split(".")[0];
@@ -66,28 +45,6 @@ export async function loadRecipesFromDisk(
     })
   );
 
-  return allRecipes;
-}
-
-/**
- * Loads the recipes either from disk (default) or from the recipe index (fallback). This can be used both during static generation and in serverless functions.
- * @param locale The language for which to load the recipes
- */
-export async function getRecipesFromDiskOrIndex(locale: SupportedLanguage) {
-  let allRecipes: Array<Recipe | RecipeInIndex> = [];
-  try {
-    allRecipes = await loadRecipesFromDisk(locale);
-  } catch (err) {
-    if (err.code === "ENOENT") {
-      // We're running in ISR mode and regenerating the page in a lambda.
-      // Load the recipe index via HTTP in this case.
-      // This is not the nicest workaround, but since we cannot use HTTP to fetch the index at SSG time and cannot read the files from disk at ISR time,
-      // we either have to do it this way or switch to an actual CMS
-      allRecipes = await fetchRecipeIndex(locale);
-    } else {
-      throw err;
-    }
-  }
   return allRecipes;
 }
 
