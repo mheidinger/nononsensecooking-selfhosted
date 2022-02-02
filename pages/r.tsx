@@ -36,7 +36,6 @@ export default function Recipes({
       <PaddedSection title={t("home.allrecipes")} smallHeadings>
         <DishList>
           {recipes
-            .filter((r: Recipe) => !r.isDraft)
             .map((recipe: Recipe) => (
               <DishListItem
                 key={recipe.id}

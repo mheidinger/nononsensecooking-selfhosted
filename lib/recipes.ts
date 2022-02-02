@@ -28,9 +28,10 @@ export async function fetchRecipeIndex(): Promise<RecipeInIndex[]> {
  * @returns The fully parsed recipes
  */
 export async function loadRecipesFromDisk(): Promise<Recipe[]> {
-  const recipeFiles = await fs.readdir(
+  const files = await fs.readdir(
     path.join(process.cwd(), recipeFilesBasePath)
   );
+  const recipeFiles = files.filter((filename) => filename.endsWith(".yaml"))
   const allRecipes = await Promise.all(
     recipeFiles.map(async (filename) => {
       const file = await fs.readFile(
@@ -61,7 +62,6 @@ export async function readSingleRecipeFromDisk(
 const parseRecipeData = (id: string, recipeData: RecipeFile): Recipe => ({
   ...recipeData,
   id,
-  isDraft: recipeData.isDraft || false,
   ingredients: parseIngredients(recipeData.ingredients),
   publishedAt: recipeData.publishedAt,
 });

@@ -27,7 +27,6 @@ function shuffle(a: any[]) {
 export const getStaticProps: GetStaticProps = async (context) => {
   const allRecipes = await fetchRecipeIndex();
   const recipesOfTheDay = shuffle(allRecipes)
-    .filter((r: Recipe) => !r.isDraft)
     .slice(0, 3);
   const latestRecipes = allRecipes.sort(byPublishedAt).slice(0, 3);
 
