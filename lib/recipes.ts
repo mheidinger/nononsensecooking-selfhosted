@@ -92,14 +92,13 @@ export async function getRecipesFromDiskOrIndex(locale: SupportedLanguage) {
 }
 
 export async function readSingleRecipeFromDisk(
-  lang: SupportedLanguage,
   id: string
 ) {
   const file = await fs.readFile(
-    path.join(recipeFilesBasePath, lang, `${id}.yaml`),
+    path.join(recipeFilesBasePath, `${id}.yaml`),
     "utf-8"
   );
-  console.log("Read recipe from file", lang, `${id}.yaml`);
+  console.log("Read recipe from file", `${id}.yaml`);
   const recipeData = YAML.parse(file);
   return parseRecipeData(id, recipeData);
 }

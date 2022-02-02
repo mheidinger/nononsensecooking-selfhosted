@@ -1,113 +1,124 @@
-import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
-import { Trans, useTranslation } from "next-i18next";
+import { mdiClockOutline } from "@mdi/js";
+import Icon from "@mdi/react";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
-import { PaddedSection } from "../../components/PaddedSection";
-import Spinner from "../../components/Spinner";
-import { queryParam } from "../../lib/queryParameter";
-import { fetchFullRecipeIndex } from "../../lib/recipes";
+import DraftIndicator from "../../components/DraftIndicator";
+import IconForDiet from "../../components/IconForDiet";
+import IngredientsList from "../../components/IngredientsList";
+import ServingsChooser from "../../components/ServingsChooser";
+import StepList from "../../components/StepList";
+import {
+  readSingleRecipeFromDisk,
+} from "../../lib/recipes";
+import { Recipe } from "../../models/Recipe";
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const id = queryParam("id").from(context) || "";
-  const fullIndex = await fetchFullRecipeIndex();
-  const { availableIn, slugs, image } = await fullIndex[id];
+export const getServerSideProps: GetServerSideProps<Recipe> = async (context) => {
+  const { id } = context.params;
+  const recipe = await readSingleRecipeFromDisk(id as string);
   return {
     props: {
-      id,
-      availableIn,
-      slugs,
-      image,
       ...(await serverSideTranslations(context.locale, [
-        "common",
-        "footer",
         "header",
+        "common",
+        "recipe",
+        "footer",
       ])),
+      ...recipe,
     },
   };
-}
+};
 
-const Centered = styled.div`
-  display: flex;
-  justify-content: center;
+const StyledArticle = styled.article`
+  max-width: 1000px;
+  width: 100%;
+  margin: 2rem auto;
+  padding: 0 2rem;
+  box-sizing: border-box;
 `;
 
 const ImageContainer = styled.div`
   width: 100%;
-  height: 0;
-  padding-top: 55%;
+  height: 0px;
+  padding-top: 60%;
   position: relative;
-  border-radius: var(--rounded);
-  background: var(--color-background-alt);
+  border-radius: var(--rounded-lg);
   overflow: hidden;
+  background: var(--color-background-alt);
 `;
 
-export default function Redirect({
-  availableIn,
-  slugs,
+const RecipeStats = styled.header`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+`;
+
+const StyledHeading = styled.h2`
+  font-size: 1.6rem;
+  font-weight: 400;
+  margin: 0 1rem 0 0;
+
+  @media screen and (min-width: 800px) {
+    font-size: 2rem;
+  }
+`;
+
+const IconStat = styled.span`
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+`;
+
+const SingleRecipe = ({
+  name,
+  steps,
   image,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const { t } = useTranslation();
-  const router = useRouter();
-  const { locale } = router;
-  const [existsInLocale, setExistsInLocale] = useState<boolean | null>(null);
-  useEffect(() => {
-    if (availableIn.includes(locale)) {
-      router.push(`/r/${slugs.find((v) => v.locale === locale).slug}`);
-    } else {
-      setExistsInLocale(false);
-    }
-  }, [router, availableIn, locale, slugs]);
-
-  const prettyLocale = (loc: string) => t(`locales.${loc}`);
-
-  return existsInLocale === null ? (
-    <PaddedSection>
-      <Centered>
-        <Spinner />
-      </Centered>
-    </PaddedSection>
-  ) : (
-    <PaddedSection
-      width="narrow"
-      title={t("notinyourlocale.displaytitle", {
-        locale: prettyLocale(locale),
-      })}
-    >
+  diet,
+  cookTime,
+  ingredients,
+  isDraft,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  const DEFAULT_SERVINGS = 2;
+  const [servings, setServings] = useState(DEFAULT_SERVINGS);
+  function onServingsChanged(newServings: number) {
+    setServings(newServings);
+  }
+  return (
+    <StyledArticle>
+      {isDraft ? <DraftIndicator /> : null}
+      <RecipeStats>
+        <StyledHeading>{name}</StyledHeading>
+        <IconStat>
+          <Icon path={mdiClockOutline} size={1} title="Preparation Time" />
+          <span>{cookTime}min</span>
+        </IconStat>
+        <IconForDiet diet={diet} />
+      </RecipeStats>
       <ImageContainer>
         <Image
-          src={`/img/recipes/${image}`}
+          src={`/img/recipes/${image || "placeholder-min.jpg"}`}
           layout="fill"
-          alt="An image of the dish"
+          objectFit="cover"
+          sizes="(max-width: 400px) 400px, (max-width: 600px) 600px, (max-width: 800px) 800px, (min-width: 801px) 900px"
+          alt=""
         />
       </ImageContainer>
-      <p>
-        {t("notinyourlocale.explanation", { locale: prettyLocale(locale) })}
-      </p>
-      <ul>
-        {availableIn.map((loc) => (
-          <li key={loc}>
-            <Link
-              href={`/r/${slugs.find((v) => v.locale === loc).slug}`}
-              passHref
-              locale={loc}
-            >
-              <a>{prettyLocale(loc)}</a>
-            </Link>
-          </li>
-        ))}
-      </ul>
-      <p>
-        <Trans i18nKey="notinyourlocale.helptranslateit" t={t}>
-          Falls du uns helfen willst, das Rezept auf{" "}
-          {{ locale: prettyLocale(locale) }} zu übersetzen, schaue bei{" "}
-          <a href="https://github.com/riesinger/nononsensecooking">Github</a>{" "}
-          vorbei.
-        </Trans>
-      </p>
-    </PaddedSection>
+      <ServingsChooser
+        servings={servings}
+        onServingsChanged={onServingsChanged}
+      />
+      <IngredientsList
+        ingredients={ingredients}
+        servingsMultiplier={servings / DEFAULT_SERVINGS}
+      />
+      <StepList steps={steps} />
+    </StyledArticle>
   );
-}
+};
+
+export default SingleRecipe;
