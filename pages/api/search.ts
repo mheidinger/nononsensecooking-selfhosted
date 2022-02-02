@@ -1,8 +1,6 @@
 import Fuse from "fuse.js";
 import { NextApiRequest, NextApiResponse } from "next";
 import { fetchRecipeIndex } from "../../lib/recipes";
-import { SupportedLanguage } from "../../models/Localized";
-import { localeFrom } from "./utils/localeFrom";
 import { methodIs } from "./utils/methodIs";
 
 const searchOptions = {
@@ -25,10 +23,9 @@ export function sanitize(term: string) {
 }
 
 export async function searchRecipes(
-  language: SupportedLanguage,
   searchTerm: string
 ) {
-  const recipes = await fetchRecipeIndex(language);
+  const recipes = await fetchRecipeIndex();
   const fuse = new Fuse(recipes, searchOptions);
 
   return fuse.search(sanitize(searchTerm));
@@ -39,7 +36,6 @@ export default async function search(
   res: NextApiResponse
 ) {
   if (!methodIs("GET", req, res)) return;
-  const lang = localeFrom(req);
   const { query } = req.query;
-  res.status(200).json(await searchRecipes(lang, query as string));
+  res.status(200).json(await searchRecipes(query as string));
 }

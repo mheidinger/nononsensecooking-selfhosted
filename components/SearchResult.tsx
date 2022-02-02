@@ -11,21 +11,21 @@ const StyledLink = styled.a`
 
 interface Props {
   name: string;
-  slug: string;
+  id: string;
   diet: Recipe["diet"];
 }
 
-function getHref(slug: string) {
-  return `/r/${slug}`;
+function getHref(id: string) {
+  return `/r/${id}`;
 }
 
 const StyledLi = styled.li`
   margin: 1rem 0;
 `;
 
-const SearchResult = ({ slug, name, diet }: Props) => (
+const SearchResult = ({ id, name, diet }: Props) => (
   <StyledLi>
-    <Link href={getHref(slug)} passHref>
+    <Link href={getHref(id)} passHref>
       <StyledLink>
         <IconForDiet diet={diet} />
         <span>{name}</span>

@@ -8,7 +8,7 @@ import { Recipe } from "../models/Recipe";
 import IconForDiet from "./IconForDiet";
 
 type Props = {
-  slug: Recipe["slug"];
+  id: Recipe["id"];
   name: Recipe["name"];
   image: Recipe["image"];
   cookTime: Recipe["cookTime"];
@@ -87,10 +87,10 @@ const IconStat = styled.span`
   gap: 0.25rem;
 `;
 
-const DishCard = ({ slug, name, image, cookTime, diet }: Props) => {
+const DishCard = ({ id, name, image, cookTime, diet }: Props) => {
   const { t } = useTranslation("common");
   return (
-    <Link href={`/r/${slug}`} passHref>
+    <Link href={`/r/${id}`} passHref>
       <StyledCard>
         <ImageContainer>
           <Image

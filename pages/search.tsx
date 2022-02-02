@@ -6,7 +6,6 @@ import DishList from "../components/DishList";
 import DishListItem from "../components/DishListItem";
 import { PaddedSection } from "../components/PaddedSection";
 import SearchBar from "../components/SearchBar";
-import languageFrom from "../lib/languageFrom";
 import { queryParam } from "../lib/queryParameter";
 import { sanitize, searchRecipes } from "./api/search";
 
@@ -26,7 +25,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
   }
   const searchTerm = sanitize(unsanitizedSearchTerm);
-  const results = await searchRecipes(languageFrom(context), searchTerm);
+  const results = await searchRecipes(searchTerm);
   return {
     props: {
       searchTerm,
@@ -83,7 +82,6 @@ export default function Search({
             <DishListItem
               key={recipe.id}
               id={recipe.id}
-              slug={recipe.fullSlug}
               {...recipe}
             />
           ))}

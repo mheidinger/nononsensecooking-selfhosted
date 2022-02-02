@@ -9,7 +9,6 @@ import IconForDiet from "./IconForDiet";
 
 type Props = {
   id: Recipe["id"];
-  slug: Recipe["slug"];
   name: Recipe["name"];
   image: Recipe["image"];
   cookTime: Recipe["cookTime"];
@@ -69,10 +68,10 @@ const IconStat = styled.span`
   gap: 0.25rem;
 `;
 
-const DishListItem = ({ slug, name, image, cookTime, diet }: Props) => {
+const DishListItem = ({ id, name, image, cookTime, diet }: Props) => {
   const { t } = useTranslation("common");
   return (
-    <Link href={`/r/${slug}`} passHref prefetch={false}>
+    <Link href={`/r/${id}`} passHref prefetch={false}>
       <Dish>
         <ImageContainer>
           <Image

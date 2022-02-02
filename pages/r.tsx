@@ -39,7 +39,6 @@ export default function Recipes({
               <DishListItem
                 key={recipe.id}
                 id={recipe.id}
-                slug={recipe.slug}
                 {...recipe}
               />
             ))}

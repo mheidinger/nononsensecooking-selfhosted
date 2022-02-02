@@ -145,7 +145,7 @@ const SearchBar = ({ placeholder }: Props) => {
             {searchResults.map(({ item }: { item: RecipeInIndex }) => (
               <SearchResult
                 key={item.id}
-                slug={item.slug}
+                id={item.id}
                 name={item.name}
                 diet={item.diet}
               />

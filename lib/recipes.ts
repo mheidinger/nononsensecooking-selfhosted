@@ -1,8 +1,6 @@
 import fs from "fs/promises";
 import path from "path";
-import slug from "slug";
 import YAML from "yaml";
-import { SupportedLanguage } from "../models/Localized";
 import { Recipe, RecipeFile, RecipeInIndex } from "../models/Recipe";
 import { Unit } from "../models/Unit";
 
@@ -64,7 +62,6 @@ const parseRecipeData = (id: string, recipeData: RecipeFile): Recipe => ({
   ...recipeData,
   id,
   isDraft: recipeData.isDraft || false,
-  slug: `${id}/${slug(recipeData.name)}`,
   ingredients: parseIngredients(recipeData.ingredients),
   publishedAt: recipeData.publishedAt,
 });
