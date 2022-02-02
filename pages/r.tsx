@@ -4,6 +4,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import DishList from "../components/DishList";
 import DishListItem from "../components/DishListItem";
 import { PaddedSection } from "../components/PaddedSection";
+import PageTitle from "../components/PageTitle";
 import languageFrom from "../lib/languageFrom";
 import { fetchRecipeIndex } from "../lib/recipes";
 import { Recipe } from "../models/Recipe";
@@ -31,6 +32,7 @@ export default function Recipes({
 
   return (
     <>
+      <PageTitle title={t("home.allrecipes")} />
       <PaddedSection title={t("home.allrecipes")} smallHeadings>
         <DishList>
           {recipes

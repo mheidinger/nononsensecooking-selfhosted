@@ -8,6 +8,7 @@ import styled from "styled-components";
 import DraftIndicator from "../../components/DraftIndicator";
 import IconForDiet from "../../components/IconForDiet";
 import IngredientsList from "../../components/IngredientsList";
+import PageTitle from "../../components/PageTitle";
 import ServingsChooser from "../../components/ServingsChooser";
 import StepList from "../../components/StepList";
 import {
@@ -89,35 +90,38 @@ const SingleRecipe = ({
     setServings(newServings);
   }
   return (
-    <StyledArticle>
-      {isDraft ? <DraftIndicator /> : null}
-      <RecipeStats>
-        <StyledHeading>{name}</StyledHeading>
-        <IconStat>
-          <Icon path={mdiClockOutline} size={1} title="Preparation Time" />
-          <span>{cookTime}min</span>
-        </IconStat>
-        <IconForDiet diet={diet} />
-      </RecipeStats>
-      <ImageContainer>
-        <Image
-          src={`/img/recipes/${image || "placeholder-min.jpg"}`}
-          layout="fill"
-          objectFit="cover"
-          sizes="(max-width: 400px) 400px, (max-width: 600px) 600px, (max-width: 800px) 800px, (min-width: 801px) 900px"
-          alt=""
+    <>
+      <PageTitle title={name} />
+      <StyledArticle>
+        {isDraft ? <DraftIndicator /> : null}
+        <RecipeStats>
+          <StyledHeading>{name}</StyledHeading>
+          <IconStat>
+            <Icon path={mdiClockOutline} size={1} title="Preparation Time" />
+            <span>{cookTime}min</span>
+          </IconStat>
+          <IconForDiet diet={diet} />
+        </RecipeStats>
+        <ImageContainer>
+          <Image
+            src={`/img/recipes/${image || "placeholder-min.jpg"}`}
+            layout="fill"
+            objectFit="cover"
+            sizes="(max-width: 400px) 400px, (max-width: 600px) 600px, (max-width: 800px) 800px, (min-width: 801px) 900px"
+            alt=""
+          />
+        </ImageContainer>
+        <ServingsChooser
+          servings={servings}
+          onServingsChanged={onServingsChanged}
         />
-      </ImageContainer>
-      <ServingsChooser
-        servings={servings}
-        onServingsChanged={onServingsChanged}
-      />
-      <IngredientsList
-        ingredients={ingredients}
-        servingsMultiplier={servings / DEFAULT_SERVINGS}
-      />
-      <StepList steps={steps} />
-    </StyledArticle>
+        <IngredientsList
+          ingredients={ingredients}
+          servingsMultiplier={servings / DEFAULT_SERVINGS}
+        />
+        <StepList steps={steps} />
+      </StyledArticle>
+    </>
   );
 };
 

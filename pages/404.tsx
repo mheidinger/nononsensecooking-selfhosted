@@ -5,6 +5,7 @@ import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Link from "next/link";
 import styled from "styled-components";
+import PageTitle from "../components/PageTitle";
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   return {
@@ -27,7 +28,7 @@ const IntroParagraph = styled.p`
   margin-bottom: 2rem;
 `;
 
-const PageTitle = styled.h2`
+const Title = styled.h2`
   font-size: 2rem;
 `;
 
@@ -59,8 +60,9 @@ export default function NotFound({}: InferGetStaticPropsType<
   const { t } = useTranslation("common");
   return (
     <>
+      <PageTitle title={t("notfound.pagetitle")} />
       <NotFoundPage>
-        <PageTitle>{t("notfound.displaytitle")}</PageTitle>
+        <Title>{t("notfound.displaytitle")}</Title>
         <IntroParagraph>{t("notfound.explanation")}</IntroParagraph>
         <LinkContainer>
           <Link href="/" passHref>

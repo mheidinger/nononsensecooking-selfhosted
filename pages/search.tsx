@@ -5,6 +5,7 @@ import styled from "styled-components";
 import DishList from "../components/DishList";
 import DishListItem from "../components/DishListItem";
 import { PaddedSection } from "../components/PaddedSection";
+import PageTitle from "../components/PageTitle";
 import SearchBar from "../components/SearchBar";
 import { queryParam } from "../lib/queryParameter";
 import { sanitize, searchRecipes } from "./api/search";
@@ -76,6 +77,7 @@ export default function Search({
   }
   return (
     <>
+      <PageTitle title={t("search.pagetitle")} />
       <PaddedSection title={t("search.sectiontitle", { searchTerm })}>
         <DishList>
           {results?.map(({ item: recipe }) => (

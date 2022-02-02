@@ -3,6 +3,7 @@ import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import DishCard from "../components/DishCard";
 import { PaddedSection } from "../components/PaddedSection";
+import PageTitle from "../components/PageTitle";
 import Track from "../components/Track";
 import { fetchRecipeIndex } from "../lib/recipes";
 import { Recipe } from "../models/Recipe";
@@ -47,6 +48,7 @@ export default function Home({
   const { t } = useTranslation("common");
   return (
     <>
+      <PageTitle />
       <PaddedSection title={t("home.todaysrecipes")} smallHeadings>
         <Track sm={1} md={2} lg={3}>
           {recipesOfTheDay.map((recipe: Recipe) => (
