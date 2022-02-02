@@ -5,7 +5,6 @@ import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Link from "next/link";
 import styled from "styled-components";
-import SEO from "../components/SEO";
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   return {
@@ -60,7 +59,6 @@ export default function NotFound({}: InferGetStaticPropsType<
   const { t } = useTranslation("common");
   return (
     <>
-      <SEO title={t("notfound.pagetitle")} />
       <NotFoundPage>
         <PageTitle>{t("notfound.displaytitle")}</PageTitle>
         <IntroParagraph>{t("notfound.explanation")}</IntroParagraph>

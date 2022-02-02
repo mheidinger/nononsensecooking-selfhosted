@@ -157,7 +157,7 @@ const Header = () => {
       </MenuButton>
       <Menu open={menuOpen}>
         <StyledNav>
-          <Link href="/r" passHref prefetch={false}>
+          <Link href="/all" passHref prefetch={false}>
             <StyledLink>
               <Icon path={mdiPotSteamOutline} size={1} />
               <span>{t("link.allrecipes")}</span>

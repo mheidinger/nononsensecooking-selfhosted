@@ -6,7 +6,6 @@ import DishList from "../components/DishList";
 import DishListItem from "../components/DishListItem";
 import { PaddedSection } from "../components/PaddedSection";
 import SearchBar from "../components/SearchBar";
-import SEO from "../components/SEO";
 import languageFrom from "../lib/languageFrom";
 import { queryParam } from "../lib/queryParameter";
 import { sanitize, searchRecipes } from "./api/search";
@@ -69,7 +68,6 @@ export default function Search({
   if (!searchTerm) {
     return (
       <>
-        <SEO title={t("search.pagetitle")} />
         <CenteredSection>
           <Notice>{t("search.findrecipes")}</Notice>
           <SearchBar placeholder={th("searchbar.placeholder")} />
@@ -79,7 +77,6 @@ export default function Search({
   }
   return (
     <>
-      <SEO title={t("search.pagetitle")} />
       <PaddedSection title={t("search.sectiontitle", { searchTerm })}>
         <DishList>
           {results?.map(({ item: recipe }) => (

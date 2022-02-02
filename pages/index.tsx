@@ -5,8 +5,6 @@ import Link from "next/link";
 import { ReactElement } from "react";
 import DishCard from "../components/DishCard";
 import { PaddedSection } from "../components/PaddedSection";
-import Paragraph from "../components/Paragraph";
-import SEO from "../components/SEO";
 import Track from "../components/Track";
 import languageFrom from "../lib/languageFrom";
 import { getRecipesFromDiskOrIndex } from "../lib/recipes";
@@ -59,7 +57,6 @@ export default function Home({
   const { t } = useTranslation("common");
   return (
     <>
-      <SEO />
       <PaddedSection title={t("home.todaysrecipes")} smallHeadings>
         <Track sm={1} md={2} lg={3}>
           {recipesOfTheDay.map((recipe: Recipe) => (

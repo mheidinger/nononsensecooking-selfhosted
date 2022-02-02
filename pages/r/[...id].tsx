@@ -8,7 +8,6 @@ import styled from "styled-components";
 import DraftIndicator from "../../components/DraftIndicator";
 import IconForDiet from "../../components/IconForDiet";
 import IngredientsList from "../../components/IngredientsList";
-import SEO from "../../components/SEO";
 import ServingsChooser from "../../components/ServingsChooser";
 import StepList from "../../components/StepList";
 import languageFrom from "../../lib/languageFrom";
@@ -113,7 +112,6 @@ const SingleRecipe = ({
   }
   return (
     <StyledArticle>
-      <SEO isRecipe title={name} img={image} />
       {isDraft ? <DraftIndicator /> : null}
       <RecipeStats>
         <StyledHeading>{name}</StyledHeading>
