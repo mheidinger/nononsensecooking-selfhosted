@@ -2,22 +2,23 @@ import { mdiClockOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import Image from "next/image";
 import { useState } from "react";
 import styled from "styled-components";
+import DishImage from "../../components/DishImage";
 import IconForDiet from "../../components/IconForDiet";
 import IngredientsList from "../../components/IngredientsList";
 import PageTitle from "../../components/PageTitle";
 import ServingsChooser from "../../components/ServingsChooser";
 import StepList from "../../components/StepList";
 import {
-  fetchSingleRecipe,
+  fetchSingleRecipe, getRecipeImageUrl,
 } from "../../lib/recipes";
-import { Recipe } from "../../models/Recipe";
 
-export const getServerSideProps: GetServerSideProps<Recipe> = async (context) => {
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.params;
   const recipe = await fetchSingleRecipe(id as string);
+  const s3Url = await getRecipeImageUrl(id as string);
   return {
     props: {
       ...(await serverSideTranslations(context.locale, [
@@ -27,6 +28,7 @@ export const getServerSideProps: GetServerSideProps<Recipe> = async (context) =>
         "footer",
       ])),
       ...recipe,
+      s3Url,
     }
   };
 };
@@ -77,10 +79,10 @@ const IconStat = styled.span`
 const SingleRecipe = ({
   name,
   steps,
-  image,
   diet,
   cookTime,
   ingredients,
+  s3Url,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const DEFAULT_SERVINGS = 2;
   const [servings, setServings] = useState(DEFAULT_SERVINGS);
@@ -100,8 +102,8 @@ const SingleRecipe = ({
           <IconForDiet diet={diet} />
         </RecipeStats>
         <ImageContainer>
-          <Image
-            src={`/img/recipes/${image || "placeholder-min.jpg"}`}
+          <DishImage
+            s3Url={s3Url}
             layout="fill"
             objectFit="cover"
             sizes="(max-width: 400px) 400px, (max-width: 600px) 600px, (max-width: 800px) 800px, (min-width: 801px) 900px"

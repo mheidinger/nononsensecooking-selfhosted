@@ -1,18 +1,18 @@
 import { mdiClockOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import { useTranslation } from "next-i18next";
-import Image from "next/image";
 import Link from "next/link";
 import styled from "styled-components";
-import { Recipe } from "../models/Recipe";
+import { Recipe, RecipeInIndex } from "../models/Recipe";
+import DishImage from "./DishImage";
 import IconForDiet from "./IconForDiet";
 
 type Props = {
   id: Recipe["id"];
   name: Recipe["name"];
-  image: Recipe["image"];
   cookTime: Recipe["cookTime"];
   diet: Recipe["diet"];
+  s3Url?: RecipeInIndex["s3Url"];
 };
 
 const StyledCard = styled.a`
@@ -87,14 +87,14 @@ const IconStat = styled.span`
   gap: 0.25rem;
 `;
 
-const DishCard = ({ id, name, image, cookTime, diet }: Props) => {
+const DishCard = ({ id, name, cookTime, diet, s3Url }: Props) => {
   const { t } = useTranslation("common");
   return (
     <Link href={`/r/${id}`} passHref>
       <StyledCard>
         <ImageContainer>
-          <Image
-            src={`/img/recipes/${image}`}
+          <DishImage
+            s3Url={s3Url}
             layout="fill"
             objectFit="cover"
             quality={80}

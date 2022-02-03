@@ -3,7 +3,6 @@ import { Ingredient } from "./Ingredient";
 export interface Recipe {
   id: string;
   name: string;
-  image: string;
   cookTime: number;
   diet: "meat" | "fish" | "vegetarian" | "vegan";
   steps: string[];
@@ -13,7 +12,6 @@ export interface Recipe {
 
 export interface RecipeFile {
   name: string;
-  image: string;
   cookTime: number;
   diet: "meat" | "fish" | "vegetarian" | "vegan";
   steps: string[];
@@ -25,8 +23,9 @@ export type RecipeInIndex = Pick<
   Recipe,
   | "id"
   | "name"
-  | "image"
   | "cookTime"
   | "diet"
   | "publishedAt"
->;
+> & {
+  s3Url?: string
+};

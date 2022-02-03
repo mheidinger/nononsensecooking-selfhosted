@@ -6,7 +6,7 @@ import { PaddedSection } from "../components/PaddedSection";
 import PageTitle from "../components/PageTitle";
 import Track from "../components/Track";
 import { fetchRecipeIndex } from "../lib/recipes";
-import { Recipe } from "../models/Recipe";
+import { Recipe, RecipeInIndex } from "../models/Recipe";
 
 function shuffle(a: any[]) {
   for (let i = a.length - 1; i > 0; i--) {
@@ -42,14 +42,14 @@ export default function Home({
       <PageTitle />
       <PaddedSection title={t("home.todaysrecipes")} smallHeadings>
         <Track sm={1} md={2} lg={3}>
-          {recipesOfTheDay.map((recipe: Recipe) => (
+          {recipesOfTheDay.map((recipe: RecipeInIndex) => (
             <DishCard {...recipe} key={recipe.id} />
           ))}
         </Track>
       </PaddedSection>
       <PaddedSection title={t("home.latestrecipes")} smallHeadings>
         <Track sm={1} md={2} lg={3}>
-          {latestRecipes.map((recipe: Recipe) => (
+          {latestRecipes.map((recipe: RecipeInIndex) => (
             <DishCard {...recipe} key={recipe.id} />
           ))}
         </Track>
