@@ -5,7 +5,7 @@ import { formatUrl } from '@aws-sdk/util-format-url';
 import { HttpRequest } from "@aws-sdk/types";
 import { Readable } from 'stream';
 
-const client = new S3Client({endpoint: "http://localhost:9000", forcePathStyle: true});
+const client = new S3Client({endpoint: process.env.S3_ENDPOINT, forcePathStyle: true});
 const signer: S3RequestPresigner = new S3RequestPresigner({...client.config});
 const bucket = process.env.BUCKET_NAME
 
