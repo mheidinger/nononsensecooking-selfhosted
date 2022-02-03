@@ -29,3 +29,25 @@ export type RecipeInIndex = Pick<
 > & {
   s3Url?: string
 };
+
+const fieldsToIncludeInIndex = [
+  "id",
+  "name",
+  "image",
+  "cookTime",
+  "diet",
+  "slug",
+  "publishedAt",
+];
+
+export function toRecipeInIndex(
+  {id, name, cookTime, diet, publishedAt}: Recipe,
+): RecipeInIndex {
+  return {
+    id,
+    name,
+    cookTime,
+    diet,
+    publishedAt
+  }
+}

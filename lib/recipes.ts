@@ -1,15 +1,27 @@
 import YAML from "yaml";
-import { Recipe, RecipeFile, RecipeInIndex } from "../models/Recipe";
+import NodeCache from "node-cache";
+import { Recipe, RecipeFile, RecipeInIndex, toRecipeInIndex } from "../models/Recipe";
 import { Unit } from "../models/Unit";
-import { fetchS3File, getSignedGetObjectUrl } from "./s3client";
+import { fetchS3File, getSignedGetObjectUrl, listFiles } from "./s3client";
 
-const tempIndex = '[{"name":"Halloumi-Pommes","publishedAt":"2021-08-27T17:31:49.831Z","cookTime":20,"diet":"vegetarian","id":"2IJ5-UnErv"},{"name":"Einfaches Bananeneis","publishedAt":"2021-08-11T20:36:58.221Z","cookTime":5,"diet":"vegetarian","id":"9ZHh13BR6p"},{"name":"Gefüllte Zucchini mit Quinoa, Feta und Spinat","publishedAt":"2021-08-11T20:36:58.221Z","cookTime":45,"diet":"vegetarian","id":"9htxuuEEZ5"},{"name":"Schokopuddingdessert mit Mango","publishedAt":"2021-08-11T20:36:58.221Z","cookTime":10,"diet":"vegetarian","id":"CsAUM3IwIN"},{"name":"Vanillepuddingdessert mit Apfelmus","publishedAt":"2021-08-11T20:36:58.221Z","cookTime":10,"diet":"vegetarian","id":"geELhSY96S"},{"name":"Karotten-Rotkohl-Salat","publishedAt":"2021-12-15T19:46:41.357Z","cookTime":15,"diet":"vegetarian","id":"hFLfAfrezp"}]';
 const s3RecipeFilesBasePath = "data"
 const s3RecipeImagesBasePath = "images"
 
-// TODO: Create on demand based on S3 then cache and update regularly
+const INDEX_CACHE_KEY = "index";
+const SIGNED_IMAGE_URL_TTL = 3600;
+const STD_TTL = 600;
+const CHECK_PERIOD = 120;
+const recipeCache = new NodeCache({stdTTL: STD_TTL, checkperiod: CHECK_PERIOD});
+
+// TODO: With in app modifications, invalidate after such
 export async function fetchRecipeIndex(): Promise<RecipeInIndex[]> {
-  const index = JSON.parse(tempIndex) as RecipeInIndex[];
+  let index = recipeCache.get(INDEX_CACHE_KEY) as RecipeInIndex[];
+  if (index == undefined) {
+    const recipeFiles = await listFiles(s3RecipeFilesBasePath + "/");
+    const recipes = await Promise.all(recipeFiles.map((file) => fetchSingleRecipe(file.key.replace(".yaml", ""))));
+    index = recipes.map((recipe) => toRecipeInIndex(recipe));
+    recipeCache.set(INDEX_CACHE_KEY, index);
+  }
   return Promise.all(
     index.map(async (item) => {
       item.s3Url = await getRecipeImageUrl(item.id);
@@ -18,17 +30,30 @@ export async function fetchRecipeIndex(): Promise<RecipeInIndex[]> {
   )
 }
 
-// TODO: Add caching of S3 files => last changed?
-export async function fetchSingleRecipe(id: string) {
-  const file = await fetchS3File(`${s3RecipeFilesBasePath}/${id}.yaml`);
-  console.log("Read recipe from S3 for id", id);
-  const recipeData = YAML.parse(file);
-  return parseRecipeData(id, recipeData);
+export async function fetchSingleRecipe(id: string): Promise<Recipe> {
+  let recipe = recipeCache.get(id) as Recipe;
+  if (recipe == undefined) {
+    const file = await fetchS3File(`${s3RecipeFilesBasePath}/${id}.yaml`);
+    console.log("Read recipe from S3 for id", id);
+    const recipeData = YAML.parse(file);
+    recipe = parseRecipeData(id, recipeData);
+    recipeCache.set(id, recipe);
+  } else {
+    console.log("Cache hit for recipe", id);
+  }
+  return recipe;
 }
 
-// TODO: Add caching of these URLs
 export async function getRecipeImageUrl(id: string) {
-  return getSignedGetObjectUrl(`${s3RecipeImagesBasePath}/${id}.jpg`)
+  const cacheKey = `SIGNED_IMAGE_URL_${id}`;
+  let url = recipeCache.get(cacheKey) as string;
+  if (url == undefined) {
+    url = await getSignedGetObjectUrl(`${s3RecipeImagesBasePath}/${id}.jpg`, SIGNED_IMAGE_URL_TTL * 1.2);
+    recipeCache.set(cacheKey, url);
+  } else {
+    console.log("Cache hit for recipe image URL", id);
+  }
+  return url;
 }
 
 const parseRecipeData = (id: string, recipeData: RecipeFile): Recipe => ({
