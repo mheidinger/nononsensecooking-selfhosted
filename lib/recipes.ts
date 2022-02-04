@@ -4,7 +4,7 @@ import { Recipe, RecipeFile, RecipeInIndex, toRecipeInIndex } from "../models/Re
 import { Unit } from "../models/Unit";
 import { fetchS3File, getSignedGetObjectUrl, listFiles } from "./s3client";
 
-const s3RecipeFilesBasePath = "data"
+const s3RecipeFilesBasePath = "recipes"
 const s3RecipeImagesBasePath = "images"
 
 const INDEX_CACHE_KEY = "index";

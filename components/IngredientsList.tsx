@@ -17,7 +17,7 @@ const IngredientsList = ({ ingredients, servingsMultiplier }: Props) => (
   <div>
     <List>
       {ingredients?.map((ingredient) => (
-        <li key={ingredient.name || ingredient.id}>
+        <li key={ingredient.name}>
           <Ingredient {...ingredient} servingsMultiplier={servingsMultiplier} />
         </li>
       ))}
