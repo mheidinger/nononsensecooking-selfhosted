@@ -77,6 +77,7 @@ const IconStat = styled.span`
 `;
 
 const SingleRecipe = ({
+  id,
   name,
   steps,
   diet,
@@ -96,10 +97,10 @@ const SingleRecipe = ({
         <RecipeStats>
           <StyledHeading>{name}</StyledHeading>
           <IconStat>
-            <Icon path={mdiClockOutline} size={1} title="Preparation Time" />
+            <Icon id={`preparationTime_${id}`} path={mdiClockOutline} size={1} title="Preparation Time" />
             <span>{cookTime}min</span>
           </IconStat>
-          <IconForDiet diet={diet} />
+          <IconForDiet id={`diet_${id}`} diet={diet} />
         </RecipeStats>
         <ImageContainer>
           <DishImage

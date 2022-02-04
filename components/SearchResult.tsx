@@ -27,7 +27,7 @@ const SearchResult = ({ id, name, diet }: Props) => (
   <StyledLi>
     <Link href={getHref(id)} passHref>
       <StyledLink>
-        <IconForDiet diet={diet} />
+        <IconForDiet id={id} diet={diet} />
         <span>{name}</span>
       </StyledLink>
     </Link>

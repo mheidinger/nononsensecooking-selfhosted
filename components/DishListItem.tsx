@@ -88,6 +88,7 @@ const DishListItem = ({ id, name, cookTime, diet, s3Url }: Props) => {
           <DishStatLine>
             <IconStat>
               <Icon
+                id={`preparationTime_${id}`}
                 path={mdiClockOutline}
                 size={0.75}
                 title={t("preparationTime.label")}
@@ -96,7 +97,7 @@ const DishListItem = ({ id, name, cookTime, diet, s3Url }: Props) => {
                 {t("preparationTime.inMinutes", { minutes: cookTime })}
               </span>
             </IconStat>
-            <IconForDiet diet={diet} size={0.75} />
+            <IconForDiet id={`diet_${id}`} diet={diet} size={0.75} />
           </DishStatLine>
         </DishStats>
       </Dish>
