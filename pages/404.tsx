@@ -78,7 +78,7 @@ export default function NotFound({}: InferGetStaticPropsType<
             </StyledLink>
           </Link>
           <Link
-            href="https://github.com/riesinger/nononsensecooking/issues"
+            href="https://github.com/mheidinger/nononsensecooking-selfhosted/issues"
             passHref
           >
             <StyledLink>

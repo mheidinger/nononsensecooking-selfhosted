@@ -8,6 +8,6 @@ module.exports = {
   },
   images: {
     formats: ["image/avif", "image/webp"],
-    domains: ["localhost"],
+    domains: [process.env.S3_DOMAIN],
   },
 };

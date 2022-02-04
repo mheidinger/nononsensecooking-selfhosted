@@ -41,7 +41,7 @@ const Footer = () => {
     <StyledFooter>
       <Nav>
         <StyledLink
-          href="https://github.com/riesinger/nononsensecooking"
+          href="https://github.com/mheidinger/nononsensecooking-selfhosted"
           rel="noopener"
         >
           GitHub

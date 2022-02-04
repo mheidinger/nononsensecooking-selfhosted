@@ -1,31 +1,43 @@
-# [NoNonsense.cooking](https://nononsense.cooking)
+# NoNonsenseCooking - Selfhosted Edition
 
-NoNonsenseCooking is a modern website for curated recipes trying to cut out all of the unnecessary bloat of typical cooking websites.
+The original [NoNonsenseCooking](nononsense.cooking) is a modern website for curated recipes trying to cut out all of the unnecessary bloat of typical cooking websites developed by [@riesinger](https://github.com/riesinger).
 
-## Why?
+This repo contains a heavily modified version of that site which is focused on selfhosting it for a (private) recipe collection.
+Therefore it is set up to work behind a proxy with optional authentication and minimal external dependencies.
 
-Simply put: I needed a place to share my favorite recipes with friends & family. I was fed up with existing recipe sites, since they either look horribly outdated and bloated, or use so many trackers that uBlock explodes (or even worse: _both_).
+## Modification to the original site
+
+Mainly these are the modifications that have been done so far:
+- Recipes and Images for them are stored in a S3 (or MinIO) bucket
+  - As these files are now external a caching of recipes was added
+  - Images are fetched with presigned URLs which are also cached
+- No translation for recipes - Only maintain your own language
+  - This includes the ingredients
+- Removal of legal, donation, etc. stuff
+  - This does not mean that you should not [donate](https://nononsense.cooking/donate) 😉
+- Removal of the RSS Feed
+- SEO and Analytics
+
+## What is planned?
+
+As the goal of this fork is to have a private recipe collection, adding new recipes and modifying existing ones is the next goal.
+For now this can only be done by directly modifying the files in the S3 storage.
+
+## Setup
+
+For deploying this site, the docker image at `TBD` can be used. As configuration the environment variables of [the env file](.env.local.example) need to be provided.
+
+As S3 storage either the AWS S3 can be used or a [MinIO](min.io) instance can be self hosted with the following caveats:
+- Recipes (see `TBD` for examples) are stored with the prefix `recipes/` and the file ending `.yaml`
+- Images with the prefix `images/` and the file ending `.jpg`
+- Filenames/IDs of the recipes have to match the corresponding image
+  - If you don't have an image for a recipe, a placeholder will be used
 
 ## Contributing
 
-Do you want to add your favorite recipe? It's quite easy!
+To run the service locally, first run `npm install`.
+Then start a local MinIO server for the data and configure it like described above.
+Test recipes and images can be found in `TBD`.
 
-First, fork this repository and clone it: `gh repo fork riesinger/nononsensecooking`.
-Then, install all the dependencies with `npm install` and run the script `npm run new-recipe`.
-This will ask you a few questions and then creates recipe files in the `recipes` directory.
-Edit the file to contain your recipe. You can take the other recipes as an inspiration on how to fill out the YAML file.
-If you have an image for your recipe, place a 1600x1040px version of it in the `public/img/recipes` directory (any resolution will do, but please make it the given aspect ratio 🙃).
-
-To run the service locally, run `npm start dev` and head to `http://localhost:3000`. You should be able to see your recipe in the "All Recipes" section or via the search. Note that you need to restart your dev server when you add a new recipe. Also, the search is using the "recipe index", which you can generate using `npm run generate-recipe-index`.
-
-_Please don't copy recipes from the internet or cookbooks (without significant modifications). Also, only use images you took yourself._
-
-## License
-
-This content of this repository is covered under two licenses.
-
-The recipes and images are licensed under a [Creative Commons Attibution 4.0 license (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/). This applies to everything in the `./recipes` and `./public/img/recipes` directories.
-You can find a copy of the license in the `LICENSE-recipes` file.
-
-The source code for the site is licensed under the MIT License.
-You can find a copy of the license in the `LICENSE-code` file.
+Use [the env file](.env.local.example) as template, rename it to `.env.local` and fill with your values.
+Finally run `npm start dev` and head to `http://localhost:3000`!
