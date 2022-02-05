@@ -7,3 +7,11 @@ export enum Unit {
   LITERS = "l",
   TABLESPOONS = "tbsp",
 }
+
+const NonScalingUnits = [
+  Unit.NONE,
+]
+
+export function isScalingUnit(unit: Unit): boolean {
+  return !NonScalingUnits.includes(unit);
+}

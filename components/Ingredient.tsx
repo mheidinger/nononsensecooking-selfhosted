@@ -1,15 +1,15 @@
 import { useTranslation } from "react-i18next";
 import { Ingredient as IngredientModel } from "../models/Ingredient";
+import { isScalingUnit } from "../models/Unit";
 
 const Ingredient = ({
   name,
-  scales,
   unit,
   amount,
   servingsMultiplier,
 }: IngredientModel & { servingsMultiplier: number }) => {
   const { t } = useTranslation("recipe");
-  const adjustedAmount = scales
+		const adjustedAmount = isScalingUnit(unit)
     ? Math.round(amount * servingsMultiplier * 100) / 100
     : amount;
 
