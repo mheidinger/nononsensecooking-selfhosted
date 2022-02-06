@@ -1,0 +1,19 @@
+name: Test Recipe 2
+publishedAt: "2021-08-27T17:31:49.831Z"
+cookTime: 5
+diet: meat
+ingredients:
+  - name: Ingredient 1
+    amount: 400
+    unit: g
+  - name: Ingredient 2
+    amount: 5
+    unit: tbsp
+  - name: Ingredient 3
+    amount: 1
+  - name: Ingredient 4
+steps:
+  - "Step 1"
+  - "Step 2: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget tellus diam. Pellentesque fringilla lacus egestas ultrices egestas. Pellentesque aliquam, elit ac suscipit aliquam, ex tortor tincidunt ante, sit amet semper dolor augue vel justo. Donec et felis sollicitudin, finibus sem vitae, malesuada ligula."
+  - "Step 3"
+  - "Enjoy!"

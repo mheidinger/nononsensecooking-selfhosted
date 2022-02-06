@@ -28,7 +28,7 @@ For now this can only be done by directly modifying the files in the S3 storage.
 For deploying this site, the docker image at `TBD` can be used. As configuration the environment variables of [the env file](.env.local.example) need to be provided.
 
 As S3 storage either the AWS S3 can be used or a [MinIO](min.io) instance can be self hosted with the following caveats:
-- Recipes (see `TBD` for examples) are stored with the prefix `recipes/` and the file ending `.yaml`
+- Recipes (see [examples](examples) for examples) are stored with the prefix `recipes/` and the file ending `.yaml`
 - Images with the prefix `images/` and the file ending `.jpg`
 - Filenames/IDs of the recipes have to match the corresponding image
   - If you don't have an image for a recipe, a placeholder will be used
@@ -37,7 +37,7 @@ As S3 storage either the AWS S3 can be used or a [MinIO](min.io) instance can be
 
 To run the service locally, first run `npm install`.
 Then start a local MinIO server for the data and configure it like described above.
-Test recipes and images can be found in `TBD`.
+Test recipes and images can be found in [examples](examples).
 
 Use [the env file](.env.local.example) as template, rename it to `.env.local` and fill with your values.
 Finally run `npm start dev` and head to `http://localhost:3000`!

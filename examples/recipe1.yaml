@@ -1,0 +1,31 @@
+name: Test Recipe 1
+publishedAt: "2021-08-27T17:31:49.831Z"
+cookTime: 20
+diet: vegetarian
+ingredients:
+  - name: Ingredient 1
+    amount: 400
+    unit: g
+  - name: Ingredient 2
+    amount: 5
+    unit: kg
+  - name: Ingredient 3
+    amount: 1
+    unit: pc
+  - name: Ingredient 4
+    amount: 20
+    unit: ml
+  - name: Ingredient 5
+    amount: 1
+    unit: l
+  - name: Ingredient 6
+    amount: 1
+    unit: tbsp
+  - name: Ingredient 7
+    unit: none
+  - name: Ingredient 8
+steps:
+  - "Step 1"
+  - "Step 2: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget tellus diam. Pellentesque fringilla lacus egestas ultrices egestas. Pellentesque aliquam, elit ac suscipit aliquam, ex tortor tincidunt ante, sit amet semper dolor augue vel justo. Donec et felis sollicitudin, finibus sem vitae, malesuada ligula."
+  - "Step 3"
+  - "Enjoy!"

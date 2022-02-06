@@ -1,0 +1,37 @@
+kind: pipeline
+name: default
+
+steps:
+- name: push-registry
+  image: plugins/docker
+  settings:
+    repo: registry.max-heidinger.de/nononsensecooking-selfhosted
+    registry: registry.max-heidinger.de
+    tags:
+      - latest
+      - ci-${DRONE_BUILD_NUMBER}
+    username:
+      from_secret: tac_username
+    password:
+      from_secret: tac_password
+  when:
+    branch:
+    - main
+    event:
+      exclude:
+      - pull_request
+
+- name: update-deployment
+  image: plugins/webhook
+  settings:
+    urls: https://portainer.max-heidinger.de/api/webhooks/TODO
+    username:
+      from_secret: tac_username
+    password:
+      from_secret: tac_password
+  when:
+    branch:
+    - main
+    event:
+      exclude:
+      - pull_request

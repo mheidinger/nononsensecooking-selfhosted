@@ -26,7 +26,7 @@ COPY --from=builder --chown=notroot:notroot /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/next*.config.js ./
 
-USER nnc
+USER notroot
 
 EXPOSE 3000
 CMD ["npm", "start"]
