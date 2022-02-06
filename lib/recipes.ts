@@ -33,8 +33,8 @@ export async function fetchRecipeIndex(): Promise<RecipeInIndex[]> {
 export async function fetchSingleRecipe(id: string): Promise<Recipe> {
   let recipe = recipeCache.get(id) as Recipe;
   if (recipe == undefined) {
-    const file = await fetchS3File(`${s3RecipeFilesBasePath}/${id}.yaml`);
     console.log("Read recipe from S3 for id", id);
+    const file = await fetchS3File(`${s3RecipeFilesBasePath}/${id}.yaml`);
     const recipeData = YAML.parse(file);
     recipe = parseRecipeData(id, recipeData);
     recipeCache.set(id, recipe);

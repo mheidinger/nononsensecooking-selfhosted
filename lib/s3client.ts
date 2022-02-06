@@ -22,7 +22,7 @@ export async function listFiles(prefix: string): Promise<S3File[]> {
     key: item.Key.replace(prefix, ""),
     lastModified: item.LastModified,
     prefix
-  }});
+  }}).filter((item) => item.key !== "");
 }
 
 export async function fetchS3File(key: string): Promise<string> {
