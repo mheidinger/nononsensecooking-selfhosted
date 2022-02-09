@@ -40,6 +40,10 @@
       "github": "Submit an issue on GitHub"
     }
   },
+  "create": {
+    "pagetitle": "Create Recipe",
+    "displaytitle": "Create New Recipe"
+  },
   "locales": {
     "en-US": "English (US)",
     "de-DE": "German (Germany)"

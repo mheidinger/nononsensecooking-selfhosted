@@ -10,6 +10,7 @@ import IngredientsList from "../../components/IngredientsList";
 import PageTitle from "../../components/PageTitle";
 import ServingsChooser from "../../components/ServingsChooser";
 import StepList from "../../components/StepList";
+import { StyledHeading } from "../../components/StyledHeading";
 import {
   fetchSingleRecipe, getRecipeImageUrl,
 } from "../../lib/recipes";
@@ -58,16 +59,6 @@ const RecipeStats = styled.header`
   flex-wrap: wrap;
   gap: 1rem;
   margin-bottom: 2rem;
-`;
-
-const StyledHeading = styled.h2`
-  font-size: 1.6rem;
-  font-weight: 400;
-  margin: 0 1rem 0 0;
-
-  @media screen and (min-width: 800px) {
-    font-size: 2rem;
-  }
 `;
 
 const IconStat = styled.span`

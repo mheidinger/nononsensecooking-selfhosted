@@ -8,7 +8,7 @@ import {
 import Icon from "@mdi/react";
 import { useTranslation } from "next-i18next";
 import React from "react";
-import { Recipe } from "../models/Recipe";
+import { Diet, Recipe } from "../models/Recipe";
 
 const IconForDiet = ({
   id,
@@ -21,11 +21,11 @@ const IconForDiet = ({
 }) => {
   const { t } = useTranslation();
   switch (diet) {
-    case "meat":
+    case Diet.Meat:
       return <Icon id={id} path={mdiFoodSteak} title={t(`diet.${diet}`)} size={size} />;
-    case "fish":
+    case Diet.Fish:
       return <Icon id={id} path={mdiFish} title={t(`diet.${diet}`)} size={size} />;
-    case "vegan":
+    case Diet.Vegan:
       return (
         <Icon
           id={id}
@@ -34,7 +34,7 @@ const IconForDiet = ({
           size={size}
         />
       );
-    case "vegetarian":
+    case Diet.Vegetarian:
       return <Icon id={id} path={mdiLeaf} title={t(`diet.${diet}`)} size={size} />;
     default:
       return (
