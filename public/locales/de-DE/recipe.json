@@ -8,5 +8,14 @@
     "ml": "{{amount}}ml",
     "l": "{{amount}}l",
     "tbsp": "{{amount}} Esslöffel"
+  },
+  "edit": {
+    "name": "Name:",
+    "diet": "Ernährung:",
+    "cookTime": "Kochzeit (in min):",
+    "ingredients": "Zutaten:",
+    "addIngredient": "Zutat hinzufügen",
+    "steps": "Schritte:",
+    "addStep": "Schritt hinzufügen"
   }
 }

@@ -9,6 +9,8 @@ import { Ingredient } from "../../models/Ingredient";
 import { Diet, Recipe } from "../../models/Recipe";
 import { Unit } from "../../models/Unit";
 import autosize from "autosize";
+import Icon from "@mdi/react";
+import { mdiClose } from "@mdi/js";
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   return {
@@ -28,7 +30,7 @@ const initRecipe: Recipe = {
   steps: [""]
 };
 
-const CreateRecipeDiv = styled.div`
+const EditRecipeDiv = styled.div`
   max-width: 1000px;
   width: 100%;
   margin: 2rem auto;
@@ -36,18 +38,20 @@ const CreateRecipeDiv = styled.div`
   box-sizing: border-box;
 `;
 
-const InputRow = styled.div`
+const InputRow = styled.div<{headingRow?: boolean} & React.HTMLProps<HTMLDivElement>>`
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
   margin-top: 2rem;
+  margin-bottom: ${props => props.headingRow ? "-2rem" : "0"};
   width: 100%;
 `;
 
-const InputLabel = styled.label`
+const InputLabel = styled.label<{indent?: boolean} & React.HTMLProps<HTMLLabelElement>>`
   font-size: 1.2rem;
   font-weight: 600;
   margin: auto 0;
+  margin-left: ${props => props.indent ? "3rem" : "0"};
 `;
 
 const Input = styled.input`
@@ -80,26 +84,38 @@ const Select = styled.select<{width?: string} & React.HTMLProps<HTMLSelectElemen
   height: 3rem;
 `;
 
-const IngredientInput = styled.div`
+const GroupedInput = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 1rem;
   width: 70%;
   min-width: 400px;
+  align-items: center;
 `
 
-const AddButton = styled.button`
+const Button = styled.button`
   background: var(--color-primary);
-  height: 3rem;
+  height: 2rem;
   appearance: none;
   cursor: pointer;
   border-radius: var(--rounded);
   outline: none;
   border: none;
   color: hsla(var(--palette-gray-00), 100%);
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 400;
+`;
+
+const AddButton = styled(Button)`
+  margin-left: auto;
+  margin-right: 0;
   padding: 0 1rem;
+`;
+
+const RemoveButton = styled(Button)`
+  height: 2.5rem;
+  width: 2.5rem;
+  background: #d94040;
 `;
 
 const StepInput = styled.textarea`
@@ -111,10 +127,18 @@ const StepInput = styled.textarea`
   padding: 0.75rem 1rem;
   appearance: none;
   color: var(--color-text-primary);
-  width: 70%;
+  width: 100%;
 `;
 
-//TODO: Translate
+const HorizontalLine = styled.hr`
+  margin-top: 1.5rem;
+  margin-bottom: -0.5rem;
+  width: 90%;
+  border: 1px solid;
+  border-radius: 5px;
+  background-color: black;
+`;
+
 export default function CreateRecipe({}: InferGetStaticPropsType<
   typeof getStaticProps
 >) {
@@ -134,8 +158,18 @@ export default function CreateRecipe({}: InferGetStaticPropsType<
     setRecipe({...recipe});
   }
 
+  function removeIngredient(index: number) {
+    recipe.ingredients.splice(index, 1);
+    setRecipe({...recipe});
+  }
+
   function setStep(step: string, index: number) {
     recipe.steps[index] = step;
+    setRecipe({...recipe});
+  }
+
+  function removeStep(index: number) {
+    recipe.steps.splice(index, 1);
     setRecipe({...recipe});
   }
 
@@ -152,10 +186,10 @@ export default function CreateRecipe({}: InferGetStaticPropsType<
   return (
     <>
       <PageTitle title={t("create.pagetitle")} />
-      <CreateRecipeDiv>
+      <EditRecipeDiv>
         <StyledHeading>{t("create.displaytitle")}</StyledHeading>
         <InputRow>
-          <InputLabel>Name: </InputLabel>
+          <InputLabel>{tr("edit.name")}</InputLabel>
           <Input
             name="recipeName"
             value={recipe.name}
@@ -163,7 +197,7 @@ export default function CreateRecipe({}: InferGetStaticPropsType<
           />
         </InputRow>
         <InputRow>
-          <InputLabel>Diet: </InputLabel>
+          <InputLabel>{tr("edit.diet")}</InputLabel>
           <Select
             id="recipeDiet"
             value={recipe.diet}
@@ -173,7 +207,7 @@ export default function CreateRecipe({}: InferGetStaticPropsType<
           </Select>
         </InputRow>
         <InputRow>
-          <InputLabel>Cook Time (in min): </InputLabel>
+          <InputLabel>{tr("edit.cookTime")}</InputLabel>
           <Input
             name="recipeCookTime"
             value={recipe.cookTime}
@@ -187,14 +221,16 @@ export default function CreateRecipe({}: InferGetStaticPropsType<
             }}
           />
         </InputRow>
+        <HorizontalLine />
         <div>
+          <InputRow headingRow><InputLabel>{tr("edit.ingredients")}</InputLabel></InputRow>
           {recipe.ingredients.map((ingredient, index) =>
             <InputRow key={`ingredient${index}`}>
-              <InputLabel>Ingredient #{index+1}:</InputLabel>
-              <IngredientInput>
+              <div />
+              <GroupedInput>
                 <Input
                   name={`ingredient${index}Amount`}
-                  width="20%"
+                  width="10%"
                   value={ingredient.amount}
                   onKeyPress={(e) => !/[0-9]/.test(e.key) && e.preventDefault()}
                   onChange={(event) => {
@@ -207,7 +243,7 @@ export default function CreateRecipe({}: InferGetStaticPropsType<
                 />
                 <Select
                   id={`ingredient${index}Unit`}
-                  width="20%"
+                  width="15%"
                   value={ingredient.unit ? ingredient.unit : Unit.NONE}
                   onChange={event => setIngredient({...ingredient, unit: event.target.value as Unit}, index)}
                 >
@@ -215,40 +251,50 @@ export default function CreateRecipe({}: InferGetStaticPropsType<
                 </Select>
                 <Input
                   name={`ingredient${index}Name`}
-                  width="80%"
+                  width="60%"
                   value={ingredient.name}
                   onChange={event => setIngredient({...ingredient, name: event.target.value}, index)}
                 />
-              </IngredientInput>
+                <RemoveButton onClick={event => removeIngredient(index)}>
+                  <Icon path={mdiClose} size={0.8} />
+                </RemoveButton>
+              </GroupedInput>
             </InputRow>)
           }
           <InputRow><AddButton
             onClick={(_) => setRecipe({...recipe, ingredients: [...recipe.ingredients, {name: ""}]})}
           >
-            Add Ingredient
+            {tr("edit.addIngredient")}
           </AddButton></InputRow>
         </div>
+        <HorizontalLine />
         <div>
+          <InputRow headingRow><InputLabel>{tr("edit.steps")}</InputLabel></InputRow>
           {recipe.steps.map((step, index) =>
             <InputRow key={`step${index}`}>
-              <InputLabel>Step #{index+1}:</InputLabel>
-              <StepInput
-                name={`step${index}`}
-                value={step}
-                onChange={event => setStep(event.target.value, index)}
-                ref={ref => {
-                  textAreaRefs.current[index] = ref;
-                }}
-              />
+              <InputLabel indent>#{index+1}:</InputLabel>
+              <GroupedInput>
+                <StepInput
+                  name={`step${index}`}
+                  value={step}
+                  onChange={event => setStep(event.target.value, index)}
+                  ref={ref => {
+                    textAreaRefs.current[index] = ref;
+                  }}
+                />
+                <RemoveButton onClick={event => removeStep(index)}>
+                  <Icon path={mdiClose} size={0.8} />
+                </RemoveButton>
+              </GroupedInput>
             </InputRow>)
           }
           <InputRow><AddButton
             onClick={(_) => setRecipe({...recipe, steps: [...recipe.steps, ""]})}
           >
-            Add Step
+            {tr("edit.addStep")}
           </AddButton></InputRow>
         </div>
-      </CreateRecipeDiv>
+      </EditRecipeDiv>
     </>
   );
 }
