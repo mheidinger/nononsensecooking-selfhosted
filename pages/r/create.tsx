@@ -30,8 +30,18 @@ export default function CreateRecipe({}: InferGetStaticPropsType<
   const { t } = useTranslation("common");
   const [ recipe, setRecipe ] = useState(initRecipe);
 
-  function saveRecipe() {
-    console.log("Save ", recipe);
+  async function saveRecipe() {
+    const results = await (
+      await fetch(`/api/create`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(recipe)
+      })
+    ).json();
+    console.log("Result ", results);
   }
 
   return (

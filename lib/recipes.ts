@@ -2,7 +2,7 @@ import YAML from "yaml";
 import NodeCache from "node-cache";
 import { Recipe, RecipeFile, RecipeInIndex, toRecipeInIndex } from "../models/Recipe";
 import { Unit } from "../models/Unit";
-import { fetchS3File, getSignedGetObjectUrl, listFiles } from "./s3client";
+import { fetchFile, fileExists, getSignedGetObjectUrl, getSignedPutObjectUrl, listFiles, uploadFile } from "./s3client";
 
 const s3RecipeFilesBasePath = "recipes"
 const s3RecipeImagesBasePath = "images"
@@ -34,7 +34,7 @@ export async function fetchSingleRecipe(id: string): Promise<Recipe> {
   let recipe = recipeCache.get(id) as Recipe;
   if (recipe == undefined) {
     console.log("Read recipe from S3 for id", id);
-    const file = await fetchS3File(`${s3RecipeFilesBasePath}/${id}.yaml`);
+    const file = await fetchFile(getKeyForRecipe(id));
     const recipeData = YAML.parse(file);
     recipe = parseRecipeData(id, recipeData);
     recipeCache.set(id, recipe);
@@ -48,12 +48,30 @@ export async function getRecipeImageUrl(id: string) {
   const cacheKey = `SIGNED_IMAGE_URL_${id}`;
   let url = recipeCache.get(cacheKey) as string;
   if (url == undefined) {
-    url = await getSignedGetObjectUrl(`${s3RecipeImagesBasePath}/${id}.jpg`, SIGNED_IMAGE_URL_TTL * 1.2);
+    url = await getSignedGetObjectUrl(getKeyForImage(id), SIGNED_IMAGE_URL_TTL * 1.2);
     recipeCache.set(cacheKey, url);
   } else {
     console.log("Cache hit for recipe image URL", id);
   }
   return url;
+}
+
+export async function createRecipe(recipe: Recipe, allowExisting: boolean): Promise<string> {
+  const key = getKeyForRecipe(recipe.id);
+  if (await fileExists(key) && !allowExisting) {
+    throw new Error("recipe id (name) already exists")
+  }
+  uploadFile(key, JSON.stringify(recipe));
+  recipeCache.del(INDEX_CACHE_KEY);
+  return getSignedPutObjectUrl(getKeyForImage(recipe.id));
+}
+
+function getKeyForRecipe(id: string): string {
+  return `${s3RecipeFilesBasePath}/${id}.yaml`;
+}
+
+function getKeyForImage(id: string): string {
+  return `${s3RecipeImagesBasePath}/${id}.jpg`;
 }
 
 const parseRecipeData = (id: string, recipeData: RecipeFile): Recipe => ({
