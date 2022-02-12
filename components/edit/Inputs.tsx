@@ -53,6 +53,7 @@ export const GroupedInput = styled.div`
   width: 70%;
   min-width: 400px;
   align-items: center;
+  cursor: ${props => props.draggable ? "grab" : "default" };
 `
 
 export const Button = styled.button`

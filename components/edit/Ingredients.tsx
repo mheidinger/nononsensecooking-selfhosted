@@ -4,7 +4,8 @@ import { Ingredient } from "../../models/Ingredient";
 import { Unit } from "../../models/Unit";
 import { AddButton, GroupedInput, Input, InputLabel, InputRow, Select, RemoveButton } from "./Inputs";
 import Icon from "@mdi/react";
-import { mdiClose } from "@mdi/js";
+import { mdiClose, mdiDrag } from "@mdi/js";
+import { useState, DragEvent } from "react";
 
 type Props = {
   recipe: Recipe;
@@ -29,13 +30,39 @@ const Ingredients = ({recipe, setRecipe}: Props) => {
     unitOptions.push(<option value={Unit[unit]} key={Unit[unit]}>{tr(`unit.${Unit[unit]}`)}</option>)
   }
 
+  function onDragStart(event: DragEvent<HTMLDivElement>, index: number) {
+    event.dataTransfer.setData("number", index.toString());
+    event.dataTransfer.effectAllowed = "all";
+  }
+
+  function onDrop(event: DragEvent<HTMLDivElement>, targetIndex: number) {
+    event.preventDefault();
+
+    const sourceIndex = parseInt(event.dataTransfer.getData("number"));
+    const [removed] = recipe.ingredients.splice(sourceIndex, 1);
+    recipe.ingredients.splice(targetIndex, 0, removed);
+    setRecipe({ ...recipe });
+  }
+
+  function onDragOver(event: DragEvent<HTMLDivElement>) {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = "move";
+  }
+
   return (
     <>
       <InputRow headingRow><InputLabel>{tr("edit.ingredients")}</InputLabel></InputRow>
       {recipe.ingredients.map((ingredient, index) =>
         <InputRow key={`ingredient${index}`}>
           <div />
-          <GroupedInput>
+          <GroupedInput
+          	id={`ingredientDrop_${index}`}
+            draggable={true}
+            onDragOver={onDragOver}
+            onDragStart={(event) => onDragStart(event, index)}
+            onDrop={(event) => onDrop(event, index)}
+          >
+            <Icon path={mdiDrag} size={1.4} />
             <Input
               name={`ingredient${index}Amount`}
               width="10%"
