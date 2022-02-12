@@ -1,6 +1,7 @@
 # NoNonsenseCooking - Selfhosted Edition
 
-The original [NoNonsenseCooking](nononsense.cooking) is a modern website for curated recipes trying to cut out all of the unnecessary bloat of typical cooking websites developed by [@riesinger](https://github.com/riesinger).
+The original [NoNonsenseCooking](https://github.com/riesinger/nononsensecooking) is a modern website for curated recipes
+trying to cut out all of the unnecessary bloat of typical cooking websites developed by [@riesinger](https://github.com/riesinger).
 
 This repo contains a heavily modified version of that site which is focused on selfhosting it for a (private) recipe collection.
 Therefore it is set up to work behind a proxy with optional authentication and minimal external dependencies.
@@ -18,16 +19,16 @@ Mainly these are the modifications that have been done so far:
 - Removal of the RSS Feed
 - SEO and Analytics
 
-## What is planned?
+## What has been added and is planned?
 
-As the goal of this fork is to have a private recipe collection, adding new recipes and modifying existing ones is the next goal.
-For now this can only be done by directly modifying the files in the S3 storage.
+As the goal of this fork is to have a private recipe collection, the functionality to add new recipes has been implemented.
+The next step is to also modify existing recipes.
 
 ## Setup
 
 For deploying this site, the docker image at `TBD` can be used. As configuration the environment variables of [the env file](.env.local.example) need to be provided.
 
-As S3 storage either the AWS S3 can be used or a [MinIO](min.io) instance can be self hosted with the following caveats:
+As S3 storage either the AWS S3 can be used or a [MinIO](https://min.io) instance can be self hosted with the following caveats:
 - Recipes (see [examples](examples) for examples) are stored with the prefix `recipes/` and the file ending `.yaml`
 - Images with the prefix `images/` and the file ending `.jpg`
 - Filenames/IDs of the recipes have to match the corresponding image
