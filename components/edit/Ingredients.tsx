@@ -5,6 +5,7 @@ import { AddButton, GroupedInput, Input, InputLabel, InputRow, Select, RemoveBut
 import Icon from "@mdi/react";
 import { mdiClose, mdiDrag } from "@mdi/js";
 import { DragEvent, useCallback, useMemo } from "react";
+import { useDnD } from "./DnD";
 
 type Props = {
   ingredients: Ingredient[];
@@ -32,24 +33,16 @@ const Ingredients = ({ingredients, setIngredients}: Props) => {
     return options;
   }, [tr]);
 
-  const onDragStart = useCallback((event: DragEvent<HTMLDivElement>, index: number) => {
-    event.dataTransfer.setData("number", index.toString());
-    event.dataTransfer.effectAllowed = "move";
-  }, []);
-
-  const onDrop = useCallback((event: DragEvent<HTMLDivElement>, targetIndex: number) => {
-    event.preventDefault();
-
-    const sourceIndex = parseInt(event.dataTransfer.getData("number"));
+  const onDrop = useCallback((sourceIndex: number, targetIndex: number) => {
     const [removed] = ingredients.splice(sourceIndex, 1);
     ingredients.splice(targetIndex, 0, removed);
     setIngredients(ingredients);
   }, [ingredients, setIngredients]);
 
-  const onDragOver = useCallback((event: DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    event.dataTransfer.dropEffect = "move";
-  }, []);
+  const toDnDProps = useDnD({
+    contextName: "ingredients",
+    onDrop,
+  });
 
   return (
     <>
@@ -57,10 +50,7 @@ const Ingredients = ({ingredients, setIngredients}: Props) => {
       {ingredients.map((ingredient, index) =>
         <InputRow key={`ingredient${index}`}>
           <GroupedInput
-            draggable={true}
-            onDragOver={onDragOver}
-            onDragStart={(event) => onDragStart(event, index)}
-            onDrop={(event) => onDrop(event, index)}
+            {...toDnDProps(index)}
           >
             <Icon path={mdiDrag} size={1.4} />
             <Input

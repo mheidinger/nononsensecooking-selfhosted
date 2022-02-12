@@ -4,6 +4,7 @@ import { AddButton, GroupedInput, InputLabel, InputRow, RemoveButton, StepInput 
 import autosize from "autosize";
 import Icon from "@mdi/react";
 import { mdiClose, mdiDrag } from "@mdi/js";
+import { useDnD } from "./DnD";
 
 type Props = {
   steps: string[];
@@ -32,24 +33,16 @@ const Steps = ({steps, setSteps}: Props) => {
     setSteps(steps);
   };
 
-  const onDragStart = useCallback((event: DragEvent<HTMLDivElement>, index: number) => {
-    event.dataTransfer.setData("number", index.toString());
-    event.dataTransfer.effectAllowed = "move";
-  }, []);
-
-  const onDrop = useCallback((event: DragEvent<HTMLDivElement>, targetIndex: number) => {
-    event.preventDefault();
-
-    const sourceIndex = parseInt(event.dataTransfer.getData("number"));
+  const onDrop = useCallback((sourceIndex: number, targetIndex: number) => {
     const [removed] = steps.splice(sourceIndex, 1);
     steps.splice(targetIndex, 0, removed);
     setSteps(steps);
   }, [steps, setSteps]);
 
-  const onDragOver = useCallback((event: DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    event.dataTransfer.dropEffect = "move";
-  }, []);
+  const toDnDProps = useDnD({
+    contextName: "steps",
+    onDrop,
+  });
 
   return (
     <>
@@ -58,10 +51,7 @@ const Steps = ({steps, setSteps}: Props) => {
         <InputRow key={`step${index}`}>
           <InputLabel indent width="10%">#{index+1}:</InputLabel>
           <GroupedInput
-            draggable={true}
-            onDragOver={onDragOver}
-            onDragStart={(event) => onDragStart(event, index)}
-            onDrop={(event) => onDrop(event, index)}
+            {...toDnDProps(index)}
           >
             <Icon path={mdiDrag} size={1.4} />
             <StepInput
