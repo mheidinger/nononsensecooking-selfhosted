@@ -56,12 +56,12 @@ const Ingredients = ({ingredients, setIngredients}: Props) => {
       <InputRow headingRow><InputLabel>{tr("edit.ingredients")}</InputLabel></InputRow>
       {ingredients.map((ingredient, index) =>
         <InputRow key={`ingredient${index}`}>
-          <div />
           <GroupedInput
             draggable={true}
             onDragOver={onDragOver}
             onDragStart={(event) => onDragStart(event, index)}
             onDrop={(event) => onDrop(event, index)}
+            width="100%"
           >
             <Icon path={mdiDrag} size={1.4} />
             <Input

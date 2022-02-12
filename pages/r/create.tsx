@@ -30,12 +30,18 @@ export default function CreateRecipe({}: InferGetStaticPropsType<
   const { t } = useTranslation("common");
   const [ recipe, setRecipe ] = useState(initRecipe);
 
+  function saveRecipe() {
+    console.log("Save ", recipe);
+  }
+
   return (
     <>
       <PageTitle title={t("create.pagetitle")} />
       <EditRecipe
+        title={t("create.displaytitle")}
         recipe={recipe}
         setRecipe={setRecipe}
+        saveRecipe={saveRecipe}
       />
     </>
   );

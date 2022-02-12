@@ -1,4 +1,3 @@
-import { useTranslation } from "next-i18next";
 import { useCallback } from "react";
 import styled from "styled-components";
 import { Ingredient } from "../../models/Ingredient";
@@ -6,19 +5,34 @@ import { Recipe } from "../../models/Recipe";
 import { StyledHeading } from "../StyledHeading";
 import GeneralInformation from "./GeneralInformation";
 import Ingredients from "./Ingredients";
+import { AddButton, InputRow } from "./Inputs";
 import Steps from "./Steps";
 
 type Props = {
+  title: string;
   recipe: Recipe;
   setRecipe(recipe: Recipe): void;
+  saveRecipe(): void;
 };
 
 const EditRecipeDiv = styled.div`
-  max-width: 1000px;
-  width: 100%;
-  margin: 2rem auto;
+  margin: 3rem;
   padding: 0 2rem;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 2rem;
+  min-height: 80vh;
+`;
+
+const LeftSide = styled.div`
+  min-width: 400px;
+`;
+
+const RightSide = styled.div`
+  flex-grow: 1;
+  min-width: 400px;
 `;
 
 const HorizontalLine = styled.hr`
@@ -30,9 +44,22 @@ const HorizontalLine = styled.hr`
   background-color: black;
 `;
 
-const EditRecipe = ({recipe, setRecipe}: Props) => {
-  const { t } = useTranslation("common");
+const VerticalLine = styled.div`
+  border: 1px solid;
+  border-radius: 5px;
+  background-color: black;
 
+  @media screen and (max-width: 1000px) {
+    display: none
+  }
+`;
+
+const SaveButton = styled(AddButton)`
+  height: 2.5rem;
+  font-size: 1.2rem;
+`;
+
+const EditRecipe = ({title, recipe, setRecipe, saveRecipe}: Props) => {
   const setIngredients = useCallback((ingredients: Ingredient[]) => {
     setRecipe({...recipe, ingredients});
   }, [recipe, setRecipe]);
@@ -42,21 +69,28 @@ const EditRecipe = ({recipe, setRecipe}: Props) => {
 
   return (
     <EditRecipeDiv>
-      <StyledHeading>{t("create.displaytitle")}</StyledHeading>
-      <GeneralInformation
-        recipe={recipe}
-        setRecipe={setRecipe}
-      />
-      <HorizontalLine />
-      <Ingredients
-        ingredients={recipe.ingredients}
-        setIngredients={setIngredients}
-      />
-      <HorizontalLine />
-      <Steps
-        steps={recipe.steps}
-        setSteps={setSteps}
-      />
+      <LeftSide>
+        <InputRow>
+          <StyledHeading>{title}</StyledHeading>
+          <SaveButton onClick={saveRecipe}>Save Recipe</SaveButton>
+        </InputRow>
+        <GeneralInformation
+          recipe={recipe}
+          setRecipe={setRecipe}
+        />
+        <HorizontalLine />
+        <Ingredients
+          ingredients={recipe.ingredients}
+          setIngredients={setIngredients}
+        />
+      </LeftSide>
+      <VerticalLine />
+      <RightSide>
+        <Steps
+          steps={recipe.steps}
+          setSteps={setSteps}
+        />
+      </RightSide>
     </EditRecipeDiv>
   );
 };

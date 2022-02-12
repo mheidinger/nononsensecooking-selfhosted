@@ -60,6 +60,7 @@ const Steps = ({steps, setSteps}: Props) => {
             onDragOver={onDragOver}
             onDragStart={(event) => onDragStart(event, index)}
             onDrop={(event) => onDrop(event, index)}
+            width="90%"
           >
             <Icon path={mdiDrag} size={1.4} />
             <StepInput

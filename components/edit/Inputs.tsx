@@ -5,7 +5,7 @@ export const InputRow = styled.div<{headingRow?: boolean} & React.HTMLProps<HTML
   justify-content: space-between;
   flex-wrap: wrap;
   margin-top: 2rem;
-  margin-bottom: ${props => props.headingRow ? "-2rem" : "0"};
+  margin-bottom: ${props => props.headingRow ? "-1rem" : "0"};
   width: 100%;
 `;
 
@@ -55,11 +55,11 @@ export const Select = styled.select<{width?: string} & React.HTMLProps<HTMLSelec
   }
 `;
 
-export const GroupedInput = styled.div`
+export const GroupedInput = styled.div<{width?: string} & React.HTMLProps<HTMLDivElement>>`
   display: flex;
   justify-content: space-between;
   gap: 1rem;
-  width: 70%;
+  width: ${props => props.width || "70%"};
   min-width: 400px;
   align-items: center;
   cursor: ${props => props.draggable ? "grab" : "default" };
@@ -79,8 +79,7 @@ export const Button = styled.button`
 `;
 
 export const AddButton = styled(Button)`
-  margin-left: auto;
-  margin-right: 0;
+	margin: auto 0 auto auto;
   padding: 0 1rem;
 `;
 
