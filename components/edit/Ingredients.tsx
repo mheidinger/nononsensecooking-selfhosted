@@ -67,7 +67,8 @@ const Ingredients = ({ingredients, setIngredients}: Props) => {
             <Input
               name={`ingredient${index}Amount`}
               width="10%"
-              value={ingredient.amount ? ingredient.amount : ""}
+              value={ingredient.amount && ingredient.unit !== Unit.NONE ? ingredient.amount : ""}
+              disabled={ingredient.unit === Unit.NONE}
               onKeyPress={(e) => !/[0-9]/.test(e.key) && e.preventDefault()}
               onChange={(event) => {
                 if (event.target.value.length > 0) {
@@ -91,14 +92,14 @@ const Ingredients = ({ingredients, setIngredients}: Props) => {
               value={ingredient.name}
               onChange={event => setIngredient({...ingredient, name: event.target.value}, index)}
             />
-            <RemoveButton onClick={event => removeIngredient(index)}>
+            <RemoveButton onClick={() => removeIngredient(index)}>
               <Icon path={mdiClose} size={0.8} />
             </RemoveButton>
           </GroupedInput>
         </InputRow>)
       }
       <InputRow><AddButton
-        onClick={() => setIngredients([...ingredients, {name: ""}])}
+        onClick={() => setIngredients([...ingredients, {name: "", unit: Unit.NONE}])}
       >
         {tr("edit.addIngredient")}
       </AddButton></InputRow>

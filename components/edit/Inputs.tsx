@@ -27,6 +27,7 @@ export const Input = styled.input`
   color: var(--color-text-primary);
   width: ${props => props.width || "70%"};
   height: 3rem;
+  filter: ${props => props.disabled ? "brightness(150%)" : "brightness(100%)"};
 `;
 
 export const Select = styled.select<{width?: string} & React.HTMLProps<HTMLSelectElement>>`

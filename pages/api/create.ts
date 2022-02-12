@@ -4,11 +4,19 @@ import slug from "slug";
 import { createRecipe } from "../../lib/recipes";
 import { Ingredient } from "../../models/Ingredient";
 import { Diet, Recipe } from "../../models/Recipe";
+import { Unit } from "../../models/Unit";
 import { methodIs } from "./utils/methodIs";
+
+class ValidationError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "ValidationError";
+  }
+}
 
 function parseBody(body: any): Recipe {
   if (!body || typeof body !== "object") {
-    throw new TypeError("no body");
+    throw new ValidationError("no body");
   }
 
   const recipe: Recipe = {
@@ -22,50 +30,53 @@ function parseBody(body: any): Recipe {
   };
 
   if (!body.name || typeof body.name !== "string"|| body.name === "") {
-    throw new TypeError("no recipe name");
+    throw new ValidationError("no recipe name");
   }
   recipe.name = body.name;
   recipe.id = slug(recipe.name);
 
   if (!body.cookTime || typeof body.cookTime !== "number") {
-    throw new TypeError("no recipe cook time");
+    throw new ValidationError("no recipe cook time");
   }
   recipe.cookTime = body.cookTime;
 
   if (!body.diet || typeof body.diet !== "string" || body.diet === "") {
-    throw new TypeError("no recipe diet");
+    throw new ValidationError("no recipe diet");
   }
   recipe.diet = body.diet;
 
   if (!body.steps || !Array.isArray(body.steps) || body.steps.length === 0) {
-    throw new TypeError("no recipe steps");
+    throw new ValidationError("no recipe steps");
   }
   for (const step of body.steps) {
     if (typeof step !== "string") {
-      throw new TypeError("recipe step is not a string");
+      throw new ValidationError("recipe step is not a string");
     }
     recipe.steps.push(step);
   }
 
   if (!body.ingredients || !Array.isArray(body.ingredients) || body.ingredients.length === 0) {
-    throw new TypeError("no recipe steps");
+    throw new ValidationError("no recipe steps");
   }
   for (const ingredient of body.ingredients) {
     const cleanIngredient: Ingredient = {
-      name: ""
+      name: "",
+      unit: Unit.NONE
     };
     if (!ingredient || typeof ingredient !== "object") {
-      throw new TypeError("ingredient is not an object");
+      throw new ValidationError("ingredient is not an object");
     }
     if (!ingredient.name || typeof ingredient.name !== "string" || ingredient.name === "") {
-      throw new TypeError("no ingredient name");
+      throw new ValidationError("no ingredient name");
     }
     cleanIngredient.name = ingredient.name;
-    if (ingredient.amount && typeof ingredient.amount === "number" && ingredient.amount > 0) {
-      cleanIngredient.amount = ingredient.amount;
-    }
     if (ingredient.unit && typeof ingredient.unit === "string" && ingredient.unit !== "") {
       cleanIngredient.unit = ingredient.unit;
+    }
+    if (cleanIngredient.unit !== Unit.NONE && ingredient.amount && typeof ingredient.amount === "number" && ingredient.amount > 0) {
+      cleanIngredient.amount = ingredient.amount;
+    } else if (cleanIngredient.unit !== Unit.NONE) {
+      throw new ValidationError(`ingredient unit set but no amount for '${cleanIngredient.name}'`);
     }
     recipe.ingredients.push(cleanIngredient);
   }
@@ -84,7 +95,7 @@ export default async function create(
     const imagePutURL = await createRecipe(recipe, req.method === "PUT");
     res.status(200).json({recipeID: recipe.id, imagePutURL: imagePutURL});
   } catch (error) {
-    if (error instanceof TypeError) {
+    if (error instanceof ValidationError) {
       res.status(400).json({message: error.message});
       return;
     }

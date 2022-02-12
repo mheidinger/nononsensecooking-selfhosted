@@ -1,10 +1,11 @@
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import PageTitle from "../../components/PageTitle";
-import { Diet, Recipe } from "../../models/Recipe";
-import EditRecipe from "../../components/edit/EditRecipe";
+import PageTitle from "../components/PageTitle";
+import { Diet, Recipe } from "../models/Recipe";
+import EditRecipe from "../components/edit/EditRecipe";
 import { useState } from "react";
+import { Unit } from "../models/Unit";
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   return {
@@ -20,7 +21,7 @@ const initRecipe: Recipe = {
   diet: Diet.Meat,
   cookTime: 20,
   publishedAt: "",
-  ingredients: [{name: "", amount: null}],
+  ingredients: [{name: "", amount: null, unit: Unit.NONE}],
   steps: [""]
 };
 
