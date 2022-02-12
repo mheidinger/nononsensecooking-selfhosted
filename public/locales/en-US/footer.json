@@ -1,3 +1,5 @@
 {
-  "something": "something"
+  "link": {
+    "createRecipe": "Create Recipe"
+  }
 }

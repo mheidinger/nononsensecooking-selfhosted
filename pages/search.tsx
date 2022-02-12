@@ -11,13 +11,14 @@ import { queryParam } from "../lib/queryParameter";
 import { sanitize, searchRecipes } from "./api/search";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  const lang = context.locale ? context.locale : "en-US";
   const unsanitizedSearchTerm = queryParam("query").from(context);
   if (!unsanitizedSearchTerm) {
     return {
       props: {
         searchTerm: "",
         results: [],
-        ...(await serverSideTranslations(context.locale, [
+        ...(await serverSideTranslations(lang, [
           "common",
           "header",
           "footer",
@@ -31,7 +32,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     props: {
       searchTerm,
       results,
-      ...(await serverSideTranslations(context.locale, [
+      ...(await serverSideTranslations(lang, [
         "common",
         "header",
         "footer",

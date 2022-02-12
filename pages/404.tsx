@@ -8,9 +8,10 @@ import styled from "styled-components";
 import PageTitle from "../components/PageTitle";
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  const lang = locale ? locale : "en-US";
   return {
     props: {
-      ...(await serverSideTranslations(locale, ["common", "header", "footer"])),
+      ...(await serverSideTranslations(lang, ["common", "header", "footer"])),
     },
   };
 };

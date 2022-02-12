@@ -1,22 +1,31 @@
 import { Ingredient } from "./Ingredient";
 
+export enum Diet {
+  Meat = "meat",
+  Fish = "fish",
+  Vegetarian = "vegetarian",
+  Vegan = "vegan",
+}
+
 export interface Recipe {
   id: string;
   name: string;
   cookTime: number;
-  diet: "meat" | "fish" | "vegetarian" | "vegan";
+  diet: Diet;
   steps: string[];
   ingredients: Ingredient[];
   publishedAt: string;
+  source: string;
 }
 
 export interface RecipeFile {
   name: string;
   cookTime: number;
-  diet: "meat" | "fish" | "vegetarian" | "vegan";
+  diet: Diet;
   steps: string[];
   ingredients: Ingredient[];
   publishedAt: string;
+  source: string;
 }
 
 export type RecipeInIndex = Pick<

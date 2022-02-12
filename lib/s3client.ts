@@ -1,4 +1,4 @@
-import { S3Client, GetObjectCommand, PutObjectCommand, ListObjectsCommand } from "@aws-sdk/client-s3";
+import { S3Client, GetObjectCommand, PutObjectCommand, ListObjectsCommand, HeadObjectCommand } from "@aws-sdk/client-s3";
 import { S3RequestPresigner } from "@aws-sdk/s3-request-presigner";
 import { createRequest } from '@aws-sdk/util-create-request';
 import { formatUrl } from '@aws-sdk/util-format-url';
@@ -12,23 +12,40 @@ const bucket = process.env.BUCKET_NAME
 type S3File = {
   prefix: string;
   key: string;
-  lastModified: Date;
 };
 
 export async function listFiles(prefix: string): Promise<S3File[]> {
   const command = new ListObjectsCommand({Bucket: bucket, Prefix: prefix});
   const results = await client.send(command);
-  return results.Contents.map((item) => { return {
-    key: item.Key.replace(prefix, ""),
-    lastModified: item.LastModified,
+  const content = results.Contents ? results.Contents : [];
+  return content.map((item) => { return {
+    key: item.Key!.replace(prefix, ""),
     prefix
   }}).filter((item) => item.key !== "");
 }
 
-export async function fetchS3File(key: string): Promise<string> {
+export async function fetchFile(key: string): Promise<string> {
   const command = new GetObjectCommand({Bucket: bucket, Key: key});
   const results = await client.send(command);
   return streamToString(results.Body as Readable);
+}
+
+export async function uploadFile(key: string, file: string) {
+  const command = new PutObjectCommand({Bucket: bucket, Key: key, Body: file});
+  await client.send(command);
+}
+
+export async function fileExists(key: string): Promise<boolean> {
+  const command = new HeadObjectCommand({Bucket: bucket, Key: key});
+  try {
+    await client.send(command);
+    return true;
+  } catch (error) {
+    if (error.name === "NotFound") {
+      return false;
+    }
+    throw error;
+  }
 }
 
 export async function getSignedGetObjectUrl(key: string, expireIn?: number): Promise<string> {

@@ -40,6 +40,10 @@
       "github": "Fehler auf GitHub melden"
     }
   },
+  "create": {
+    "pagetitle": "Rezept erstellen",
+    "displaytitle": "Neues Rezept erstellen"
+  },
   "locales": {
     "en-US": "Englisch (USA)",
     "de-DE": "Deutsch (Deutschland)"

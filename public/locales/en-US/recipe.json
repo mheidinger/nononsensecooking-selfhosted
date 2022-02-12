@@ -8,5 +8,17 @@
     "ml": "{{amount}}ml",
     "l": "{{amount}}l",
     "tbsp": "{{amount}}tbsp"
+  },
+  "edit": {
+    "name": "Name:",
+    "diet": "Diet:",
+    "cookTime": "Cook Time (in min):",
+    "ingredients": "Ingredients:",
+    "addIngredient": "Add Ingredient",
+    "steps": "Steps:",
+    "addStep": "Add Step",
+    "source": "Source:",
+    "image": "Image:",
+    "fileSelect": "Select File..."
   }
 }

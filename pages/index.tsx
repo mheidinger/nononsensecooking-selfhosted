@@ -22,10 +22,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const recipesOfTheDay = shuffle(allRecipes)
     .slice(0, 3);
   const latestRecipes = allRecipes.sort(byPublishedAt).slice(0, 3);
+  const lang = context.locale ? context.locale : "en-US";
 
   return {
     props: {
-      ...(await serverSideTranslations(context.locale, ["common", "footer", "header"])),
+      ...(await serverSideTranslations(lang, ["common", "footer", "header"])),
       recipesOfTheDay,
       latestRecipes,
     }
