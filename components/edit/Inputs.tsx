@@ -71,6 +71,13 @@ export const GroupedInput = styled.div`
   align-items: center;
   cursor: ${props => props.draggable ? "grab" : "default" };
   flex-grow: 1;
+
+  &.dragHover {
+    padding-top: 2rem;
+  }
+  &.dragHover * {
+    pointer-events: none;
+  }
 `
 
 export const Button = styled.button`

@@ -41,6 +41,7 @@ const Steps = ({steps, setSteps}: Props) => {
 
   const toDnDProps = useDnD({
     contextName: "steps",
+    hoverClass: "dragHover",
     onDrop,
   });
 

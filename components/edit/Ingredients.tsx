@@ -4,7 +4,7 @@ import { Unit } from "../../models/Unit";
 import { AddButton, GroupedInput, Input, InputLabel, InputRow, Select, RemoveButton } from "./Inputs";
 import Icon from "@mdi/react";
 import { mdiClose, mdiDrag } from "@mdi/js";
-import { DragEvent, useCallback, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useDnD } from "./DnD";
 
 type Props = {
@@ -41,6 +41,7 @@ const Ingredients = ({ingredients, setIngredients}: Props) => {
 
   const toDnDProps = useDnD({
     contextName: "ingredients",
+    hoverClass: "dragHover",
     onDrop,
   });
 
