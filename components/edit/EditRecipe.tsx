@@ -1,5 +1,7 @@
 import { useTranslation } from "next-i18next";
+import { useCallback } from "react";
 import styled from "styled-components";
+import { Ingredient } from "../../models/Ingredient";
 import { Recipe } from "../../models/Recipe";
 import { StyledHeading } from "../StyledHeading";
 import GeneralInformation from "./GeneralInformation";
@@ -31,6 +33,13 @@ const HorizontalLine = styled.hr`
 const EditRecipe = ({recipe, setRecipe}: Props) => {
   const { t } = useTranslation("common");
 
+  const setIngredients = useCallback((ingredients: Ingredient[]) => {
+    setRecipe({...recipe, ingredients});
+  }, [recipe, setRecipe]);
+  const setSteps = useCallback((steps: string[]) => {
+    setRecipe({...recipe, steps});
+  }, [recipe, setRecipe]);
+
   return (
     <EditRecipeDiv>
       <StyledHeading>{t("create.displaytitle")}</StyledHeading>
@@ -40,13 +49,13 @@ const EditRecipe = ({recipe, setRecipe}: Props) => {
       />
       <HorizontalLine />
       <Ingredients
-        recipe={recipe}
-        setRecipe={setRecipe}
+        ingredients={recipe.ingredients}
+        setIngredients={setIngredients}
       />
       <HorizontalLine />
       <Steps
-        recipe={recipe}
-        setRecipe={setRecipe}
+        steps={recipe.steps}
+        setSteps={setSteps}
       />
     </EditRecipeDiv>
   );

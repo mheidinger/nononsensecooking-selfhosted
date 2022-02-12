@@ -1,17 +1,16 @@
 import { useTranslation } from "next-i18next";
-import { useEffect, useRef } from "react";
-import { Recipe } from "../../models/Recipe";
+import { useEffect, useRef, DragEvent, useCallback } from "react";
 import { AddButton, GroupedInput, InputLabel, InputRow, RemoveButton, StepInput } from "./Inputs";
 import autosize from "autosize";
 import Icon from "@mdi/react";
-import { mdiClose } from "@mdi/js";
+import { mdiClose, mdiDrag } from "@mdi/js";
 
 type Props = {
-  recipe: Recipe;
-  setRecipe(recipe: Recipe): void;
+  steps: string[];
+  setSteps(steps: string[]): void;
 };
 
-const Steps = ({recipe, setRecipe}: Props) => {
+const Steps = ({steps, setSteps}: Props) => {
   const { t: tr } = useTranslation("recipe");
   const textAreaRefs = useRef([]);
 
@@ -19,25 +18,50 @@ const Steps = ({recipe, setRecipe}: Props) => {
     for (const ref of textAreaRefs.current) {
       autosize(ref);
     }
-  }, [recipe.steps]);
+  }, [steps]);
 
   function setStep(step: string, index: number) {
-    recipe.steps[index] = step;
-    setRecipe({...recipe});
+    steps[index] = step;
+    setSteps(steps);
   };
 
   function removeStep(index: number) {
-    recipe.steps.splice(index, 1);
-    setRecipe({...recipe});
+    steps.splice(index, 1);
+    setSteps(steps);
   };
+
+  const onDragStart = useCallback((event: DragEvent<HTMLDivElement>, index: number) => {
+    event.dataTransfer.setData("number", index.toString());
+    event.dataTransfer.effectAllowed = "move";
+  }, []);
+
+  const onDrop = useCallback((event: DragEvent<HTMLDivElement>, targetIndex: number) => {
+    event.preventDefault();
+
+    const sourceIndex = parseInt(event.dataTransfer.getData("number"));
+    const [removed] = steps.splice(sourceIndex, 1);
+    steps.splice(targetIndex, 0, removed);
+    setSteps(steps);
+  }, [steps, setSteps]);
+
+  const onDragOver = useCallback((event: DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = "move";
+  }, []);
 
   return (
     <>
       <InputRow headingRow><InputLabel>{tr("edit.steps")}</InputLabel></InputRow>
-      {recipe.steps.map((step, index) =>
+      {steps.map((step, index) =>
         <InputRow key={`step${index}`}>
           <InputLabel indent>#{index+1}:</InputLabel>
-          <GroupedInput>
+          <GroupedInput
+            draggable={true}
+            onDragOver={onDragOver}
+            onDragStart={(event) => onDragStart(event, index)}
+            onDrop={(event) => onDrop(event, index)}
+          >
+            <Icon path={mdiDrag} size={1.4} />
             <StepInput
               name={`step${index}`}
               value={step}
@@ -53,7 +77,7 @@ const Steps = ({recipe, setRecipe}: Props) => {
         </InputRow>)
       }
       <InputRow><AddButton
-        onClick={() => setRecipe({...recipe, steps: [...recipe.steps, ""]})}
+        onClick={() => setSteps([...steps, ""])}
       >
         {tr("edit.addStep")}
       </AddButton></InputRow>

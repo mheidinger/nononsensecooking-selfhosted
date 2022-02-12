@@ -1,4 +1,5 @@
 import { useTranslation } from "next-i18next";
+import { useMemo } from "react";
 import { Diet, Recipe } from "../../models/Recipe";
 import { InputLabel, InputRow, Input, Select } from "./Inputs";
 
@@ -10,10 +11,13 @@ type Props = {
 const GeneralInformation = ({recipe, setRecipe}: Props) => {
   const { t: tr } = useTranslation("recipe");
 
-  const dietOptions = [];
-  for (const diet in Diet) {
-    dietOptions.push(<option value={Diet[diet]} key={Diet[diet]}>{diet}</option>)
-  }
+  const dietOptions = useMemo(() => {
+    const options = [];
+    for (const diet in Diet) {
+      options.push(<option value={Diet[diet]} key={Diet[diet]}>{diet}</option>)
+    }
+    return options;
+  }, []);
 
   return (
     <>

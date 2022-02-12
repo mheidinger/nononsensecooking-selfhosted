@@ -20,7 +20,7 @@ const initRecipe: Recipe = {
   diet: Diet.Meat,
   cookTime: 20,
   publishedAt: "",
-  ingredients: [{name: ""}],
+  ingredients: [{name: "", amount: null}],
   steps: [""]
 };
 

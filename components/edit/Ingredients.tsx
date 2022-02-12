@@ -1,62 +1,63 @@
 import { useTranslation } from "next-i18next";
-import { Recipe } from "../../models/Recipe";
 import { Ingredient } from "../../models/Ingredient";
 import { Unit } from "../../models/Unit";
 import { AddButton, GroupedInput, Input, InputLabel, InputRow, Select, RemoveButton } from "./Inputs";
 import Icon from "@mdi/react";
 import { mdiClose, mdiDrag } from "@mdi/js";
-import { useState, DragEvent } from "react";
+import { DragEvent, useCallback, useMemo } from "react";
 
 type Props = {
-  recipe: Recipe;
-  setRecipe(recipe: Recipe): void;
+  ingredients: Ingredient[];
+  setIngredients(ingredients: Ingredient[]): void;
 };
 
-const Ingredients = ({recipe, setRecipe}: Props) => {
+const Ingredients = ({ingredients, setIngredients}: Props) => {
   const { t: tr } = useTranslation("recipe");
 
   function setIngredient(ingredient: Ingredient, index: number) {
-    recipe.ingredients[index] = ingredient;
-    setRecipe({...recipe});
+    ingredients[index] = ingredient;
+    setIngredients(ingredients);
   }
 
   function removeIngredient(index: number) {
-    recipe.ingredients.splice(index, 1);
-    setRecipe({...recipe});
+    ingredients.splice(index, 1);
+    setIngredients(ingredients);
   }
 
-  const unitOptions = [];
-  for (const unit in Unit) {
-    unitOptions.push(<option value={Unit[unit]} key={Unit[unit]}>{tr(`unit.${Unit[unit]}`)}</option>)
-  }
+  const unitOptions = useMemo(() => {
+    const options = [];
+    for (const unit in Unit) {
+      options.push(<option value={Unit[unit]} key={Unit[unit]}>{tr(`unit.${Unit[unit]}`)}</option>)
+    }
+    return options;
+  }, [tr]);
 
-  function onDragStart(event: DragEvent<HTMLDivElement>, index: number) {
+  const onDragStart = useCallback((event: DragEvent<HTMLDivElement>, index: number) => {
     event.dataTransfer.setData("number", index.toString());
-    event.dataTransfer.effectAllowed = "all";
-  }
+    event.dataTransfer.effectAllowed = "move";
+  }, []);
 
-  function onDrop(event: DragEvent<HTMLDivElement>, targetIndex: number) {
+  const onDrop = useCallback((event: DragEvent<HTMLDivElement>, targetIndex: number) => {
     event.preventDefault();
 
     const sourceIndex = parseInt(event.dataTransfer.getData("number"));
-    const [removed] = recipe.ingredients.splice(sourceIndex, 1);
-    recipe.ingredients.splice(targetIndex, 0, removed);
-    setRecipe({ ...recipe });
-  }
+    const [removed] = ingredients.splice(sourceIndex, 1);
+    ingredients.splice(targetIndex, 0, removed);
+    setIngredients(ingredients);
+  }, [ingredients, setIngredients]);
 
-  function onDragOver(event: DragEvent<HTMLDivElement>) {
+  const onDragOver = useCallback((event: DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = "move";
-  }
+  }, []);
 
   return (
     <>
       <InputRow headingRow><InputLabel>{tr("edit.ingredients")}</InputLabel></InputRow>
-      {recipe.ingredients.map((ingredient, index) =>
+      {ingredients.map((ingredient, index) =>
         <InputRow key={`ingredient${index}`}>
           <div />
           <GroupedInput
-          	id={`ingredientDrop_${index}`}
             draggable={true}
             onDragOver={onDragOver}
             onDragStart={(event) => onDragStart(event, index)}
@@ -66,13 +67,13 @@ const Ingredients = ({recipe, setRecipe}: Props) => {
             <Input
               name={`ingredient${index}Amount`}
               width="10%"
-              value={ingredient.amount}
+              value={ingredient.amount ? ingredient.amount : ""}
               onKeyPress={(e) => !/[0-9]/.test(e.key) && e.preventDefault()}
               onChange={(event) => {
                 if (event.target.value.length > 0) {
                   setIngredient({...ingredient, amount: parseInt(event.target.value)}, index);
                 } else {
-                  setIngredient({...ingredient, amount: 0}, index);
+                  setIngredient({...ingredient, amount: null}, index);
                 }
               }}
             />
@@ -97,7 +98,7 @@ const Ingredients = ({recipe, setRecipe}: Props) => {
         </InputRow>)
       }
       <InputRow><AddButton
-        onClick={() => setRecipe({...recipe, ingredients: [...recipe.ingredients, {name: ""}]})}
+        onClick={() => setIngredients([...ingredients, {name: ""}])}
       >
         {tr("edit.addIngredient")}
       </AddButton></InputRow>
