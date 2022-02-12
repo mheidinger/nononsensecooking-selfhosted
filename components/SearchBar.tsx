@@ -108,10 +108,11 @@ const SearchBar = ({ placeholder }: Props) => {
   }
 
   async function fetchSearchResults(searchTerm: string) {
+    const lang = router.locale ? router.locale : "en-US";
     const results = await (
       await fetch(`/api/search?query=${searchTerm}`, {
         headers: {
-          "Accept-Language": router.locale,
+          "Accept-Language": lang,
         },
       })
     ).json();

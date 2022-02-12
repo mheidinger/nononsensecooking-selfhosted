@@ -8,9 +8,10 @@ import { useState } from "react";
 import { Unit } from "../models/Unit";
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  const lang = locale ? locale : "en-US";
   return {
     props: {
-      ...(await serverSideTranslations(locale, ["common", "header", "footer", "recipe"])),
+      ...(await serverSideTranslations(lang, ["common", "header", "footer", "recipe"])),
     },
   };
 };
@@ -21,7 +22,7 @@ const initRecipe: Recipe = {
   diet: Diet.Meat,
   cookTime: 20,
   publishedAt: "",
-  ingredients: [{name: "", amount: null, unit: Unit.NONE}],
+  ingredients: [{name: "", amount: undefined, unit: Unit.NONE}],
   steps: [""]
 };
 

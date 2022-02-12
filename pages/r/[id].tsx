@@ -15,14 +15,15 @@ import {
   fetchSingleRecipe, getRecipeImageUrl,
 } from "../../lib/recipes";
 
-
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { id } = context.params;
+  const { id } = context.params!;
   const recipe = await fetchSingleRecipe(id as string);
   const s3Url = await getRecipeImageUrl(id as string);
+  const lang = context.locale ? context.locale : "en-US";
+
   return {
     props: {
-      ...(await serverSideTranslations(context.locale, [
+      ...(await serverSideTranslations(lang, [
         "header",
         "common",
         "recipe",

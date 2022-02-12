@@ -12,7 +12,7 @@ const GeneralInformation = ({recipe, setRecipe}: Props) => {
   const { t: tr } = useTranslation("recipe");
 
   const dietOptions = useMemo(() => {
-    const options = [];
+    const options: JSX.Element[] = [];
     for (const diet in Diet) {
       options.push(<option value={Diet[diet]} key={Diet[diet]}>{diet}</option>)
     }

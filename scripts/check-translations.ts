@@ -71,7 +71,7 @@ function parseTranslations(file: string, rawTranslations: object) {
 
 function recurse(translationsObject: object | string | number) {
   if (!isObject(translationsObject)) return [];
-  const currentKeys = [];
+  const currentKeys: string[] = [];
   const entries = Object.entries(translationsObject);
   const entriesWithoutChildren = entries.filter(
     ([_, value]) => value && !isObject(value)

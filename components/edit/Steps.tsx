@@ -12,11 +12,13 @@ type Props = {
 
 const Steps = ({steps, setSteps}: Props) => {
   const { t: tr } = useTranslation("recipe");
-  const textAreaRefs = useRef([]);
+  const textAreaRefs = useRef<(HTMLTextAreaElement | null)[]>([]);
 
   useEffect(() => {
     for (const ref of textAreaRefs.current) {
-      autosize(ref);
+      if (ref) {
+        autosize(ref);
+      }
     }
   }, [steps]);
 

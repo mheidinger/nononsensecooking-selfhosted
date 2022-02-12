@@ -12,15 +12,14 @@ const bucket = process.env.BUCKET_NAME
 type S3File = {
   prefix: string;
   key: string;
-  lastModified: Date;
 };
 
 export async function listFiles(prefix: string): Promise<S3File[]> {
   const command = new ListObjectsCommand({Bucket: bucket, Prefix: prefix});
   const results = await client.send(command);
-  return results.Contents.map((item) => { return {
-    key: item.Key.replace(prefix, ""),
-    lastModified: item.LastModified,
+  const content = results.Contents ? results.Contents : [];
+  return content.map((item) => { return {
+    key: item.Key!.replace(prefix, ""),
     prefix
   }}).filter((item) => item.key !== "");
 }

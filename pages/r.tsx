@@ -10,10 +10,11 @@ import { Recipe } from "../models/Recipe";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const recipeIndex = await fetchRecipeIndex();
+  const lang = context.locale ? context.locale : "en-US";
 
   return {
     props: {
-      ...(await serverSideTranslations(context.locale, [
+      ...(await serverSideTranslations(lang, [
         "common",
         "footer",
         "header",
@@ -37,7 +38,6 @@ export default function Recipes({
             .map((recipe: Recipe) => (
               <DishListItem
                 key={recipe.id}
-                id={recipe.id}
                 {...recipe}
               />
             ))}

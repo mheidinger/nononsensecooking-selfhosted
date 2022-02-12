@@ -9,7 +9,7 @@ const Ingredient = ({
   servingsMultiplier,
 }: IngredientModel & { servingsMultiplier: number }) => {
   const { t } = useTranslation("recipe");
-		const adjustedAmount = isScalingUnit(unit)
+		const adjustedAmount = isScalingUnit(unit) && amount
     ? Math.round(amount * servingsMultiplier * 100) / 100
     : amount;
 

@@ -25,7 +25,7 @@ const Ingredients = ({ingredients, setIngredients}: Props) => {
   }
 
   const unitOptions = useMemo(() => {
-    const options = [];
+    const options: JSX.Element[] = [];
     for (const unit in Unit) {
       options.push(<option value={Unit[unit]} key={Unit[unit]}>{tr(`unit.${Unit[unit]}`)}</option>)
     }
@@ -74,7 +74,7 @@ const Ingredients = ({ingredients, setIngredients}: Props) => {
                 if (event.target.value.length > 0) {
                   setIngredient({...ingredient, amount: parseInt(event.target.value)}, index);
                 } else {
-                  setIngredient({...ingredient, amount: null}, index);
+                  setIngredient({...ingredient, amount: undefined}, index);
                 }
               }}
             />
