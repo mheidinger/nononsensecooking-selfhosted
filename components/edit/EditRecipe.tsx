@@ -16,24 +16,29 @@ type Props = {
   setRecipeImageFile(file?: File): void;
 };
 
+const COLUMN_MAX_WIDTH = "1300px";
+
 const EditRecipeDiv = styled.div`
-  margin: 3rem;
-  padding: 0 2rem;
+	margin: auto;
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
   gap: 2rem;
   min-height: 80vh;
+  max-width: 2000px;
+  padding: 0 2rem;
+
+  @media screen and (max-width: ${COLUMN_MAX_WIDTH}) {
+    flex-direction: column;
+  }
 `;
 
 const LeftSide = styled.div`
-  min-width: 400px;
+  flex-shrink: 1;
 `;
 
 const RightSide = styled.div`
   flex-grow: 1;
-  min-width: 400px;
 `;
 
 const HorizontalLine = styled.hr`
@@ -45,19 +50,30 @@ const HorizontalLine = styled.hr`
   background-color: black;
 `;
 
-const VerticalLine = styled.div`
+const ColumnHorizontalLine = styled(HorizontalLine)`
+  display: none;
+  @media screen and (max-width: ${COLUMN_MAX_WIDTH}) {
+    display: block;
+  }
+`;
+
+const RowVerticalLine = styled.div`
   border: 1px solid;
   border-radius: 5px;
   background-color: black;
 
-  @media screen and (max-width: 1000px) {
-    display: none
+  @media screen and (max-width: ${COLUMN_MAX_WIDTH}) {
+    display: none;
   }
 `;
 
 const SaveButton = styled(AddButton)`
-  height: 2.5rem;
+  height: 2.8rem;
   font-size: 1.2rem;
+
+  @media screen and (max-width: ${COLUMN_MAX_WIDTH}) {
+    font-size: 1rem;
+  }
 `;
 
 const EditRecipe = ({title, recipe, setRecipe, saveRecipe, setRecipeImageFile}: Props) => {
@@ -86,7 +102,8 @@ const EditRecipe = ({title, recipe, setRecipe, saveRecipe, setRecipeImageFile}: 
           setIngredients={setIngredients}
         />
       </LeftSide>
-      <VerticalLine />
+      <ColumnHorizontalLine />
+      <RowVerticalLine />
       <RightSide>
         <Steps
           steps={recipe.steps}

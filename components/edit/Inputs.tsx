@@ -1,22 +1,28 @@
 import styled from "styled-components";
 
+const COLUMN_MAX_WIDTH = "1300px";
+
 export const InputRow = styled.div<{headingRow?: boolean} & React.HTMLProps<HTMLDivElement>>`
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap;
   margin-top: 2rem;
   margin-bottom: ${props => props.headingRow ? "-1rem" : "0"};
-  width: 100%;
+  gap: 5px;
 `;
 
-export const InputLabel = styled.label<{indent?: boolean} & React.HTMLProps<HTMLLabelElement>>`
+export const InputLabel = styled.label<{indent?: boolean, width?: string} & React.HTMLProps<HTMLLabelElement>>`
   font-size: 1.2rem;
   font-weight: 600;
   margin: auto 0;
   margin-left: ${props => props.indent ? "3rem" : "0"};
+  ${props => props.width ? `width: ${props.width};` : ""}
+
+  @media screen and (max-width: ${COLUMN_MAX_WIDTH}) {
+    margin-left: ${props => props.indent ? "1rem" : "0"};
+  }
 `;
 
-export const Input = styled.input`
+export const Input = styled.input<{grow?: number, width?: string} & React.HTMLProps<HTMLInputElement>>`
   font-family: var(--font-stack);
   font-size: var(--font-size-base);
   background: var(--color-background-alt);
@@ -25,12 +31,13 @@ export const Input = styled.input`
   padding: 0.75rem 1rem;
   appearance: none;
   color: var(--color-text-primary);
-  width: ${props => props.width || "70%"};
   height: 3rem;
   filter: ${props => props.disabled ? "brightness(150%)" : "brightness(100%)"};
+  flex-grow: ${props => props.grow || 0};
+  ${props => props.width ? `width: ${props.width};` : ""}
 `;
 
-export const Select = styled.select<{width?: string} & React.HTMLProps<HTMLSelectElement>>`
+export const Select = styled.select<{grow?: number, width?: string} & React.HTMLProps<HTMLSelectElement>>`
   font-family: var(--font-stack);
   font-size: var(--font-size-base);
   background: var(--color-background-alt);
@@ -43,8 +50,9 @@ export const Select = styled.select<{width?: string} & React.HTMLProps<HTMLSelec
   background-position: right 1rem center;
   background-size: 1em;
   color: var(--color-text-primary);
-  width: ${props => props.width || "70%"};
   height: 3rem;
+  ${props => props.width ? `width: ${props.width};` : ""}
+  flex-grow: ${props => props.grow || 0};
 
   & > option {
     background-color: var(--color-background-alt-solid);
@@ -56,14 +64,13 @@ export const Select = styled.select<{width?: string} & React.HTMLProps<HTMLSelec
   }
 `;
 
-export const GroupedInput = styled.div<{width?: string} & React.HTMLProps<HTMLDivElement>>`
+export const GroupedInput = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 1rem;
-  width: ${props => props.width || "70%"};
-  min-width: 400px;
   align-items: center;
   cursor: ${props => props.draggable ? "grab" : "default" };
+  flex-grow: 1;
 `
 
 export const Button = styled.button`

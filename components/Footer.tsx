@@ -1,4 +1,5 @@
 import { useTranslation } from "next-i18next";
+import Link from "next/link";
 import styled from "styled-components";
 
 const StyledFooter = styled.footer`
@@ -37,6 +38,8 @@ const Nav = styled.nav`
 `;
 
 const Footer = () => {
+  const { t } = useTranslation("footer");
+
   return (
     <StyledFooter>
       <Nav>
@@ -46,6 +49,9 @@ const Footer = () => {
         >
           GitHub
         </StyledLink>
+        <Link href="/create" passHref prefetch={false}>
+          <StyledLink>{t("link.createRecipe")}</StyledLink>
+        </Link>
       </Nav>
     </StyledFooter>
   );

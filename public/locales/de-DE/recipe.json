@@ -18,6 +18,7 @@
     "steps": "Schritte:",
     "addStep": "Schritt hinzufügen",
     "source": "Quelle:",
-    "image": "Bild:"
+    "image": "Bild:",
+    "fileSelect": "Datei auswählen..."
   }
 }

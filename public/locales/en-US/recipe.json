@@ -18,6 +18,7 @@
     "steps": "Steps:",
     "addStep": "Add Step",
     "source": "Source:",
-    "image": "Image:"
+    "image": "Image:",
+    "fileSelect": "Select File..."
   }
 }

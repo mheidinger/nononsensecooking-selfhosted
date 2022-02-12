@@ -38,25 +38,27 @@ const GeneralInformation = ({recipe, setRecipe, setRecipeImageFile}: Props) => {
   return (
     <>
       <InputRow>
-        <InputLabel>{tr("edit.name")}</InputLabel>
+        <InputLabel width="30%">{tr("edit.name")}</InputLabel>
         <Input
           name="recipeName"
           value={recipe.name}
           onChange={event => setRecipe({...recipe, name: event.target.value})}
+          grow={1}
         />
       </InputRow>
       <InputRow>
-        <InputLabel>{tr("edit.diet")}</InputLabel>
+        <InputLabel width="30%">{tr("edit.diet")}</InputLabel>
         <Select
           id="recipeDiet"
           value={recipe.diet}
           onChange={event => setRecipe({...recipe, diet: event.target.value as Diet})}
+          grow={1}
         >
           {dietOptions}
         </Select>
       </InputRow>
       <InputRow>
-        <InputLabel>{tr("edit.cookTime")}</InputLabel>
+        <InputLabel width="30%">{tr("edit.cookTime")}</InputLabel>
         <Input
           name="recipeCookTime"
           value={recipe.cookTime}
@@ -68,23 +70,25 @@ const GeneralInformation = ({recipe, setRecipe, setRecipeImageFile}: Props) => {
               setRecipe({...recipe, cookTime: 0});
             }
           }}
+          grow={1}
         />
       </InputRow>
       <InputRow>
-        <InputLabel>{tr("edit.source")}</InputLabel>
+        <InputLabel width="30%">{tr("edit.source")}</InputLabel>
         <Input
           name="recipeSource"
           value={recipe.source}
           onChange={(event) => setRecipe({...recipe, source: event.target.value})}
+          grow={1}
         />
       </InputRow>
       <InputRow>
-        <InputLabel>{tr("edit.image")}</InputLabel>
+        <InputLabel width="30%">{tr("edit.image")}</InputLabel>
         <GroupedInput>
           <FileSelector
             onClick={() => openFileSelector()}
           >
-            {selectedFile ? selectedFile.name : "Select File..."}
+            {selectedFile ? selectedFile.name : tr("edit.fileSelect")}
           </FileSelector>
           <RemoveButton onClick={() => clearFile()}>
             <Icon path={mdiClose} size={0.8} />

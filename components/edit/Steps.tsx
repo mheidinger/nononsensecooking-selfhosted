@@ -56,13 +56,12 @@ const Steps = ({steps, setSteps}: Props) => {
       <InputRow headingRow><InputLabel>{tr("edit.steps")}</InputLabel></InputRow>
       {steps.map((step, index) =>
         <InputRow key={`step${index}`}>
-          <InputLabel indent>#{index+1}:</InputLabel>
+          <InputLabel indent width="10%">#{index+1}:</InputLabel>
           <GroupedInput
             draggable={true}
             onDragOver={onDragOver}
             onDragStart={(event) => onDragStart(event, index)}
             onDrop={(event) => onDrop(event, index)}
-            width="90%"
           >
             <Icon path={mdiDrag} size={1.4} />
             <StepInput

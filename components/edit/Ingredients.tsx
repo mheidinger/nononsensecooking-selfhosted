@@ -61,12 +61,10 @@ const Ingredients = ({ingredients, setIngredients}: Props) => {
             onDragOver={onDragOver}
             onDragStart={(event) => onDragStart(event, index)}
             onDrop={(event) => onDrop(event, index)}
-            width="100%"
           >
             <Icon path={mdiDrag} size={1.4} />
             <Input
               name={`ingredient${index}Amount`}
-              width="10%"
               value={ingredient.amount && ingredient.unit !== Unit.NONE ? ingredient.amount : ""}
               disabled={ingredient.unit === Unit.NONE}
               onKeyPress={(e) => !/[0-9]/.test(e.key) && e.preventDefault()}
@@ -77,20 +75,21 @@ const Ingredients = ({ingredients, setIngredients}: Props) => {
                   setIngredient({...ingredient, amount: undefined}, index);
                 }
               }}
+              width="20%"
             />
             <Select
               id={`ingredient${index}Unit`}
-              width="15%"
               value={ingredient.unit ? ingredient.unit : Unit.NONE}
               onChange={event => setIngredient({...ingredient, unit: event.target.value as Unit}, index)}
+              width="20%"
             >
               {unitOptions}
             </Select>
             <Input
               name={`ingredient${index}Name`}
-              width="60%"
               value={ingredient.name}
               onChange={event => setIngredient({...ingredient, name: event.target.value}, index)}
+              width="60%"
             />
             <RemoveButton onClick={() => removeIngredient(index)}>
               <Icon path={mdiClose} size={0.8} />
