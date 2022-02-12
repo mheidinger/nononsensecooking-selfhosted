@@ -54,6 +54,14 @@ const GeneralInformation = ({recipe, setRecipe}: Props) => {
           }}
         />
       </InputRow>
+      <InputRow>
+        <InputLabel>{tr("edit.source")}</InputLabel>
+        <Input
+          name="recipeSource"
+          value={recipe.source}
+          onChange={(event) => setRecipe({...recipe, source: event.target.value})}
+        />
+      </InputRow>
     </>
   );
 }

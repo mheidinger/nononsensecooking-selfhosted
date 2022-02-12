@@ -16,6 +16,7 @@
     "ingredients": "Ingredients:",
     "addIngredient": "Add Ingredient",
     "steps": "Steps:",
-    "addStep": "Add Step"
+    "addStep": "Add Step",
+    "source": "Source:"
   }
 }

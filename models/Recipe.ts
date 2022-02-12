@@ -15,6 +15,7 @@ export interface Recipe {
   steps: string[];
   ingredients: Ingredient[];
   publishedAt: string;
+  source: string;
 }
 
 export interface RecipeFile {
@@ -24,6 +25,7 @@ export interface RecipeFile {
   steps: string[];
   ingredients: Ingredient[];
   publishedAt: string;
+  source: string;
 }
 
 export type RecipeInIndex = Pick<

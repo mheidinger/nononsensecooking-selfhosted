@@ -13,7 +13,6 @@ const STD_TTL = 600;
 const CHECK_PERIOD = 120;
 const recipeCache = new NodeCache({stdTTL: STD_TTL, checkperiod: CHECK_PERIOD});
 
-// TODO: With in app modifications, invalidate after such
 export async function fetchRecipeIndex(): Promise<RecipeInIndex[]> {
   let index = recipeCache.get(INDEX_CACHE_KEY) as RecipeInIndex[];
   if (index == undefined) {
@@ -79,6 +78,7 @@ const parseRecipeData = (id: string, recipeData: RecipeFile): Recipe => ({
   id,
   ingredients: parseIngredients(recipeData.ingredients),
   publishedAt: recipeData.publishedAt,
+  source: recipeData.source || "",
 });
 
 const parseIngredients = (

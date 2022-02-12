@@ -26,7 +26,8 @@ function parseBody(body: any): Recipe {
     cookTime: 0,
     diet: Diet.Meat,
     ingredients: [],
-    steps: []
+    steps: [],
+    source: "",
   };
 
   if (!body.name || typeof body.name !== "string"|| body.name === "") {
@@ -44,6 +45,10 @@ function parseBody(body: any): Recipe {
     throw new ValidationError("no recipe diet");
   }
   recipe.diet = body.diet;
+
+  if (body.source && typeof body.source === "string" && body.source !== "") {
+    recipe.source = body.source;
+  }
 
   if (!body.steps || !Array.isArray(body.steps) || body.steps.length === 0) {
     throw new ValidationError("no recipe steps");

@@ -1,4 +1,4 @@
-import { mdiClockOutline } from "@mdi/js";
+import { mdiClockOutline, mdiLinkVariant } from "@mdi/js";
 import Icon from "@mdi/react";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
@@ -63,10 +63,14 @@ const RecipeStats = styled.header`
 `;
 
 const IconStat = styled.span`
-  display: flex;
+  display: ${props => props.hidden ? "none" : "flex"};
   align-items: center;
   gap: 0.25rem;
 `;
+
+function truncate(str: string, n: number){
+  return (str.length > n) ? str.substring(0, n-1) + "..." : str;
+};
 
 const SingleRecipe = ({
   id,
@@ -75,6 +79,7 @@ const SingleRecipe = ({
   diet,
   cookTime,
   ingredients,
+  source,
   s3Url,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const DEFAULT_SERVINGS = 2;
@@ -82,6 +87,7 @@ const SingleRecipe = ({
   function onServingsChanged(newServings: number) {
     setServings(newServings);
   }
+  const displaySource = truncate(source, 20);
   return (
     <>
       <PageTitle title={name} />
@@ -93,7 +99,16 @@ const SingleRecipe = ({
             <span>{cookTime}min</span>
           </IconStat>
           <IconForDiet id={`diet_${id}`} diet={diet} />
+          <IconStat hidden={source === ""}>
+            <Icon path={mdiLinkVariant} size={1} />
+            {source.startsWith("http") ?
+              <a href={source}>{displaySource}</a> :
+              <span title={source}>{displaySource}</span>
+            }
+          </IconStat>
         </RecipeStats>
+        <div>
+        </div>
         <ImageContainer>
           <DishImage
             s3Url={s3Url}

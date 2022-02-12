@@ -23,7 +23,8 @@ const initRecipe: Recipe = {
   cookTime: 20,
   publishedAt: "",
   ingredients: [{name: "", amount: undefined, unit: Unit.NONE}],
-  steps: [""]
+  steps: [""],
+  source: "",
 };
 
 export default function CreateRecipe({}: InferGetStaticPropsType<
