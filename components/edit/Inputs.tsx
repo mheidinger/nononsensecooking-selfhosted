@@ -101,3 +101,17 @@ export const StepInput = styled.textarea`
   color: var(--color-text-primary);
   width: 100%;
 `;
+
+export const FileSelector = styled.span`
+  font-family: var(--font-stack);
+  font-size: var(--font-size-base);
+  background: var(--color-background-alt);
+  border-radius: var(--rounded);
+  border: none;
+  padding: 0.75rem 1rem;
+  appearance: none;
+  color: var(--color-text-primary);
+  width: 90%;
+  height: 3rem;
+  cursor: pointer;
+`;

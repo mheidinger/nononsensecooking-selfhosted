@@ -1,14 +1,18 @@
+import { mdiClose } from "@mdi/js";
+import Icon from "@mdi/react";
 import { useTranslation } from "next-i18next";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
+import { useFilePicker } from "use-file-picker";
 import { Diet, Recipe } from "../../models/Recipe";
-import { InputLabel, InputRow, Input, Select } from "./Inputs";
+import { InputLabel, InputRow, Input, Select, FileSelector, GroupedInput, RemoveButton } from "./Inputs";
 
 type Props = {
   recipe: Recipe;
   setRecipe(recipe: Recipe): void;
+  setRecipeImageFile(file?: File): void;
 };
 
-const GeneralInformation = ({recipe, setRecipe}: Props) => {
+const GeneralInformation = ({recipe, setRecipe, setRecipeImageFile}: Props) => {
   const { t: tr } = useTranslation("recipe");
 
   const dietOptions = useMemo(() => {
@@ -18,6 +22,18 @@ const GeneralInformation = ({recipe, setRecipe}: Props) => {
     }
     return options;
   }, []);
+
+  const [openFileSelector, {plainFiles, clear: clearFile}] = useFilePicker({
+    accept: ".jpg",
+    readFilesContent: false,
+    multiple: false,
+  });
+
+  const selectedFile = plainFiles.length > 0 ? plainFiles[0] : undefined;
+
+  useEffect(() => {
+    setRecipeImageFile(selectedFile);
+  }, [setRecipeImageFile, selectedFile])
 
   return (
     <>
@@ -61,6 +77,20 @@ const GeneralInformation = ({recipe, setRecipe}: Props) => {
           value={recipe.source}
           onChange={(event) => setRecipe({...recipe, source: event.target.value})}
         />
+      </InputRow>
+      <InputRow>
+        <InputLabel>{tr("edit.image")}</InputLabel>
+        <GroupedInput>
+          <FileSelector
+            onClick={() => openFileSelector()}
+          >
+            {selectedFile ? selectedFile.name : "Select File..."}
+          </FileSelector>
+          <RemoveButton onClick={() => clearFile()}>
+            <Icon path={mdiClose} size={0.8} />
+          </RemoveButton>
+        </GroupedInput>
+
       </InputRow>
     </>
   );

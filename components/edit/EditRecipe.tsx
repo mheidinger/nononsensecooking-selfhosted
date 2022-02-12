@@ -13,6 +13,7 @@ type Props = {
   recipe: Recipe;
   setRecipe(recipe: Recipe): void;
   saveRecipe(): void;
+  setRecipeImageFile(file?: File): void;
 };
 
 const EditRecipeDiv = styled.div`
@@ -59,7 +60,7 @@ const SaveButton = styled(AddButton)`
   font-size: 1.2rem;
 `;
 
-const EditRecipe = ({title, recipe, setRecipe, saveRecipe}: Props) => {
+const EditRecipe = ({title, recipe, setRecipe, saveRecipe, setRecipeImageFile}: Props) => {
   const setIngredients = useCallback((ingredients: Ingredient[]) => {
     setRecipe({...recipe, ingredients});
   }, [recipe, setRecipe]);
@@ -77,6 +78,7 @@ const EditRecipe = ({title, recipe, setRecipe, saveRecipe}: Props) => {
         <GeneralInformation
           recipe={recipe}
           setRecipe={setRecipe}
+          setRecipeImageFile={setRecipeImageFile}
         />
         <HorizontalLine />
         <Ingredients

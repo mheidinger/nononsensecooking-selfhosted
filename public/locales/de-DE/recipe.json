@@ -17,6 +17,7 @@
     "addIngredient": "Zutat hinzufügen",
     "steps": "Schritte:",
     "addStep": "Schritt hinzufügen",
-    "source": "Quelle:"
+    "source": "Quelle:",
+    "image": "Bild:"
   }
 }

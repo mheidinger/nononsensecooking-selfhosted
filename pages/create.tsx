@@ -6,6 +6,8 @@ import { Diet, Recipe } from "../models/Recipe";
 import EditRecipe from "../components/edit/EditRecipe";
 import { useState } from "react";
 import { Unit } from "../models/Unit";
+import { useRouter } from "next/router";
+import { uploadImage, uploadRecipe } from "../lib/client/upload";
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   const lang = locale ? locale : "en-US";
@@ -32,19 +34,20 @@ export default function CreateRecipe({}: InferGetStaticPropsType<
 >) {
   const { t } = useTranslation("common");
   const [ recipe, setRecipe ] = useState(initRecipe);
+  const [ recipeImageFile, setRecipeImageFile ] = useState<File | undefined>(undefined);
+  const router = useRouter();
 
   async function saveRecipe() {
-    const results = await (
-      await fetch(`/api/create`, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(recipe)
-      })
-    ).json();
-    console.log("Result ", results);
+    try {
+      const result = await uploadRecipe(recipe);
+      if (recipeImageFile) {
+        await uploadImage(result.imagePutURL, recipeImageFile);
+      }
+
+      router.push(`/r/${result.recipeID}`);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
@@ -55,6 +58,7 @@ export default function CreateRecipe({}: InferGetStaticPropsType<
         recipe={recipe}
         setRecipe={setRecipe}
         saveRecipe={saveRecipe}
+        setRecipeImageFile={setRecipeImageFile}
       />
     </>
   );
