@@ -81,12 +81,9 @@ const SingleRecipe = ({
   ingredients,
   source,
   s3Url,
+  servings,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const DEFAULT_SERVINGS = 2;
-  const [servings, setServings] = useState(DEFAULT_SERVINGS);
-  function onServingsChanged(newServings: number) {
-    setServings(newServings);
-  }
+  const [currentServingsCount, setServingsCount] = useState(servings.count);
   const displaySource = truncate(source, 20);
   return (
     <>
@@ -119,12 +116,13 @@ const SingleRecipe = ({
           />
         </ImageContainer>
         <ServingsChooser
-          servings={servings}
-          onServingsChanged={onServingsChanged}
+          count={currentServingsCount}
+          label={servings.label}
+          onServingsCountChanged={setServingsCount}
         />
         <IngredientsList
           ingredients={ingredients}
-          servingsMultiplier={servings / DEFAULT_SERVINGS}
+          servingsMultiplier={currentServingsCount / servings.count}
         />
         <StepList steps={steps} />
       </StyledArticle>

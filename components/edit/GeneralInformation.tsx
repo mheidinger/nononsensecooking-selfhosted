@@ -58,6 +58,39 @@ const GeneralInformation = ({recipe, setRecipe, setRecipeImageFile}: Props) => {
         </Select>
       </InputRow>
       <InputRow>
+        <InputLabel width="30%">{tr("edit.servings")}</InputLabel>
+        <Input
+          name="recipeServingsCount"
+          value={recipe.servings.count}
+          onKeyPress={(e) => !/[0-9]/.test(e.key) && e.preventDefault()}
+          onChange={(event) => {
+            const newServings = {...recipe.servings};
+            if (event.target.value.length > 0) {
+              newServings.count = parseInt(event.target.value);
+            } else {
+              newServings.count = 0;
+            }
+            setRecipe({...recipe, servings: newServings});
+          }}
+          width="30%"
+        />
+        <Input
+          name="recipeServingsLabel"
+          value={recipe.servings.label ? recipe.servings.label : ""}
+          placeholder={tr("servings")}
+          onChange={(event) => {
+            const newServings = {...recipe.servings};
+            if (event.target.value.length > 0) {
+              newServings.label = event.target.value;
+            } else {
+              delete newServings.label;
+            }
+            setRecipe({...recipe, servings: newServings});
+          }}
+          grow={1}
+        />
+      </InputRow>
+      <InputRow>
         <InputLabel width="30%">{tr("edit.cookTime")}</InputLabel>
         <Input
           name="recipeCookTime"

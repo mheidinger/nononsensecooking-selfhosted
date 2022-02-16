@@ -5,13 +5,13 @@ const COLUMN_MAX_WIDTH = "1300px";
 export const InputRow = styled.div<{headingRow?: boolean} & React.HTMLProps<HTMLDivElement>>`
   display: flex;
   justify-content: space-between;
-  margin-top: 2rem;
-  margin-bottom: ${props => props.headingRow ? "-1rem" : "0"};
+  margin-top: 1rem;
+  margin-bottom: ${props => props.headingRow ? "-.5rem" : "0"};
   gap: 5px;
 `;
 
 export const InputLabel = styled.label<{indent?: boolean, width?: string} & React.HTMLProps<HTMLLabelElement>>`
-  font-size: 1.2rem;
+  font-size: var(--font-size-base);
   font-weight: 600;
   margin: auto 0;
   margin-left: ${props => props.indent ? "3rem" : "0"};
@@ -31,7 +31,7 @@ export const Input = styled.input<{grow?: number, width?: string} & React.HTMLPr
   padding: 0.75rem 1rem;
   appearance: none;
   color: var(--color-text-primary);
-  height: 3rem;
+  height: 2.5rem;
   filter: ${props => props.disabled ? "brightness(150%)" : "brightness(100%)"};
   flex-grow: ${props => props.grow || 0};
   ${props => props.width ? `width: ${props.width};` : ""}
@@ -43,14 +43,14 @@ export const Select = styled.select<{grow?: number, width?: string} & React.HTML
   background: var(--color-background-alt);
   border-radius: var(--rounded);
   border: none;
-  padding: 0.75rem 1rem;
+  padding: 0 1rem;
   appearance: none;
   background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
   background-repeat: no-repeat;
   background-position: right 1rem center;
   background-size: 1em;
   color: var(--color-text-primary);
-  height: 3rem;
+  height: 2.5rem;
   ${props => props.width ? `width: ${props.width};` : ""}
   flex-grow: ${props => props.grow || 0};
 
@@ -99,7 +99,6 @@ export const AddButton = styled(Button)`
 `;
 
 export const RemoveButton = styled(Button)`
-  height: 2.5rem;
   width: 2.5rem;
   background: #d94040;
 `;
@@ -126,6 +125,6 @@ export const FileSelector = styled.span`
   appearance: none;
   color: var(--color-text-primary);
   width: 90%;
-  height: 3rem;
+  height: 2.5rem;
   cursor: pointer;
 `;

@@ -79,11 +79,20 @@ const parseRecipeData = (id: string, recipeData: RecipeFile): Recipe => ({
   ingredients: parseIngredients(recipeData.ingredients),
   publishedAt: recipeData.publishedAt,
   source: recipeData.source || "",
+  servings: parseServings(recipeData.servings),
 });
 
-const parseIngredients = (
-  ingredients: Recipe["ingredients"]
-): Recipe["ingredients"] =>
+function parseServings(servings: RecipeFile["servings"]): Recipe["servings"] {
+  const returnServings: Recipe["servings"] = {
+    count: servings?.count || 1,
+  };
+  if (servings && servings.label) {
+    returnServings.label = servings.label;
+  }
+  return returnServings;
+}
+
+const parseIngredients = (ingredients: RecipeFile["ingredients"]): Recipe["ingredients"] =>
   ingredients.map((ingredient) => ({
     ...ingredient,
     unit: ingredient.unit || Unit.NONE,

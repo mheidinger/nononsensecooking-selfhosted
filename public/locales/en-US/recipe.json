@@ -19,6 +19,7 @@
     "addStep": "Add Step",
     "source": "Source:",
     "image": "Image:",
-    "fileSelect": "Select File..."
+    "fileSelect": "Select File...",
+    "servings": "Servings:"
   }
 }

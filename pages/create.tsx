@@ -10,26 +10,32 @@ import { useRouter } from "next/router";
 import { uploadImage, uploadRecipe } from "../lib/client/upload";
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  const initRecipe: Recipe = {
+    id: "",
+    name: "New Recipe",
+    diet: Diet.Meat,
+    cookTime: 20,
+    publishedAt: "",
+    ingredients: [{name: "", unit: Unit.NONE}],
+    steps: [""],
+    source: "",
+    servings: {
+      count: 2,
+    },
+  };
+
   const lang = locale ? locale : "en-US";
   return {
     props: {
       ...(await serverSideTranslations(lang, ["common", "header", "footer", "recipe"])),
+      initRecipe,
     },
   };
 };
 
-const initRecipe: Recipe = {
-  id: "",
-  name: "New Recipe",
-  diet: Diet.Meat,
-  cookTime: 20,
-  publishedAt: "",
-  ingredients: [{name: "", amount: undefined, unit: Unit.NONE}],
-  steps: [""],
-  source: "",
-};
 
-export default function CreateRecipe({}: InferGetStaticPropsType<
+
+export default function CreateRecipe({initRecipe}: InferGetStaticPropsType<
   typeof getStaticProps
 >) {
   const { t } = useTranslation("common");

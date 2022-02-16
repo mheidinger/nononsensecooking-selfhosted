@@ -16,6 +16,12 @@ export interface Recipe {
   ingredients: Ingredient[];
   publishedAt: string;
   source: string;
+  servings: Servings;
+}
+
+export interface Servings {
+  count: number;
+  label?: string;
 }
 
 export interface RecipeFile {
@@ -26,6 +32,10 @@ export interface RecipeFile {
   ingredients: Ingredient[];
   publishedAt: string;
   source: string;
+  servings: {
+    count: number;
+    label?: string;
+  };
 }
 
 export type RecipeInIndex = Pick<

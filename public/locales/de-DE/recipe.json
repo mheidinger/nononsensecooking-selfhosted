@@ -19,6 +19,7 @@
     "addStep": "Schritt hinzufügen",
     "source": "Quelle:",
     "image": "Bild:",
-    "fileSelect": "Datei auswählen..."
+    "fileSelect": "Datei auswählen...",
+    "servings": "Portionen:"
   }
 }

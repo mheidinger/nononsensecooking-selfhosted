@@ -28,6 +28,9 @@ function parseBody(body: any): Recipe {
     ingredients: [],
     steps: [],
     source: "",
+    servings: {
+      count: 0,
+    }
   };
 
   if (!body.name || typeof body.name !== "string"|| body.name === "") {
@@ -84,6 +87,14 @@ function parseBody(body: any): Recipe {
       throw new ValidationError(`ingredient unit set but no amount for '${cleanIngredient.name}'`);
     }
     recipe.ingredients.push(cleanIngredient);
+  }
+
+  if (!body.servings || typeof body.servings !== "object" || !body.servings.count || body.servings.count <= 0) {
+    throw new ValidationError("no servings, servings count or count not greater 0");
+  }
+  recipe.servings.count = body.servings.count;
+  if (body.servings.label) {
+    recipe.servings.label = body.servings.label;
   }
 
   return recipe;

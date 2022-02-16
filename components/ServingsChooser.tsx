@@ -2,6 +2,7 @@ import { mdiMinus, mdiPlus } from "@mdi/js";
 import Icon from "@mdi/react";
 import { useTranslation } from "next-i18next";
 import styled from "styled-components";
+import { Servings as ServingsSpan } from "../models/Recipe";
 
 const IconButton = styled.button`
   appearance: none;
@@ -22,7 +23,7 @@ const ChooserInputLine = styled.div`
   align-items: center;
 `;
 
-const Servings = styled.span`
+const ServingsSpan = styled.span`
   font-size: 1.275rem;
 `;
 
@@ -34,37 +35,42 @@ const Heading = styled.h5`
 const StyledServingsChooser = styled.div`
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
 `;
 
 interface Props {
-  servings: number;
-  onServingsChanged: (newServings: number) => void;
+  count: number;
+  label?: string;
+  onServingsCountChanged: (newServings: number) => void;
 }
 
-const ServingsChooser = ({ servings, onServingsChanged }: Props) => {
+const ServingsChooser = ({ count, label, onServingsCountChanged: onServingsChanged }: Props) => {
   const { t } = useTranslation("recipe");
   return (
     <StyledServingsChooser>
-      <Heading>{t("servings")}</Heading>
       <ChooserInputLine>
         <IconButton
           onClick={function () {
-            onServingsChanged(Math.max(1, servings - 1));
+            onServingsChanged(Math.max(1, count - 1));
           }}
         >
           <Icon path={mdiMinus} size={1} title="Less servings" />
         </IconButton>
 
-        <Servings>{servings}</Servings>
+        <ServingsSpan>{count}</ServingsSpan>
+
         <IconButton
           onClick={function () {
-            onServingsChanged(servings + 1);
+            onServingsChanged(count + 1);
           }}
         >
           <Icon path={mdiPlus} size={1} title="More servings" />
         </IconButton>
       </ChooserInputLine>
+      {label ?
+        <Heading>{label}</Heading> :
+        <Heading>{t("servings")}</Heading>
+      }
     </StyledServingsChooser>
   );
 };
