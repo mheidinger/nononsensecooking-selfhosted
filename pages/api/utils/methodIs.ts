@@ -1,14 +1,14 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
 export function methodIs(
-  method: string,
+  methods: string[],
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) {
-  if (req.method !== method) {
+  if (methods.findIndex((method) => req.method === method) === -1) {
     res
       .status(405)
-      .json({ error: `Only ${method} requests are allowed to this endpoint` });
+      .json({ error: `Only ${methods} requests are allowed to this endpoint` });
     return false;
   }
   return true;

@@ -39,6 +39,10 @@ function parseBody(body: any): Recipe {
   recipe.name = body.name;
   recipe.id = slug(recipe.name);
 
+  if (body.id && typeof body.id === "string" && body.id !== "") {
+    recipe.id = body.id;
+  }
+
   if (!body.cookTime || typeof body.cookTime !== "number") {
     throw new ValidationError("no recipe cook time");
   }
@@ -104,7 +108,7 @@ export default async function create(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (!methodIs("POST", req, res) && !methodIs("PUT", req, res)) return;
+  if (!methodIs(["POST", "PUT"], req, res)) return;
 
   try {
     const recipe = parseBody(req.body);

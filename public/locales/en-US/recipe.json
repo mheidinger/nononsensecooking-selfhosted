@@ -20,6 +20,16 @@
     "source": "Source:",
     "image": "Image:",
     "fileSelect": "Select File...",
-    "servings": "Servings:"
+    "servings": "Servings:",
+    "save": "Save Recipe"
+  },
+  "delete": {
+    "question": "Are you sure to delete this recipe?",
+    "back": "Back to Safety!",
+    "delete": "Delete Recipe"
+  },
+  "link": {
+    "edit": "Edit Recipe",
+    "delete": "Delete Recipe"
   }
 }

@@ -1,3 +1,4 @@
+import { useTranslation } from "next-i18next";
 import { useCallback } from "react";
 import styled from "styled-components";
 import { Ingredient } from "../../models/Ingredient";
@@ -77,6 +78,7 @@ const SaveButton = styled(AddButton)`
 `;
 
 const EditRecipe = ({title, recipe, setRecipe, saveRecipe, setRecipeImageFile}: Props) => {
+  const { t: tr } = useTranslation("recipe");
   const setIngredients = useCallback((ingredients: Ingredient[]) => {
     setRecipe({...recipe, ingredients});
   }, [recipe, setRecipe]);
@@ -89,7 +91,7 @@ const EditRecipe = ({title, recipe, setRecipe, saveRecipe, setRecipeImageFile}: 
       <LeftSide>
         <InputRow>
           <StyledHeading>{title}</StyledHeading>
-          <SaveButton onClick={saveRecipe}>Save Recipe</SaveButton>
+          <SaveButton onClick={saveRecipe}>{tr("edit.save")}</SaveButton>
         </InputRow>
         <GeneralInformation
           recipe={recipe}

@@ -1,4 +1,4 @@
-import { S3Client, GetObjectCommand, PutObjectCommand, ListObjectsCommand, HeadObjectCommand } from "@aws-sdk/client-s3";
+import { S3Client, GetObjectCommand, PutObjectCommand, ListObjectsCommand, HeadObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { S3RequestPresigner } from "@aws-sdk/s3-request-presigner";
 import { createRequest } from '@aws-sdk/util-create-request';
 import { formatUrl } from '@aws-sdk/util-format-url';
@@ -46,6 +46,11 @@ export async function fileExists(key: string): Promise<boolean> {
     }
     throw error;
   }
+}
+
+export async function deleteFile(key: string) {
+  const command = new DeleteObjectCommand({Bucket: bucket, Key: key});
+  await client.send(command);
 }
 
 export async function getSignedGetObjectUrl(key: string, expireIn?: number): Promise<string> {

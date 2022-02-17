@@ -1,7 +1,9 @@
 import { mdiClockOutline, mdiLinkVariant } from "@mdi/js";
 import Icon from "@mdi/react";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import Link from "next/link";
 import { useState } from "react";
 import styled from "styled-components";
 import DishImage from "../../components/DishImage";
@@ -68,6 +70,18 @@ const IconStat = styled.span`
   gap: 0.25rem;
 `;
 
+const LinkContainer = styled.div`
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+`;
+
+const StyledLink = styled.a`
+  color: var(--color-primary);
+  white-space: pre;
+`;
+
 function truncate(str: string, n: number){
   return (str.length > n) ? str.substring(0, n-1) + "..." : str;
 };
@@ -83,6 +97,7 @@ const SingleRecipe = ({
   s3Url,
   servings,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  const { t: tr } = useTranslation("recipe");
   const [currentServingsCount, setServingsCount] = useState(servings.count);
   const displaySource = truncate(source, 20);
   return (
@@ -125,6 +140,14 @@ const SingleRecipe = ({
           servingsMultiplier={currentServingsCount / servings.count}
         />
         <StepList steps={steps} />
+        <LinkContainer>
+          <Link href={`/r/${id}/edit`} passHref prefetch={false}>
+            <StyledLink>{tr("link.edit")}</StyledLink>
+          </Link>
+          <Link href={`/r/${id}/delete`} passHref prefetch={false}>
+            <StyledLink>{tr("link.delete")}</StyledLink>
+          </Link>
+        </LinkContainer>
       </StyledArticle>
     </>
   );

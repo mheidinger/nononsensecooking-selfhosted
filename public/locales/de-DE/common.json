@@ -44,6 +44,13 @@
     "pagetitle": "Rezept erstellen",
     "displaytitle": "Neues Rezept erstellen"
   },
+  "edit": {
+    "pagetitle": "Rezept bearbeiten",
+    "displaytitle": "Rezept bearbeiten"
+  },
+  "delete": {
+    "pagetitle": "Rezept löschen"
+  },
   "locales": {
     "en-US": "Englisch (USA)",
     "de-DE": "Deutsch (Deutschland)"

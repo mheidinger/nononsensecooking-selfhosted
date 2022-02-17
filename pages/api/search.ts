@@ -35,7 +35,7 @@ export default async function search(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (!methodIs("GET", req, res)) return;
+  if (!methodIs(["GET"], req, res)) return;
   const { query } = req.query;
   res.status(200).json(await searchRecipes(query as string));
 }

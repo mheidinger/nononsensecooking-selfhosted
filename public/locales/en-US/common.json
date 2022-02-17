@@ -44,6 +44,13 @@
     "pagetitle": "Create Recipe",
     "displaytitle": "Create New Recipe"
   },
+  "edit": {
+    "pagetitle": "Edit Recipe",
+    "displaytitle": "Edit Recipe"
+  },
+  "delete": {
+    "pagetitle": "Delete Recipe"
+  },
   "locales": {
     "en-US": "English (US)",
     "de-DE": "German (Germany)"

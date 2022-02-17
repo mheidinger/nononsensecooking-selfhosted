@@ -35,3 +35,19 @@ export async function uploadImage(url: string, image: File) {
     body: image
   });
 }
+
+export async function deleteRecipe(id: string) {
+  const response = await fetch("/api/delete", {
+    method: "DELETE",
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({id})
+  });
+
+  const result = await response.json();
+  if (response.status !== 200) {
+    throw new Error(`Delete recipe API request failed: ${JSON.stringify(result)}`);
+  }
+}

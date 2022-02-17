@@ -2,7 +2,7 @@ import YAML from "yaml";
 import NodeCache from "node-cache";
 import { Recipe, RecipeFile, RecipeInIndex, toRecipeInIndex } from "../models/Recipe";
 import { Unit } from "../models/Unit";
-import { fetchFile, fileExists, getSignedGetObjectUrl, getSignedPutObjectUrl, listFiles, uploadFile } from "./s3client";
+import { deleteFile, fetchFile, fileExists, getSignedGetObjectUrl, getSignedPutObjectUrl, listFiles, uploadFile } from "./s3client";
 
 const s3RecipeFilesBasePath = "recipes"
 const s3RecipeImagesBasePath = "images"
@@ -63,6 +63,24 @@ export async function createRecipe(recipe: Recipe, allowExisting: boolean): Prom
   uploadFile(key, JSON.stringify(recipe));
   recipeCache.del(INDEX_CACHE_KEY);
   return getSignedPutObjectUrl(getKeyForImage(recipe.id));
+}
+
+export async function deleteRecipe(id: string) {
+  const recipeKey = getKeyForRecipe(id);
+  try {
+    deleteFile(recipeKey);
+    recipeCache.del(id);
+  } catch (error) {
+    console.error("Failed to delete recipe with id: ", id);
+  }
+
+  const imageKey = getKeyForImage(id);
+  try {
+    deleteFile(imageKey);
+  } catch (error) {
+    console.error("Failed to delete recipe image with id: ", id);
+  }
+  recipeCache.del(INDEX_CACHE_KEY);
 }
 
 function getKeyForRecipe(id: string): string {
