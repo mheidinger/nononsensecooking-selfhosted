@@ -62,6 +62,7 @@ export async function createRecipe(recipe: Recipe, allowExisting: boolean): Prom
   }
   uploadFile(key, JSON.stringify(recipe));
   recipeCache.del(INDEX_CACHE_KEY);
+  recipeCache.del(recipe.id);
   return getSignedPutObjectUrl(getKeyForImage(recipe.id));
 }
 
