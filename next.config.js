@@ -9,7 +9,7 @@ const { parsed: awsEnv } = dotenv.config({
 module.exports = {
   i18n,
   reactStrictMode: true,
-  experimental: {
+  compiler: {
     styledComponents: true,
   },
   images: {
