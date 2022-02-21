@@ -4,7 +4,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import ErrorNotification from "../../../components/edit/ErrorNotification";
-import { Button } from "../../../components/edit/Inputs";
+import { Button } from "../../../components/Inputs";
 import PageTitle from "../../../components/PageTitle";
 import { deleteRecipe } from "../../../lib/client/upload";
 import { fetchSingleRecipe } from "../../../lib/recipes";

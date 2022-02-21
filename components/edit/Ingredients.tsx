@@ -1,7 +1,7 @@
 import { useTranslation } from "next-i18next";
 import { Ingredient } from "../../models/Ingredient";
 import { Unit } from "../../models/Unit";
-import { AddButton, GroupedInput, Input, InputLabel, InputRow, Select, RemoveButton } from "./Inputs";
+import { AddButton, GroupedInput, Input, InputLabel, InputRow, Select, RemoveButton } from "../Inputs";
 import Icon from "@mdi/react";
 import { mdiClose, mdiDrag } from "@mdi/js";
 import { useCallback, useMemo } from "react";

@@ -51,6 +51,11 @@
   "delete": {
     "pagetitle": "Rezept löschen"
   },
+  "all": {
+    "filter": {
+      "diet": "Ernährungsfilter"
+    }
+  },
   "locales": {
     "en-US": "Englisch (USA)",
     "de-DE": "Deutsch (Deutschland)"

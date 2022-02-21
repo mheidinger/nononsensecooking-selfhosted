@@ -1,6 +1,6 @@
 import { useTranslation } from "next-i18next";
 import { useEffect, useRef, DragEvent, useCallback } from "react";
-import { AddButton, GroupedInput, InputLabel, InputRow, RemoveButton, StepInput } from "./Inputs";
+import { AddButton, GroupedInput, InputLabel, InputRow, RemoveButton, StepInput } from "../Inputs";
 import autosize from "autosize";
 import Icon from "@mdi/react";
 import { mdiClose, mdiDrag } from "@mdi/js";

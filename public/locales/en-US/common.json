@@ -51,6 +51,11 @@
   "delete": {
     "pagetitle": "Delete Recipe"
   },
+  "all": {
+    "filter": {
+      "diet": "Diet Filter"
+    }
+  },
   "locales": {
     "en-US": "English (US)",
     "de-DE": "German (Germany)"

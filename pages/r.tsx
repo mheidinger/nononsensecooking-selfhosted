@@ -2,11 +2,9 @@ import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import DishList from "../components/DishList";
-import DishListItem from "../components/DishListItem";
 import { PaddedSection } from "../components/PaddedSection";
 import PageTitle from "../components/PageTitle";
 import { fetchRecipeIndex } from "../lib/recipes";
-import { Recipe } from "../models/Recipe";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const recipeIndex = await fetchRecipeIndex();
@@ -33,15 +31,7 @@ export default function Recipes({
     <>
       <PageTitle title={t("home.allrecipes")} />
       <PaddedSection title={t("home.allrecipes")} smallHeadings>
-        <DishList>
-          {recipes
-            .map((recipe: Recipe) => (
-              <DishListItem
-                key={recipe.id}
-                {...recipe}
-              />
-            ))}
-        </DishList>
+      <DishList recipes={recipes} />
       </PaddedSection>
     </>
   );

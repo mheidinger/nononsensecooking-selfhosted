@@ -6,7 +6,7 @@ import { Recipe } from "../../models/Recipe";
 import { StyledHeading } from "../StyledHeading";
 import GeneralInformation from "./GeneralInformation";
 import Ingredients from "./Ingredients";
-import { AddButton, InputRow } from "./Inputs";
+import { AddButton, InputRow } from "../Inputs";
 import Steps from "./Steps";
 
 type Props = {

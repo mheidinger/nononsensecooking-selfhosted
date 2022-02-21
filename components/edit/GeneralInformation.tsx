@@ -4,7 +4,7 @@ import { useTranslation } from "next-i18next";
 import { useEffect, useMemo } from "react";
 import { useFilePicker } from "use-file-picker";
 import { Diet, Recipe } from "../../models/Recipe";
-import { InputLabel, InputRow, Input, Select, FileSelector, GroupedInput, RemoveButton } from "./Inputs";
+import { InputLabel, InputRow, Input, Select, FileSelector, GroupedInput, RemoveButton } from "../Inputs";
 
 type Props = {
   recipe: Recipe;

@@ -3,7 +3,6 @@ import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import styled from "styled-components";
 import DishList from "../components/DishList";
-import DishListItem from "../components/DishListItem";
 import { PaddedSection } from "../components/PaddedSection";
 import PageTitle from "../components/PageTitle";
 import SearchBar from "../components/SearchBar";
@@ -80,15 +79,7 @@ export default function Search({
     <>
       <PageTitle title={t("search.pagetitle")} />
       <PaddedSection title={t("search.sectiontitle", { searchTerm })}>
-        <DishList>
-          {results?.map(({ item: recipe }) => (
-            <DishListItem
-              key={recipe.id}
-              id={recipe.id}
-              {...recipe}
-            />
-          ))}
-        </DishList>
+        <DishList recipes={results} />
       </PaddedSection>
     </>
   );
