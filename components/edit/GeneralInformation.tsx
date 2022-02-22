@@ -2,15 +2,21 @@ import { mdiClose } from "@mdi/js";
 import Icon from "@mdi/react";
 import { useTranslation } from "next-i18next";
 import { useEffect, useMemo } from "react";
+import styled from "styled-components";
 import { useFilePicker } from "use-file-picker";
 import { Diet, Recipe } from "../../models/Recipe";
 import { InputLabel, InputRow, Input, Select, FileSelector, GroupedInput, RemoveButton } from "../Inputs";
+import TagSelect from "../TagSelect";
 
 type Props = {
   recipe: Recipe;
   setRecipe(recipe: Recipe): void;
   setRecipeImageFile(file?: File): void;
 };
+
+const WidthTagSelect = styled(TagSelect)`
+  width: 70%;
+`;
 
 const GeneralInformation = ({recipe, setRecipe, setRecipeImageFile}: Props) => {
   const { t: tr } = useTranslation("recipe");
@@ -127,7 +133,14 @@ const GeneralInformation = ({recipe, setRecipe, setRecipeImageFile}: Props) => {
             <Icon path={mdiClose} size={0.8} />
           </RemoveButton>
         </GroupedInput>
-
+      </InputRow>
+      <InputRow>
+        <InputLabel width="30%">{tr("edit.tags")}</InputLabel>
+        <WidthTagSelect
+          values={recipe.tags}
+          onChange={values => setRecipe({...recipe, tags: values.map((value) => value.value)})}
+          creatable
+        />
       </InputRow>
     </>
   );

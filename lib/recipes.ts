@@ -99,6 +99,7 @@ const parseRecipeData = (id: string, recipeData: RecipeFile): Recipe => ({
   publishedAt: recipeData.publishedAt,
   source: recipeData.source || "",
   servings: parseServings(recipeData.servings),
+  tags: recipeData.tags || [],
 });
 
 function parseServings(servings: RecipeFile["servings"]): Recipe["servings"] {

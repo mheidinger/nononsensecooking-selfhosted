@@ -17,6 +17,7 @@ export interface Recipe {
   publishedAt: string;
   source: string;
   servings: Servings;
+  tags: string[];
 }
 
 export interface Servings {
@@ -36,6 +37,7 @@ export interface RecipeFile {
     count: number;
     label?: string;
   };
+  tags: string[];
 }
 
 export type RecipeInIndex = Pick<
@@ -45,18 +47,20 @@ export type RecipeInIndex = Pick<
   | "cookTime"
   | "diet"
   | "publishedAt"
+  | "tags"
 > & {
   s3Url?: string
 };
 
 export function toRecipeInIndex(
-  {id, name, cookTime, diet, publishedAt}: Recipe,
+  {id, name, cookTime, diet, publishedAt, tags}: Recipe,
 ): RecipeInIndex {
   return {
     id,
     name,
     cookTime,
     diet,
-    publishedAt
+    publishedAt,
+    tags,
   }
 }
