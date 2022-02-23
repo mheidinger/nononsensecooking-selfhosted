@@ -14,6 +14,7 @@ type Props = {
   onChange?: (values: TagSelectValue[]) => void;
   creatable?: boolean;
   className?: string;
+  onlyShow?: boolean;
 };
 
 function getTagColors(tag: string) {
@@ -24,24 +25,35 @@ function getTagColors(tag: string) {
   };
 }
 
-const colorStyles: StylesConfig<TagSelectValue, true> = {
-  multiValue: (styles, { data }) => {
-    const colors = getTagColors(data.value);
-    return {
-      ...styles,
-      backgroundColor: colors.backgroundColor,
-      color: colors.fontColor,
-    };
-  },
-  multiValueLabel: (styles, { data }) => ({
-    ...styles,
-    color: getTagColors(data.value).fontColor,
-  }),
-};
-
-const TagSelect = ({options, values, onChange, creatable, className}: Props) => {
+const TagSelect = ({options, values, onChange, creatable, className, onlyShow}: Props) => {
   const selectOptions: TagSelectValue[] = options ? options.map((option) => ({label: option, value: option})) : [];
   const selectValues: TagSelectValue[] = values ? values.map((value) => ({label: value, value: value})) : [];
+
+  const colorStyles: StylesConfig<TagSelectValue, true> = {
+    multiValue: (styles, { data }) => {
+      const colors = getTagColors(data.value);
+      return {
+        ...styles,
+        backgroundColor: colors.backgroundColor,
+        color: colors.fontColor,
+        visibility: "visible",
+      };
+    },
+    multiValueLabel: (styles, { data }) => ({
+      ...styles,
+      color: getTagColors(data.value).fontColor,
+      padding: "6px",
+      visibility: "visible",
+    }),
+    multiValueRemove: (styles) => ({
+      ...styles,
+      display: "none",
+    }),
+    container: (styles) => ({
+      ...styles,
+      visibility: "hidden",
+    })
+  };
 
   const selectProps = {
     options: selectOptions,
@@ -49,6 +61,7 @@ const TagSelect = ({options, values, onChange, creatable, className}: Props) => 
     onChange: onChange,
     isMulti: true,
     styles: colorStyles,
+    isDisabled: onlyShow,
   };
 
   return (
