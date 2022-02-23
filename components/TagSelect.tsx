@@ -15,6 +15,7 @@ type Props = {
   creatable?: boolean;
   className?: string;
   onlyShow?: boolean;
+  instanceId?: string;
 };
 
 function getTagColors(tag: string) {
@@ -25,7 +26,7 @@ function getTagColors(tag: string) {
   };
 }
 
-const TagSelect = ({options, values, onChange, creatable, className, onlyShow}: Props) => {
+const TagSelect = ({options, values, onChange, creatable, className, onlyShow, instanceId}: Props) => {
   const selectOptions: TagSelectValue[] = options ? options.map((option) => ({label: option, value: option})) : [];
   const selectValues: TagSelectValue[] = values ? values.map((value) => ({label: value, value: value})) : [];
 
@@ -62,6 +63,7 @@ const TagSelect = ({options, values, onChange, creatable, className, onlyShow}: 
     isMulti: true,
     styles: colorStyles,
     isDisabled: onlyShow,
+    instanceId
   };
 
   return (

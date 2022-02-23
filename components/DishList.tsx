@@ -75,11 +75,13 @@ function DishList({ recipes, availableTags }: Props) {
           isMulti={true}
           onChange={(values: DietFilterOption[]) => setDietFilter(values.map((val) => val.value))}
           placeholder={t("all.filter.diet")}
+          instanceId={"diet-filter"}
         />
         <TagFilter
           options={availableTags}
           values={tagFilter}
           onChange={values => setTagFilter(values.map((val) => val.value))}
+          instanceId={"tag-filter"}
         />
       </Filters>
       <List>

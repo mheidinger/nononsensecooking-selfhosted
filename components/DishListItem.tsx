@@ -100,7 +100,7 @@ const DishListItem = ({ id, name, cookTime, diet, s3Url, tags }: Props) => {
               </span>
             </IconStat>
             <IconForDiet id={`diet_${id}`} diet={diet} size={0.75} />
-            <TagSelect values={tags} onlyShow />
+            <TagSelect values={tags} onlyShow instanceId={id}/>
           </DishStatLine>
         </DishStats>
       </Dish>

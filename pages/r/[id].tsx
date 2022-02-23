@@ -134,7 +134,7 @@ const SingleRecipe = ({
               <span title={source}>{displaySource}</span>
             }
           </IconStat>
-          <TagSelect values={tags} onlyShow />
+          <TagSelect values={tags} onlyShow instanceId={id} />
         </RecipeStats>
         <div>
         </div>

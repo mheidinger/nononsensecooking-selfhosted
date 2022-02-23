@@ -142,6 +142,7 @@ const GeneralInformation = ({recipe, setRecipe, setRecipeImageFile, availableTag
           options={availableTags}
           onChange={values => setRecipe({...recipe, tags: values.map((value) => value.value)})}
           creatable
+          instanceId={recipe.id}
         />
       </InputRow>
     </>
