@@ -3,26 +3,28 @@ import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { fetchSingleRecipe } from "../../../lib/recipes";
+import { fetchSingleRecipe, getRecipeTags } from "../../../lib/recipes";
 import { uploadImage, uploadRecipe } from "../../../lib/client/upload";
 import PageTitle from "../../../components/PageTitle";
 import EditRecipe from "../../../components/edit/EditRecipe";
 import ErrorNotification from "../../../components/edit/ErrorNotification";
 
-export const getServerSideProps: GetServerSideProps = async ({ locale, params }) => {
-  const { id } = params!;
+export const getServerSideProps: GetServerSideProps = async ({ locale, query }) => {
+  const { id } = query;
   const recipe = await fetchSingleRecipe(id as string);
+  const availableTags = await getRecipeTags();
 
   const lang = locale ? locale : "en-US";
   return {
     props: {
       ...(await serverSideTranslations(lang, ["common", "header", "footer", "recipe"])),
       recipe,
+      availableTags,
     },
   };
 };
 
-export default function CreateRecipe({recipe: origRecipe}: InferGetServerSidePropsType<
+export default function CreateRecipe({recipe: origRecipe, availableTags}: InferGetServerSidePropsType<
   typeof getServerSideProps
 >) {
   const { t } = useTranslation("common");
@@ -45,7 +47,7 @@ export default function CreateRecipe({recipe: origRecipe}: InferGetServerSidePro
         await uploadImage(result.imagePutURL, recipeImageFile);
       }
 
-      router.push(`/r/${result.recipeID}`);
+      router.push(`/r/${result.recipeID}?invalidate=true`);
     } catch (error) {
       console.error(error);
       setErrorMessage(error.toString());
@@ -62,6 +64,7 @@ export default function CreateRecipe({recipe: origRecipe}: InferGetServerSidePro
         setRecipe={setRecipe}
         saveRecipe={saveRecipe}
         setRecipeImageFile={setRecipeImageFile}
+        availableTags={availableTags}
       />
       <ErrorNotification
         message={errorMessage}

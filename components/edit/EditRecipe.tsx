@@ -15,6 +15,7 @@ type Props = {
   setRecipe(recipe: Recipe): void;
   saveRecipe(): void;
   setRecipeImageFile(file?: File): void;
+  availableTags: string[];
 };
 
 const COLUMN_MAX_WIDTH = "1300px";
@@ -77,7 +78,7 @@ const SaveButton = styled(AddButton)`
   }
 `;
 
-const EditRecipe = ({title, recipe, setRecipe, saveRecipe, setRecipeImageFile}: Props) => {
+const EditRecipe = ({title, recipe, setRecipe, saveRecipe, setRecipeImageFile, availableTags}: Props) => {
   const { t: tr } = useTranslation("recipe");
   const setIngredients = useCallback((ingredients: Ingredient[]) => {
     setRecipe({...recipe, ingredients});
@@ -97,6 +98,7 @@ const EditRecipe = ({title, recipe, setRecipe, saveRecipe, setRecipeImageFile}: 
           recipe={recipe}
           setRecipe={setRecipe}
           setRecipeImageFile={setRecipeImageFile}
+          availableTags={availableTags}
         />
         <HorizontalLine />
         <Ingredients

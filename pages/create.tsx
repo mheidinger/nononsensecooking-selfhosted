@@ -9,6 +9,7 @@ import { Unit } from "../models/Unit";
 import { useRouter } from "next/router";
 import { uploadImage, uploadRecipe } from "../lib/client/upload";
 import ErrorNotification from "../components/edit/ErrorNotification";
+import { getRecipeTags } from "../lib/recipes";
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   const initRecipe: Recipe = {
@@ -26,16 +27,18 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
     tags: [],
   };
 
+  const availableTags = await getRecipeTags();
   const lang = locale ? locale : "en-US";
   return {
     props: {
       ...(await serverSideTranslations(lang, ["common", "header", "footer", "recipe"])),
       initRecipe,
+      availableTags,
     },
   };
 };
 
-export default function CreateRecipe({initRecipe}: InferGetStaticPropsType<
+export default function CreateRecipe({initRecipe, availableTags}: InferGetStaticPropsType<
   typeof getStaticProps
 >) {
   const { t } = useTranslation("common");
@@ -58,7 +61,7 @@ export default function CreateRecipe({initRecipe}: InferGetStaticPropsType<
         await uploadImage(result.imagePutURL, recipeImageFile);
       }
 
-      router.push(`/r/${result.recipeID}`);
+      router.push(`/r/${result.recipeID}?invalidate=true`);
     } catch (error) {
       console.error(error);
       setErrorMessage(error.toString());
@@ -75,6 +78,7 @@ export default function CreateRecipe({initRecipe}: InferGetStaticPropsType<
         setRecipe={setRecipe}
         saveRecipe={saveRecipe}
         setRecipeImageFile={setRecipeImageFile}
+        availableTags={availableTags}
       />
       <ErrorNotification
         message={errorMessage}

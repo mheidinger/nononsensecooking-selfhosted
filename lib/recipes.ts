@@ -13,6 +13,11 @@ const STD_TTL = 600;
 const CHECK_PERIOD = 120;
 const recipeCache = new NodeCache({stdTTL: STD_TTL, checkperiod: CHECK_PERIOD});
 
+export function invalidateCache(id: string) {
+  console.log("Clear cache for index and", id);
+  recipeCache.del([INDEX_CACHE_KEY, id]);
+}
+
 export async function fetchRecipeIndex(): Promise<RecipeInIndex[]> {
   let index = recipeCache.get(INDEX_CACHE_KEY) as RecipeInIndex[];
   if (index == undefined) {
@@ -64,22 +69,21 @@ export async function getRecipeImageUrl(id: string) {
   return url;
 }
 
+// Called from API => different recipeCache instance!
 export async function createRecipe(recipe: Recipe, allowExisting: boolean): Promise<string> {
   const key = getKeyForRecipe(recipe.id);
   if (await fileExists(key) && !allowExisting) {
     throw new Error("recipe id (name) already exists")
   }
   uploadFile(key, JSON.stringify(recipe));
-  recipeCache.del(INDEX_CACHE_KEY);
-  recipeCache.del(recipe.id);
   return getSignedPutObjectUrl(getKeyForImage(recipe.id));
 }
 
+// Called from API => different recipeCache instance!
 export async function deleteRecipe(id: string) {
   const recipeKey = getKeyForRecipe(id);
   try {
     deleteFile(recipeKey);
-    recipeCache.del(id);
   } catch (error) {
     console.error("Failed to delete recipe with id: ", id);
   }
@@ -90,7 +94,6 @@ export async function deleteRecipe(id: string) {
   } catch (error) {
     console.error("Failed to delete recipe image with id: ", id);
   }
-  recipeCache.del(INDEX_CACHE_KEY);
 }
 
 function getKeyForRecipe(id: string): string {

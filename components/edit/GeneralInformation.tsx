@@ -12,13 +12,14 @@ type Props = {
   recipe: Recipe;
   setRecipe(recipe: Recipe): void;
   setRecipeImageFile(file?: File): void;
+  availableTags: string[];
 };
 
 const WidthTagSelect = styled(TagSelect)`
   width: 70%;
 `;
 
-const GeneralInformation = ({recipe, setRecipe, setRecipeImageFile}: Props) => {
+const GeneralInformation = ({recipe, setRecipe, setRecipeImageFile, availableTags}: Props) => {
   const { t: tr } = useTranslation("recipe");
 
   const dietOptions = useMemo(() => {
@@ -138,6 +139,7 @@ const GeneralInformation = ({recipe, setRecipe, setRecipeImageFile}: Props) => {
         <InputLabel width="30%">{tr("edit.tags")}</InputLabel>
         <WidthTagSelect
           values={recipe.tags}
+          options={availableTags}
           onChange={values => setRecipe({...recipe, tags: values.map((value) => value.value)})}
           creatable
         />

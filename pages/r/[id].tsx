@@ -4,7 +4,8 @@ import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Link from "next/link";
-import { useState } from "react";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import DishImage from "../../components/DishImage";
 import IconForDiet from "../../components/IconForDiet";
@@ -15,11 +16,14 @@ import StepList from "../../components/StepList";
 import { StyledHeading } from "../../components/StyledHeading";
 import TagSelect from "../../components/TagSelect";
 import {
-  fetchSingleRecipe, getRecipeImageUrl,
+  fetchSingleRecipe, getRecipeImageUrl, invalidateCache
 } from "../../lib/recipes";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { id } = context.params!;
+  const { id, invalidate } = context.query;
+  if (invalidate && invalidate === "true") {
+    invalidateCache(id as string);
+  }
   const recipe = await fetchSingleRecipe(id as string);
   const s3Url = await getRecipeImageUrl(id as string);
   const lang = context.locale ? context.locale : "en-US";
@@ -103,6 +107,15 @@ const SingleRecipe = ({
   const { t: tr } = useTranslation("recipe");
   const [currentServingsCount, setServingsCount] = useState(servings.count);
   const displaySource = truncate(source, 20);
+
+  // Remove invalidate query from URL
+  const router = useRouter();
+  useEffect(() => {
+    if (router.query.invalidate) {
+      router.replace(`/r/${id}`, undefined, { scroll: false, shallow: true });
+    }
+  }, [id, router])
+
   return (
     <>
       <PageTitle title={name} />

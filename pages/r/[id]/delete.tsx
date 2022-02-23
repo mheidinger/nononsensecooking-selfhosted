@@ -10,8 +10,8 @@ import { deleteRecipe } from "../../../lib/client/upload";
 import { fetchSingleRecipe } from "../../../lib/recipes";
 import { useEffect, useState } from "react";
 
-export const getServerSideProps: GetServerSideProps = async ({ locale, params }) => {
-  const { id } = params!;
+export const getServerSideProps: GetServerSideProps = async ({ locale, query }) => {
+  const { id } = query;
   const recipe = await fetchSingleRecipe(id as string);
 
   const lang = locale ? locale : "en-US";

@@ -1,11 +1,13 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 import DishCard from "../components/DishCard";
 import { PaddedSection } from "../components/PaddedSection";
 import PageTitle from "../components/PageTitle";
 import Track from "../components/Track";
-import { fetchRecipeIndex } from "../lib/recipes";
+import { fetchRecipeIndex, invalidateCache } from "../lib/recipes";
 import { Recipe, RecipeInIndex } from "../models/Recipe";
 
 function shuffle(a: any[]) {
@@ -17,6 +19,10 @@ function shuffle(a: any[]) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { id, invalidate } = context.query;
+  if (invalidate && invalidate === "true") {
+    invalidateCache(id as string);
+  }
   const allRecipes = await fetchRecipeIndex();
   // TODO: Cache this and refresh every day
   const recipesOfTheDay = shuffle(allRecipes)
@@ -38,6 +44,15 @@ export default function Home({
   latestRecipes,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { t } = useTranslation("common");
+
+  // Remove invalidate query from URL
+  const router = useRouter();
+  useEffect(() => {
+    if (router.query.invalidate) {
+      router.replace('/', undefined, { scroll: false, shallow: true });
+    }
+  }, [router])
+
   return (
     <>
       <PageTitle />
