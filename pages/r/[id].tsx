@@ -13,6 +13,7 @@ import PageTitle from "../../components/PageTitle";
 import ServingsChooser from "../../components/ServingsChooser";
 import StepList from "../../components/StepList";
 import { StyledHeading } from "../../components/StyledHeading";
+import TagSelect from "../../components/TagSelect";
 import {
   fetchSingleRecipe, getRecipeImageUrl,
 } from "../../lib/recipes";
@@ -62,6 +63,7 @@ const RecipeStats = styled.header`
   flex-wrap: wrap;
   gap: 1rem;
   margin-bottom: 2rem;
+  flex-wrap: wrap;
 `;
 
 const IconStat = styled.span`
@@ -96,6 +98,7 @@ const SingleRecipe = ({
   source,
   s3Url,
   servings,
+  tags,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const { t: tr } = useTranslation("recipe");
   const [currentServingsCount, setServingsCount] = useState(servings.count);
@@ -118,6 +121,7 @@ const SingleRecipe = ({
               <span title={source}>{displaySource}</span>
             }
           </IconStat>
+          <TagSelect values={tags} onlyShow />
         </RecipeStats>
         <div>
         </div>

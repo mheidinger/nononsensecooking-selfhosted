@@ -28,7 +28,7 @@ const Ingredients = ({ingredients, setIngredients}: Props) => {
   const unitOptions = useMemo(() => {
     const options: JSX.Element[] = [];
     for (const unit in Unit) {
-      options.push(<option value={Unit[unit]} key={Unit[unit]}>{tr(`unit.${Unit[unit]}`)}</option>)
+      options.push(<option value={Unit[unit]} key={Unit[unit]}>{tr(`unit.${Unit[unit]}`, {amount: ""}).trim()}</option>)
     }
     return options;
   }, [tr]);

@@ -30,7 +30,8 @@ function parseBody(body: any): Recipe {
     source: "",
     servings: {
       count: 0,
-    }
+    },
+    tags: [],
   };
 
   if (!body.name || typeof body.name !== "string"|| body.name === "") {
@@ -99,6 +100,14 @@ function parseBody(body: any): Recipe {
   recipe.servings.count = body.servings.count;
   if (body.servings.label) {
     recipe.servings.label = body.servings.label;
+  }
+
+  if (body.tags && Array.isArray(body.tags) && body.tags.length > 0) {
+    for (const tag of body.tags) {
+      if (tag && typeof tag === "string") {
+        recipe.tags.push(tag);
+      }
+    }
   }
 
   return recipe;

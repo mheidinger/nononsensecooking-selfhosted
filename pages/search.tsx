@@ -7,6 +7,7 @@ import { PaddedSection } from "../components/PaddedSection";
 import PageTitle from "../components/PageTitle";
 import SearchBar from "../components/SearchBar";
 import { queryParam } from "../lib/queryParameter";
+import { getRecipeTags } from "../lib/recipes";
 import { sanitize, searchRecipes } from "./api/search";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -27,10 +28,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
   const searchTerm = sanitize(unsanitizedSearchTerm);
   const results = await searchRecipes(searchTerm);
+  const availableTags = await getRecipeTags();
   return {
     props: {
       searchTerm,
       results,
+      availableTags,
       ...(await serverSideTranslations(lang, [
         "common",
         "header",
@@ -62,6 +65,7 @@ const CenteredSection = styled.section`
 export default function Search({
   searchTerm,
   results,
+  availableTags,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { t } = useTranslation("common");
   const { t: th } = useTranslation("header");
@@ -79,7 +83,7 @@ export default function Search({
     <>
       <PageTitle title={t("search.pagetitle")} />
       <PaddedSection title={t("search.sectiontitle", { searchTerm })}>
-        <DishList recipes={results} />
+        <DishList recipes={results} availableTags={availableTags} />
       </PaddedSection>
     </>
   );

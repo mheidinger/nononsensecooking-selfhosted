@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { Recipe, RecipeInIndex } from "../models/Recipe";
 import DishImage from "./DishImage";
 import IconForDiet from "./IconForDiet";
+import TagSelect from "./TagSelect";
 
 type Props = {
   id: Recipe["id"];
@@ -13,6 +14,7 @@ type Props = {
   cookTime: Recipe["cookTime"];
   diet: Recipe["diet"];
   s3Url?: RecipeInIndex["s3Url"];
+  tags: Recipe["tags"];
 };
 
 const StyledCard = styled.a`
@@ -71,6 +73,7 @@ const DishName = styled.h4`
 
 const DishStatLine = styled.span`
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 1rem;
 
@@ -87,7 +90,11 @@ const IconStat = styled.span`
   gap: 0.25rem;
 `;
 
-const DishCard = ({ id, name, cookTime, diet, s3Url }: Props) => {
+const MaxWidthTagSelect = styled(TagSelect)`
+  max-width: 300px;
+`;
+
+const DishCard = ({ id, name, cookTime, diet, s3Url, tags }: Props) => {
   const { t } = useTranslation("common");
   return (
     <Link href={`/r/${id}`} passHref>
@@ -117,6 +124,7 @@ const DishCard = ({ id, name, cookTime, diet, s3Url }: Props) => {
               </span>
             </IconStat>
             <IconForDiet id={`diet_${id}`} diet={diet} />
+            <MaxWidthTagSelect values={tags} onlyShow />
           </DishStatLine>
         </DishStats>
       </StyledCard>

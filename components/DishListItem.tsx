@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { Recipe, RecipeInIndex } from "../models/Recipe";
 import DishImage from "./DishImage";
 import IconForDiet from "./IconForDiet";
+import TagSelect from "./TagSelect";
 
 type Props = {
   id: Recipe["id"];
@@ -13,6 +14,7 @@ type Props = {
   cookTime: Recipe["cookTime"];
   diet: Recipe["diet"];
   s3Url?: RecipeInIndex["s3Url"];
+  tags: Recipe["tags"];
 };
 
 const HEIGHT = 8; //rem
@@ -21,7 +23,6 @@ const Dish = styled.a`
   position: relative;
   display: flex;
   align-items: center;
-  height: ${HEIGHT}rem;
   overflow: hidden;
   color: var(--color-text-primary);
 
@@ -60,6 +61,7 @@ const DishStatLine = styled.span`
   display: flex;
   align-items: center;
   gap: 1rem;
+  flex-wrap: wrap;
 `;
 
 const IconStat = styled.span`
@@ -68,7 +70,7 @@ const IconStat = styled.span`
   gap: 0.25rem;
 `;
 
-const DishListItem = ({ id, name, cookTime, diet, s3Url }: Props) => {
+const DishListItem = ({ id, name, cookTime, diet, s3Url, tags }: Props) => {
   const { t } = useTranslation("common");
   return (
     <Link href={`/r/${id}`} passHref prefetch={false}>
@@ -98,6 +100,7 @@ const DishListItem = ({ id, name, cookTime, diet, s3Url }: Props) => {
               </span>
             </IconStat>
             <IconForDiet id={`diet_${id}`} diet={diet} size={0.75} />
+            <TagSelect values={tags} onlyShow />
           </DishStatLine>
         </DishStats>
       </Dish>

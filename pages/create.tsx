@@ -23,6 +23,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
     servings: {
       count: 2,
     },
+    tags: [],
   };
 
   const lang = locale ? locale : "en-US";

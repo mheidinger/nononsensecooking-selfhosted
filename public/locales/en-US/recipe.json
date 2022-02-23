@@ -21,7 +21,8 @@
     "image": "Image:",
     "fileSelect": "Select File...",
     "servings": "Servings:",
-    "save": "Save Recipe"
+    "save": "Save Recipe",
+    "tags": "Tags:"
   },
   "delete": {
     "question": "Are you sure to delete this recipe?",

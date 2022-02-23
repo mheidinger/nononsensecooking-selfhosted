@@ -21,7 +21,8 @@
     "image": "Bild:",
     "fileSelect": "Datei auswählen...",
     "servings": "Portionen:",
-    "save": "Rezept speichern"
+    "save": "Rezept speichern",
+    "tags": "Tags:"
   },
   "delete": {
     "question": "Folgendes Rezept wirklich löschen?",
