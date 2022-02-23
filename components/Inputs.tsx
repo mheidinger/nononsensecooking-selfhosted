@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { default as ReactSelect } from "react-select";
 
 const COLUMN_MAX_WIDTH = "1300px";
 
