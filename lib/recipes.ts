@@ -29,6 +29,15 @@ export async function fetchRecipeIndex(): Promise<RecipeInIndex[]> {
   )
 }
 
+export async function getRecipeTags(): Promise<string[]> {
+  const index = await fetchRecipeIndex();
+  const tagSet = new Set<string>()
+  index.forEach((recipe) =>
+    recipe.tags.forEach((tag) => tagSet.add(tag))
+  );
+  return Array.from(tagSet);
+}
+
 export async function fetchSingleRecipe(id: string): Promise<Recipe> {
   let recipe = recipeCache.get(id) as Recipe;
   if (recipe == undefined) {

@@ -3,7 +3,7 @@ import Select, { StylesConfig } from "react-select";
 import Creatable from 'react-select/creatable';
 import stc from "string-to-color";
 
-type TagSelectValue = {
+export type TagSelectValue = {
   label: string;
   value: string;
 }
@@ -47,11 +47,11 @@ const TagSelect = ({options, values, onChange, creatable, className, onlyShow}: 
     }),
     multiValueRemove: (styles) => ({
       ...styles,
-      display: "none",
+      display: onlyShow ? "none" : "flex",
     }),
     container: (styles) => ({
       ...styles,
-      visibility: "hidden",
+      visibility: onlyShow ? "hidden" : "visible",
     })
   };
 
