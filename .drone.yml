@@ -2,6 +2,16 @@ kind: pipeline
 name: default
 
 steps:
+- name: build
+  image: node
+  commands:
+    - npm ci
+    - npm run build
+  when:
+    branch:
+      exclude:
+        - main
+
 - name: push-registry
   image: plugins/docker
   settings:
