@@ -4,6 +4,8 @@ name: default
 steps:
 - name: build
   image: node
+  environment:
+    S3_DOMAIN: example.com
   commands:
     - npm ci
     - npm run build
