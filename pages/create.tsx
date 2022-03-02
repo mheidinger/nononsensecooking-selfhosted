@@ -1,4 +1,4 @@
-import { GetStaticProps, InferGetStaticPropsType } from "next";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import PageTitle from "../components/PageTitle";
@@ -11,7 +11,7 @@ import { uploadImage, uploadRecipe } from "../lib/client/upload";
 import ErrorNotification from "../components/edit/ErrorNotification";
 import { getRecipeTags } from "../lib/recipes";
 
-export const getStaticProps: GetStaticProps = async ({ locale }) => {
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   const initRecipe: Recipe = {
     id: "",
     name: "New Recipe",
@@ -38,8 +38,8 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
   };
 };
 
-export default function CreateRecipe({initRecipe, availableTags}: InferGetStaticPropsType<
-  typeof getStaticProps
+export default function CreateRecipe({initRecipe, availableTags}: InferGetServerSidePropsType<
+  typeof getServerSideProps
 >) {
   const { t } = useTranslation("common");
   const [ recipe, setRecipe ] = useState(initRecipe);
