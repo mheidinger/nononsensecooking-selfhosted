@@ -10,8 +10,8 @@
     "check-translations": "ts-node ./scripts/check-translations.ts"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.49.0",
-    "@aws-sdk/s3-request-presigner": "^3.49.0",
+    "@aws-sdk/client-s3": "^3.53.1",
+    "@aws-sdk/s3-request-presigner": "^3.53.1",
     "@aws-sdk/types": "^3.53.0",
     "@aws-sdk/util-create-request": "^3.53.0",
     "@aws-sdk/util-format-url": "^3.53.0",
@@ -19,24 +19,24 @@
     "@mdi/react": "^1.5.0",
     "@types/chroma-js": "^2.1.3",
     "autosize": "^5.0.1",
-    "babel-plugin-styled-components": "^2.0.2",
+    "babel-plugin-styled-components": "^2.0.6",
     "chroma-js": "^2.4.2",
     "dotenv": "^16.0.0",
     "fuse.js": "^6.5.3",
     "lodash": "^4.17.21",
     "next": "^12.1.0",
-    "next-i18next": "^10.2.0",
+    "next-i18next": "^10.5.0",
     "node-cache": "^5.1.2",
     "node-gzip": "^1.1.2",
     "prop-types": "^15.8.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-select": "^5.2.2",
-    "sharp": "^0.30.1",
+    "sharp": "^0.30.2",
     "slug": "^5.2.0",
     "string-to-color": "^2.2.2",
     "styled-components": "^5.3.3",
-    "typescript": "^4.5.5",
+    "typescript": "^4.6.2",
     "use-file-picker": "^1.4.1",
     "yaml": "^1.10.2"
   },
@@ -46,8 +46,8 @@
     "@types/react": "^17.0.39",
     "@types/slug": "^5.0.3",
     "@types/styled-components": "^5.1.23",
-    "eslint": "^8.8.0",
+    "eslint": "^8.10.0",
     "eslint-config-next": "^12.0.10",
-    "ts-node": "^10.5.0"
+    "ts-node": "^10.6.0"
   }
 }
