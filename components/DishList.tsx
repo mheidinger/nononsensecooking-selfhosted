@@ -1,10 +1,10 @@
 import { useTranslation } from "next-i18next";
 import { useMemo, useState } from "react";
-import Select from "react-select";
+import Select, { StylesConfig } from "react-select";
 import styled from "styled-components";
 import { Diet, Recipe } from "../models/Recipe";
 import DishListItem from "./DishListItem";
-import TagSelect, { TagSelectValue } from "./TagSelect";
+import TagSelect from "./TagSelect";
 
 type Props = {
   recipes: Recipe[],
@@ -67,6 +67,22 @@ function DishList({ recipes, availableTags }: Props) {
     filteredRecipes = filteredRecipes.filter((recipe) => tagFilter.some(tag => recipe.tags.includes(tag)))
   }
 
+  const dietFilterStyle: StylesConfig<unknown, true> = {
+    control: (styles) => ({
+      ...styles,
+      backgroundColor: "var(--color-background-alt)",
+      border: "none",
+    }),
+    menu: (styles) => ({
+      ...styles,
+      backgroundColor: "var(--color-background-alt-solid)",
+    }),
+    option: (styles, state) => ({
+      ...styles,
+      backgroundColor: state.isFocused ? "var(--color-background)" : "var(--color-background-alt-solid)",
+    }),
+  };
+
   return (
     <>
       <Filters>
@@ -76,6 +92,7 @@ function DishList({ recipes, availableTags }: Props) {
           onChange={(values: DietFilterOption[]) => setDietFilter(values.map((val) => val.value))}
           placeholder={t("all.filter.diet")}
           instanceId={"diet-filter"}
+          styles={dietFilterStyle}
         />
         <TagFilter
           options={availableTags}

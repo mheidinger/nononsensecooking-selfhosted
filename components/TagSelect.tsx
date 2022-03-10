@@ -53,7 +53,20 @@ const TagSelect = ({options, values, onChange, creatable, className, onlyShow, i
     container: (styles) => ({
       ...styles,
       visibility: onlyShow ? "hidden" : "visible",
-    })
+    }),
+    control: (styles) => ({
+      ...styles,
+      backgroundColor: "var(--color-background-alt)",
+      border: "none",
+    }),
+    menu: (styles) => ({
+      ...styles,
+      backgroundColor: "var(--color-background-alt-solid)",
+    }),
+    option: (styles, state) => ({
+      ...styles,
+      backgroundColor: state.isFocused ? "var(--color-background)" : "var(--color-background-alt-solid)",
+    }),
   };
 
   const selectProps = {
