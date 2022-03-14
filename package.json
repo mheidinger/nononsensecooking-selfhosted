@@ -13,7 +13,7 @@
     "@aws-sdk/client-s3": "^3.53.1",
     "@aws-sdk/s3-request-presigner": "^3.53.1",
     "@aws-sdk/types": "^3.53.0",
-    "@aws-sdk/util-create-request": "^3.53.0",
+    "@aws-sdk/util-create-request": "^3.54.0",
     "@aws-sdk/util-format-url": "^3.53.0",
     "@mdi/js": "^6.5.95",
     "@mdi/react": "^1.5.0",
