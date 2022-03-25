@@ -12,7 +12,7 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.53.1",
     "@aws-sdk/s3-request-presigner": "^3.53.1",
-    "@aws-sdk/types": "^3.53.0",
+    "@aws-sdk/types": "^3.55.0",
     "@aws-sdk/util-create-request": "^3.53.0",
     "@aws-sdk/util-format-url": "^3.53.0",
     "@mdi/js": "^6.5.95",
@@ -43,7 +43,7 @@
   "devDependencies": {
     "@types/autosize": "^4.0.1",
     "@types/node-gzip": "^1.1.0",
-    "@types/react": "^17.0.39",
+    "@types/react": "^17.0.41",
     "@types/slug": "^5.0.3",
     "@types/styled-components": "^5.1.24",
     "eslint": "^8.10.0",
