@@ -28,7 +28,7 @@ steps:
       from_secret: tac_password
   when:
     branch:
-    - main
+    - deploy
     event:
       exclude:
       - pull_request
@@ -43,7 +43,7 @@ steps:
       from_secret: tac_password
   when:
     branch:
-    - main
+    - deploy
     event:
       exclude:
       - pull_request
