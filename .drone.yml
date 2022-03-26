@@ -12,7 +12,7 @@ steps:
   when:
     branch:
       exclude:
-        - main
+        - deploy
 
 - name: push-registry
   image: plugins/docker
