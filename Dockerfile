@@ -7,7 +7,7 @@ ENV S3_DOMAIN example.com
 
 COPY . .
 
-RUN npm ci
+RUN npm ci --production=false
 RUN npm run build
 RUN npm prune --production
 
