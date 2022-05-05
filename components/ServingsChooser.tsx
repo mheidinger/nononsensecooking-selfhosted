@@ -2,7 +2,6 @@ import { mdiMinus, mdiPlus } from "@mdi/js";
 import Icon from "@mdi/react";
 import { useTranslation } from "next-i18next";
 import styled from "styled-components";
-import { Servings as ServingsSpan } from "../models/Recipe";
 
 const IconButton = styled.button`
   appearance: none;

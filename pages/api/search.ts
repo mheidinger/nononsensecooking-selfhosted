@@ -16,6 +16,7 @@ const searchOptions = {
   ignoreFieldNorm: false,
   shouldSort: true,
   keys: ["name"],
+  fieldNormWeight: 0,
 };
 
 export function sanitize(term: string) {
