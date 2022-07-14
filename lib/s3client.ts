@@ -70,7 +70,6 @@ export async function getSignedPutObjectUrl(key: string, expireIn?: number): Pro
 }
 
 async function signRequest(request: HttpRequest, expiresIn?: number): Promise<string> {
-  request.headers.host = `${request.hostname}:${request.port}`;
   const signed = await signer.presign(request, {expiresIn});
   return formatUrl(signed);
 }
