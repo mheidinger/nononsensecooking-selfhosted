@@ -10,8 +10,8 @@
     "check-translations": "ts-node ./scripts/check-translations.ts"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "3.129.0",
-    "@aws-sdk/s3-request-presigner": "3.129.0",
+    "@aws-sdk/client-s3": "3.130.0",
+    "@aws-sdk/s3-request-presigner": "3.130.0",
     "@aws-sdk/types": "3.127.0",
     "@aws-sdk/util-create-request": "3.127.0",
     "@aws-sdk/util-format-url": "3.127.0",
