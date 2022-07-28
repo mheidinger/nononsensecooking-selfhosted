@@ -24,7 +24,7 @@
     "dotenv": "16.0.1",
     "fuse.js": "6.6.2",
     "lodash": "4.17.21",
-    "next": "12.2.2",
+    "next": "12.2.3",
     "next-i18next": "11.3.0",
     "node-cache": "5.1.2",
     "node-gzip": "1.1.2",
@@ -48,7 +48,7 @@
     "@types/slug": "5.0.3",
     "@types/styled-components": "5.1.25",
     "eslint": "8.20.0",
-    "eslint-config-next": "12.2.2",
+    "eslint-config-next": "12.2.3",
     "ts-node": "10.9.1"
   }
 }
