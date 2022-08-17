@@ -37,7 +37,7 @@
     "string-to-color": "2.2.2",
     "styled-components": "5.3.5",
     "typescript": "4.7.4",
-    "use-file-picker": "1.5.0",
+    "use-file-picker": "1.5.1",
     "yaml": "2.1.1"
   },
   "devDependencies": {
