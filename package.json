@@ -15,7 +15,7 @@
     "@aws-sdk/types": "3.267.0",
     "@aws-sdk/util-create-request": "3.267.0",
     "@aws-sdk/util-format-url": "3.267.0",
-    "@mdi/js": "7.0.96",
+    "@mdi/js": "7.1.96",
     "@mdi/react": "1.6.1",
     "@types/chroma-js": "2.1.4",
     "autosize": "5.0.1",
