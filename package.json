@@ -17,7 +17,7 @@
     "@aws-sdk/util-format-url": "3.303.0",
     "@mdi/js": "7.2.96",
     "@mdi/react": "1.6.1",
-    "@types/chroma-js": "2.1.5",
+    "@types/chroma-js": "2.4.0",
     "autosize": "6.0.1",
     "babel-plugin-styled-components": "2.0.7",
     "chroma-js": "2.4.2",
