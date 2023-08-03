@@ -26,7 +26,7 @@ The next step is to also modify existing recipes.
 
 ## Setup
 
-For deploying this site, the docker image at `TBD` can be used. As configuration the environment variables of [the env file](.env.local.example) need to be provided.
+For deploying this site, the docker image from the [GHCR](https://github.com/mheidinger/nononsensecooking-selfhosted/pkgs/container/nononsensecooking-selfhosted) can be used. As configuration the environment variables of [the env file](.env.local.example) need to be provided.
 
 As S3 storage either the AWS S3 can be used or a [MinIO](https://min.io) instance can be self hosted with the following caveats:
 - Recipes (see [examples](examples) for examples) are stored with the prefix `recipes/` and the file ending `.yaml`
