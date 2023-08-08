@@ -44,7 +44,7 @@
     "@types/autosize": "4.0.1",
     "@types/node": "18.17.3",
     "@types/node-gzip": "1.1.0",
-    "@types/react": "18.0.31",
+    "@types/react": "18.2.19",
     "@types/slug": "5.0.3",
     "@types/styled-components": "5.1.26",
     "eslint": "8.46.0",
