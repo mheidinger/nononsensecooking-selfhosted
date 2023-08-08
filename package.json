@@ -38,7 +38,7 @@
     "styled-components": "5.3.9",
     "typescript": "5.1.6",
     "use-file-picker": "1.5.2",
-    "yaml": "2.2.1"
+    "yaml": "2.2.2"
   },
   "devDependencies": {
     "@types/autosize": "4.0.1",
