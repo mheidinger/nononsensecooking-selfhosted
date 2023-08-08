@@ -21,7 +21,7 @@
     "autosize": "6.0.1",
     "babel-plugin-styled-components": "2.1.4",
     "chroma-js": "2.4.2",
-    "dotenv": "16.0.3",
+    "dotenv": "16.3.1",
     "fuse.js": "6.6.2",
     "lodash": "4.17.21",
     "next": "12.3.4",
