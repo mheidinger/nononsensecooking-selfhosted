@@ -26,6 +26,7 @@ steps:
       from_secret: tac_username
     password:
       from_secret: tac_password
+    purge: false
   when:
     branch:
     - deploy
@@ -46,6 +47,7 @@ steps:
       from_secret: github_username
     password:
       from_secret: github_password
+    purge: false
   when:
     branch:
     - deploy
