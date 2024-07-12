@@ -32,8 +32,8 @@ const ErrorBox = styled.div<
   color: white;
   text-align: center;
   padding: 1rem;
-  opacity: ${({$show}) => ($show ? "1" : "0")};
-  animation: ${({$show}) => ($show ? fadeIn : fadeOut)} 1s;
+  opacity: ${({ $show }) => ($show ? "1" : "0")};
+  animation: ${({ $show }) => ($show ? fadeIn : fadeOut)} 1s;
 `;
 
 const ErrorNotification = ({ message, show }: Props) => {

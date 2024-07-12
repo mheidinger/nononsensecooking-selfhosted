@@ -8,7 +8,7 @@ export const InputRow = styled.div<
   display: flex;
   justify-content: space-between;
   margin-top: 1rem;
-  margin-bottom: ${({$headingRow}) => ($headingRow ? "-.5rem" : "0")};
+  margin-bottom: ${({ $headingRow }) => ($headingRow ? "-.5rem" : "0")};
   gap: 5px;
 `;
 
@@ -18,11 +18,11 @@ export const InputLabel = styled.label<
   font-size: var(--font-size-base);
   font-weight: 600;
   margin: auto 0;
-  margin-left: ${({$indent}) => ($indent ? "3rem" : "0")};
-  ${({width}) => (width ? `width: ${width};` : "")}
+  margin-left: ${({ $indent }) => ($indent ? "3rem" : "0")};
+  ${({ width }) => (width ? `width: ${width};` : "")}
 
   @media screen and (max-width: ${COLUMN_MAX_WIDTH}) {
-    margin-left: ${({$indent}) => ($indent ? "1rem" : "0")};
+    margin-left: ${({ $indent }) => ($indent ? "1rem" : "0")};
   }
 `;
 
@@ -38,10 +38,10 @@ export const Input = styled.input<
   appearance: none;
   color: var(--color-text-primary);
   height: 2.5rem;
-  filter: ${({disabled}) =>
+  filter: ${({ disabled }) =>
     disabled ? "brightness(150%)" : "brightness(100%)"};
-  flex-grow: ${({$grow}) => $grow || 0};
-  ${({width}) => (width ? `width: ${width};` : "")}
+  flex-grow: ${({ $grow }) => $grow || 0};
+  ${({ width }) => (width ? `width: ${width};` : "")}
 `;
 
 export const Select = styled.select<
@@ -60,8 +60,8 @@ export const Select = styled.select<
   background-size: 1em;
   color: var(--color-text-primary);
   height: 2.5rem;
-  ${({width}) => (width ? `width: ${width};` : "")}
-  flex-grow: ${({$grow}) => $grow || 0};
+  ${({ width }) => (width ? `width: ${width};` : "")}
+  flex-grow: ${({ $grow }) => $grow || 0};
 
   & > option {
     background-color: var(--color-background-alt-solid);
