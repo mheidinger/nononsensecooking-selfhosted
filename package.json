@@ -10,11 +10,11 @@
     "check-translations": "ts-node ./scripts/check-translations.ts"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "3.386.0",
-    "@aws-sdk/s3-request-presigner": "3.386.0",
-    "@aws-sdk/types": "3.378.0",
-    "@aws-sdk/util-create-request": "3.378.0",
-    "@aws-sdk/util-format-url": "3.378.0",
+    "@aws-sdk/client-s3": "3.614.0",
+    "@aws-sdk/s3-request-presigner": "3.614.0",
+    "@aws-sdk/types": "3.609.0",
+    "@aws-sdk/util-create-request": "3.614.0",
+    "@aws-sdk/util-format-url": "3.609.0",
     "@mdi/js": "7.2.96",
     "@mdi/react": "1.6.1",
     "autosize": "6.0.1",
