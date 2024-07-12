@@ -5,7 +5,15 @@ import { useEffect, useMemo } from "react";
 import styled from "styled-components";
 import { useFilePicker } from "use-file-picker";
 import { Diet, Recipe } from "../../models/Recipe";
-import { InputLabel, InputRow, Input, Select, FileSelector, GroupedInput, RemoveButton } from "../Inputs";
+import {
+  InputLabel,
+  InputRow,
+  Input,
+  Select,
+  FileSelector,
+  GroupedInput,
+  RemoveButton,
+} from "../Inputs";
 import TagSelect from "../TagSelect";
 
 type Props = {
@@ -19,18 +27,31 @@ const WidthTagSelect = styled(TagSelect)`
   width: 70%;
 `;
 
-const GeneralInformation = ({recipe, setRecipe, setRecipeImageFile, availableTags}: Props) => {
+const GeneralInformation = ({
+  recipe,
+  setRecipe,
+  setRecipeImageFile,
+  availableTags,
+}: Props) => {
   const { t: tr } = useTranslation("recipe");
 
   const dietOptions = useMemo(() => {
     const options: JSX.Element[] = [];
     for (const diet in Diet) {
-      options.push(<option value={Diet[diet]} key={Diet[diet]}>{diet}</option>)
+      options.push(
+        <option value={Diet[diet]} key={Diet[diet]}>
+          {diet}
+        </option>,
+      );
     }
     return options;
   }, []);
 
-  const { openFilePicker, plainFiles, clear: clearFile } = useFilePicker({
+  const {
+    openFilePicker,
+    plainFiles,
+    clear: clearFile,
+  } = useFilePicker({
     accept: ".jpg",
     readFilesContent: false,
     multiple: false,
@@ -40,7 +61,7 @@ const GeneralInformation = ({recipe, setRecipe, setRecipeImageFile, availableTag
 
   useEffect(() => {
     setRecipeImageFile(selectedFile);
-  }, [setRecipeImageFile, selectedFile])
+  }, [setRecipeImageFile, selectedFile]);
 
   return (
     <>
@@ -49,7 +70,9 @@ const GeneralInformation = ({recipe, setRecipe, setRecipeImageFile, availableTag
         <Input
           name="recipeName"
           value={recipe.name}
-          onChange={event => setRecipe({...recipe, name: event.currentTarget.value})}
+          onChange={(event) =>
+            setRecipe({ ...recipe, name: event.currentTarget.value })
+          }
           grow={1}
         />
       </InputRow>
@@ -58,7 +81,9 @@ const GeneralInformation = ({recipe, setRecipe, setRecipeImageFile, availableTag
         <Select
           id="recipeDiet"
           value={recipe.diet}
-          onChange={event => setRecipe({...recipe, diet: event.currentTarget.value as Diet})}
+          onChange={(event) =>
+            setRecipe({ ...recipe, diet: event.currentTarget.value as Diet })
+          }
           grow={1}
         >
           {dietOptions}
@@ -71,13 +96,13 @@ const GeneralInformation = ({recipe, setRecipe, setRecipeImageFile, availableTag
           value={recipe.servings.count}
           onKeyPress={(e) => !/[0-9]/.test(e.key) && e.preventDefault()}
           onChange={(event) => {
-            const newServings = {...recipe.servings};
+            const newServings = { ...recipe.servings };
             if (event.currentTarget.value.length > 0) {
               newServings.count = parseInt(event.currentTarget.value);
             } else {
               newServings.count = 0;
             }
-            setRecipe({...recipe, servings: newServings});
+            setRecipe({ ...recipe, servings: newServings });
           }}
           width="30%"
         />
@@ -86,13 +111,13 @@ const GeneralInformation = ({recipe, setRecipe, setRecipeImageFile, availableTag
           value={recipe.servings.label ? recipe.servings.label : ""}
           placeholder={tr("servings")}
           onChange={(event) => {
-            const newServings = {...recipe.servings};
+            const newServings = { ...recipe.servings };
             if (event.currentTarget.value.length > 0) {
               newServings.label = event.currentTarget.value;
             } else {
               delete newServings.label;
             }
-            setRecipe({...recipe, servings: newServings});
+            setRecipe({ ...recipe, servings: newServings });
           }}
           grow={1}
         />
@@ -105,9 +130,12 @@ const GeneralInformation = ({recipe, setRecipe, setRecipeImageFile, availableTag
           onKeyPress={(e) => !/[0-9]/.test(e.key) && e.preventDefault()}
           onChange={(event) => {
             if (event.currentTarget.value.length > 0) {
-              setRecipe({...recipe, cookTime: parseInt(event.currentTarget.value)});
+              setRecipe({
+                ...recipe,
+                cookTime: parseInt(event.currentTarget.value),
+              });
             } else {
-              setRecipe({...recipe, cookTime: 0});
+              setRecipe({ ...recipe, cookTime: 0 });
             }
           }}
           grow={1}
@@ -118,16 +146,16 @@ const GeneralInformation = ({recipe, setRecipe, setRecipeImageFile, availableTag
         <Input
           name="recipeSource"
           value={recipe.source}
-          onChange={(event) => setRecipe({...recipe, source: event.currentTarget.value})}
+          onChange={(event) =>
+            setRecipe({ ...recipe, source: event.currentTarget.value })
+          }
           grow={1}
         />
       </InputRow>
       <InputRow>
         <InputLabel width="30%">{tr("edit.image")}</InputLabel>
         <GroupedInput>
-          <FileSelector
-            onClick={() => openFilePicker()}
-          >
+          <FileSelector onClick={() => openFilePicker()}>
             {selectedFile ? selectedFile.name : tr("edit.fileSelect")}
           </FileSelector>
           <RemoveButton onClick={() => clearFile()}>
@@ -140,13 +168,15 @@ const GeneralInformation = ({recipe, setRecipe, setRecipeImageFile, availableTag
         <WidthTagSelect
           values={recipe.tags}
           options={availableTags}
-          onChange={values => setRecipe({...recipe, tags: values.map((value) => value.value)})}
+          onChange={(values) =>
+            setRecipe({ ...recipe, tags: values.map((value) => value.value) })
+          }
           creatable
           instanceId={recipe.id}
         />
       </InputRow>
     </>
   );
-}
+};
 
 export default GeneralInformation;

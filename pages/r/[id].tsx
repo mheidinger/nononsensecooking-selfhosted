@@ -16,7 +16,9 @@ import StepList from "../../components/StepList";
 import { StyledHeading } from "../../components/StyledHeading";
 import TagSelect from "../../components/TagSelect";
 import {
-  fetchSingleRecipe, getRecipeImageUrl, invalidateCache
+  fetchSingleRecipe,
+  getRecipeImageUrl,
+  invalidateCache,
 } from "../../lib/recipes";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -38,7 +40,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       ])),
       ...recipe,
       s3Url,
-    }
+    },
   };
 };
 
@@ -71,7 +73,7 @@ const RecipeStats = styled.header`
 `;
 
 const IconStat = styled.span`
-  display: ${props => props.hidden ? "none" : "flex"};
+  display: ${(props) => (props.hidden ? "none" : "flex")};
   align-items: center;
   gap: 0.25rem;
 `;
@@ -88,9 +90,9 @@ const StyledLink = styled.a`
   white-space: pre;
 `;
 
-function truncate(str: string, n: number){
-  return (str.length > n) ? str.substring(0, n-1) + "..." : str;
-};
+function truncate(str: string, n: number) {
+  return str.length > n ? str.substring(0, n - 1) + "..." : str;
+}
 
 const SingleRecipe = ({
   id,
@@ -114,7 +116,7 @@ const SingleRecipe = ({
     if (router.query.invalidate) {
       router.replace(`/r/${id}`, undefined, { scroll: false, shallow: true });
     }
-  }, [id, router])
+  }, [id, router]);
 
   return (
     <>
@@ -123,21 +125,26 @@ const SingleRecipe = ({
         <RecipeStats>
           <StyledHeading>{name}</StyledHeading>
           <IconStat>
-            <Icon id={`preparationTime_${id}`} path={mdiClockOutline} size={1} title="Preparation Time" />
+            <Icon
+              id={`preparationTime_${id}`}
+              path={mdiClockOutline}
+              size={1}
+              title="Preparation Time"
+            />
             <span>{cookTime}min</span>
           </IconStat>
           <IconForDiet id={`diet_${id}`} diet={diet} />
           <IconStat hidden={source === ""}>
             <Icon path={mdiLinkVariant} size={1} />
-            {source.startsWith("http") ?
-              <a href={source}>{displaySource}</a> :
+            {source.startsWith("http") ? (
+              <a href={source}>{displaySource}</a>
+            ) : (
               <span title={source}>{displaySource}</span>
-            }
+            )}
           </IconStat>
           <TagSelect values={tags} onlyShow instanceId={id} />
         </RecipeStats>
-        <div>
-        </div>
+        <div></div>
         <ImageContainer>
           <DishImage
             s3Url={s3Url}

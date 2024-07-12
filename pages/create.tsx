@@ -18,7 +18,7 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     diet: Diet.Meat,
     cookTime: 20,
     publishedAt: "",
-    ingredients: [{name: "", unit: Unit.NONE}],
+    ingredients: [{ name: "", unit: Unit.NONE }],
     steps: [""],
     source: "",
     servings: {
@@ -31,28 +31,36 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   const lang = locale ? locale : "en-US";
   return {
     props: {
-      ...(await serverSideTranslations(lang, ["common", "header", "footer", "recipe"])),
+      ...(await serverSideTranslations(lang, [
+        "common",
+        "header",
+        "footer",
+        "recipe",
+      ])),
       initRecipe,
       availableTags,
     },
   };
 };
 
-export default function CreateRecipe({initRecipe, availableTags}: InferGetServerSidePropsType<
-  typeof getServerSideProps
->) {
+export default function CreateRecipe({
+  initRecipe,
+  availableTags,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { t } = useTranslation("common");
-  const [ recipe, setRecipe ] = useState(initRecipe);
-  const [ recipeImageFile, setRecipeImageFile ] = useState<File | undefined>(undefined);
-  const [ errorMessage, setErrorMessage ] = useState();
-  const [ showErrorMessage, setShowErrorMessage ] = useState(false);
+  const [recipe, setRecipe] = useState(initRecipe);
+  const [recipeImageFile, setRecipeImageFile] = useState<File | undefined>(
+    undefined,
+  );
+  const [errorMessage, setErrorMessage] = useState();
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
     if (errorMessage) {
       setTimeout(() => setShowErrorMessage(false), 5000);
     }
-  }, [errorMessage])
+  }, [errorMessage]);
 
   async function saveRecipe() {
     try {
@@ -80,10 +88,7 @@ export default function CreateRecipe({initRecipe, availableTags}: InferGetServer
         setRecipeImageFile={setRecipeImageFile}
         availableTags={availableTags}
       />
-      <ErrorNotification
-        message={errorMessage}
-        show={showErrorMessage}
-      />
+      <ErrorNotification message={errorMessage} show={showErrorMessage} />
     </>
   );
 }

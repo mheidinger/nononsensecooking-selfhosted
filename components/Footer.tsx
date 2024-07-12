@@ -1,6 +1,6 @@
 import { useTranslation } from "next-i18next";
 import Link from "next/link";
-import {useRouter} from "next/router";
+import { useRouter } from "next/router";
 import styled from "styled-components";
 
 const StyledFooter = styled.footer`
@@ -61,8 +61,12 @@ const Footer = () => {
         </Link>
       </Nav>
       <Nav>
-        <a href="#" onClick={() => onToggleLanguageClick("en-US")}>en</a>
-        <a href="#" onClick={() => onToggleLanguageClick("de-DE")}>de</a>
+        <a href="#" onClick={() => onToggleLanguageClick("en-US")}>
+          en
+        </a>
+        <a href="#" onClick={() => onToggleLanguageClick("de-DE")}>
+          de
+        </a>
       </Nav>
     </StyledFooter>
   );

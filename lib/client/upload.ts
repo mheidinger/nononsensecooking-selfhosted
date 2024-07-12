@@ -5,27 +5,34 @@ interface UploadRecipeResult {
   imagePutURL: string;
 }
 
-export async function uploadRecipe(recipe: Recipe, update?: boolean): Promise<UploadRecipeResult> {
+export async function uploadRecipe(
+  recipe: Recipe,
+  update?: boolean,
+): Promise<UploadRecipeResult> {
   const recipeClone = structuredClone(recipe);
   // Remove empty ingredients and steps to avoid API error
-  recipeClone.ingredients = recipeClone.ingredients.filter(i => i.name);
-  recipeClone.steps = recipeClone.steps.filter(s => s);
+  recipeClone.ingredients = recipeClone.ingredients.filter((i) => i.name);
+  recipeClone.steps = recipeClone.steps.filter((s) => s);
 
   const response = await fetch("/api/create", {
-    method: update ? "PUT": "POST",
+    method: update ? "PUT" : "POST",
     headers: {
-      "Accept": "application/json",
-      "Content-Type": "application/json"
+      Accept: "application/json",
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(recipeClone)
+    body: JSON.stringify(recipeClone),
   });
 
   const result = await response.json();
   if (response.status !== 200) {
-    throw new Error(`Create recipe API request failed: ${JSON.stringify(result)}`);
+    throw new Error(
+      `Create recipe API request failed: ${JSON.stringify(result)}`,
+    );
   }
   if (!result || !result.recipeID || !result.imagePutURL) {
-    throw new Error(`Create recipe result not as expected: ${JSON.stringify(result)}`);
+    throw new Error(
+      `Create recipe result not as expected: ${JSON.stringify(result)}`,
+    );
   }
 
   return result;
@@ -35,9 +42,9 @@ export async function uploadImage(url: string, image: File) {
   await fetch(url, {
     method: "PUT",
     headers: {
-      "Content-Type": image.type
+      "Content-Type": image.type,
     },
-    body: image
+    body: image,
   });
 }
 
@@ -45,14 +52,16 @@ export async function deleteRecipe(id: string) {
   const response = await fetch("/api/delete", {
     method: "DELETE",
     headers: {
-      "Accept": "application/json",
-      "Content-Type": "application/json"
+      Accept: "application/json",
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify({id})
+    body: JSON.stringify({ id }),
   });
 
   const result = await response.json();
   if (response.status !== 200) {
-    throw new Error(`Delete recipe API request failed: ${JSON.stringify(result)}`);
+    throw new Error(
+      `Delete recipe API request failed: ${JSON.stringify(result)}`,
+    );
   }
 }

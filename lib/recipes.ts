@@ -1,17 +1,33 @@
 import YAML from "yaml";
 import NodeCache from "node-cache";
-import { Recipe, RecipeFile, RecipeInIndex, toRecipeInIndex } from "../models/Recipe";
+import {
+  Recipe,
+  RecipeFile,
+  RecipeInIndex,
+  toRecipeInIndex,
+} from "../models/Recipe";
 import { Unit } from "../models/Unit";
-import { deleteFile, fetchFile, fileExists, getSignedGetObjectUrl, getSignedPutObjectUrl, listFiles, uploadFile } from "./s3client";
+import {
+  deleteFile,
+  fetchFile,
+  fileExists,
+  getSignedGetObjectUrl,
+  getSignedPutObjectUrl,
+  listFiles,
+  uploadFile,
+} from "./s3client";
 
-const s3RecipeFilesBasePath = "recipes"
-const s3RecipeImagesBasePath = "images"
+const s3RecipeFilesBasePath = "recipes";
+const s3RecipeImagesBasePath = "images";
 
 const INDEX_CACHE_KEY = "index";
 const SIGNED_IMAGE_URL_TTL = 3600;
 const STD_TTL = 600;
 const CHECK_PERIOD = 120;
-const recipeCache = new NodeCache({stdTTL: STD_TTL, checkperiod: CHECK_PERIOD});
+const recipeCache = new NodeCache({
+  stdTTL: STD_TTL,
+  checkperiod: CHECK_PERIOD,
+});
 
 export function invalidateCache(id: string) {
   console.log("Clear cache for index and", id);
@@ -22,7 +38,11 @@ export async function fetchRecipeIndex(): Promise<RecipeInIndex[]> {
   let index = recipeCache.get(INDEX_CACHE_KEY) as RecipeInIndex[];
   if (index == undefined) {
     const recipeFiles = await listFiles(s3RecipeFilesBasePath + "/");
-    const recipes = await Promise.all(recipeFiles.map((file) => fetchSingleRecipe(file.key.replace(".yaml", ""))));
+    const recipes = await Promise.all(
+      recipeFiles.map((file) =>
+        fetchSingleRecipe(file.key.replace(".yaml", "")),
+      ),
+    );
     index = recipes.map((recipe) => toRecipeInIndex(recipe));
     recipeCache.set(INDEX_CACHE_KEY, index);
   }
@@ -30,16 +50,14 @@ export async function fetchRecipeIndex(): Promise<RecipeInIndex[]> {
     index.map(async (item) => {
       item.s3Url = await getRecipeImageUrl(item.id);
       return item;
-    })
-  )
+    }),
+  );
 }
 
 export async function getRecipeTags(): Promise<string[]> {
   const index = await fetchRecipeIndex();
-  const tagSet = new Set<string>()
-  index.forEach((recipe) =>
-    recipe.tags.forEach((tag) => tagSet.add(tag))
-  );
+  const tagSet = new Set<string>();
+  index.forEach((recipe) => recipe.tags.forEach((tag) => tagSet.add(tag)));
   return Array.from(tagSet);
 }
 
@@ -61,7 +79,10 @@ export async function getRecipeImageUrl(id: string) {
   const cacheKey = `SIGNED_IMAGE_URL_${id}`;
   let url = recipeCache.get(cacheKey) as string;
   if (url == undefined) {
-    url = await getSignedGetObjectUrl(getKeyForImage(id), SIGNED_IMAGE_URL_TTL * 1.2);
+    url = await getSignedGetObjectUrl(
+      getKeyForImage(id),
+      SIGNED_IMAGE_URL_TTL * 1.2,
+    );
     recipeCache.set(cacheKey, url);
   } else {
     console.log("Cache hit for recipe image URL", id);
@@ -70,10 +91,13 @@ export async function getRecipeImageUrl(id: string) {
 }
 
 // Called from API => different recipeCache instance!
-export async function createRecipe(recipe: Recipe, allowExisting: boolean): Promise<string> {
+export async function createRecipe(
+  recipe: Recipe,
+  allowExisting: boolean,
+): Promise<string> {
   const key = getKeyForRecipe(recipe.id);
-  if (await fileExists(key) && !allowExisting) {
-    throw new Error("recipe id (name) already exists")
+  if ((await fileExists(key)) && !allowExisting) {
+    throw new Error("recipe id (name) already exists");
   }
   uploadFile(key, JSON.stringify(recipe));
   return getSignedPutObjectUrl(getKeyForImage(recipe.id));
@@ -124,7 +148,9 @@ function parseServings(servings: RecipeFile["servings"]): Recipe["servings"] {
   return returnServings;
 }
 
-const parseIngredients = (ingredients: RecipeFile["ingredients"]): Recipe["ingredients"] =>
+const parseIngredients = (
+  ingredients: RecipeFile["ingredients"],
+): Recipe["ingredients"] =>
   ingredients.map((ingredient) => ({
     ...ingredient,
     unit: ingredient.unit || Unit.NONE,

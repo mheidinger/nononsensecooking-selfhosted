@@ -21,7 +21,7 @@ type Props = {
 const COLUMN_MAX_WIDTH = "1300px";
 
 const EditRecipeDiv = styled.div`
-	margin: auto;
+  margin: auto;
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
@@ -78,14 +78,27 @@ const SaveButton = styled(AddButton)`
   }
 `;
 
-const EditRecipe = ({title, recipe, setRecipe, saveRecipe, setRecipeImageFile, availableTags}: Props) => {
+const EditRecipe = ({
+  title,
+  recipe,
+  setRecipe,
+  saveRecipe,
+  setRecipeImageFile,
+  availableTags,
+}: Props) => {
   const { t: tr } = useTranslation("recipe");
-  const setIngredients = useCallback((ingredients: Ingredient[]) => {
-    setRecipe({...recipe, ingredients});
-  }, [recipe, setRecipe]);
-  const setSteps = useCallback((steps: string[]) => {
-    setRecipe({...recipe, steps});
-  }, [recipe, setRecipe]);
+  const setIngredients = useCallback(
+    (ingredients: Ingredient[]) => {
+      setRecipe({ ...recipe, ingredients });
+    },
+    [recipe, setRecipe],
+  );
+  const setSteps = useCallback(
+    (steps: string[]) => {
+      setRecipe({ ...recipe, steps });
+    },
+    [recipe, setRecipe],
+  );
 
   return (
     <EditRecipeDiv>
@@ -109,10 +122,7 @@ const EditRecipe = ({title, recipe, setRecipe, saveRecipe, setRecipeImageFile, a
       <ColumnHorizontalLine />
       <RowVerticalLine />
       <RightSide>
-        <Steps
-          steps={recipe.steps}
-          setSteps={setSteps}
-        />
+        <Steps steps={recipe.steps} setSteps={setSteps} />
       </RightSide>
     </EditRecipeDiv>
   );

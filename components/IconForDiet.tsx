@@ -22,9 +22,18 @@ const IconForDiet = ({
   const { t } = useTranslation();
   switch (diet) {
     case Diet.Meat:
-      return <Icon id={id} path={mdiFoodSteak} title={t(`diet.${diet}`)} size={size} />;
+      return (
+        <Icon
+          id={id}
+          path={mdiFoodSteak}
+          title={t(`diet.${diet}`)}
+          size={size}
+        />
+      );
     case Diet.Fish:
-      return <Icon id={id} path={mdiFish} title={t(`diet.${diet}`)} size={size} />;
+      return (
+        <Icon id={id} path={mdiFish} title={t(`diet.${diet}`)} size={size} />
+      );
     case Diet.Vegan:
       return (
         <Icon
@@ -35,10 +44,17 @@ const IconForDiet = ({
         />
       );
     case Diet.Vegetarian:
-      return <Icon id={id} path={mdiLeaf} title={t(`diet.${diet}`)} size={size} />;
+      return (
+        <Icon id={id} path={mdiLeaf} title={t(`diet.${diet}`)} size={size} />
+      );
     default:
       return (
-        <Icon id={id} path={mdiHelpCircleOutline} title="UNKNOWN DIET" size={size} />
+        <Icon
+          id={id}
+          path={mdiHelpCircleOutline}
+          title="UNKNOWN DIET"
+          size={size}
+        />
       );
   }
 };

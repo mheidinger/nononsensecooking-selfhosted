@@ -13,13 +13,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   return {
     props: {
-      ...(await serverSideTranslations(lang, [
-        "common",
-        "footer",
-        "header",
-      ])),
+      ...(await serverSideTranslations(lang, ["common", "footer", "header"])),
       recipes: recipeIndex,
-      availableTags
+      availableTags,
     },
   };
 };
@@ -34,7 +30,7 @@ export default function Recipes({
     <>
       <PageTitle title={t("home.allrecipes")} />
       <PaddedSection title={t("home.allrecipes")} smallHeadings>
-      <DishList recipes={recipes} availableTags={availableTags} />
+        <DishList recipes={recipes} availableTags={availableTags} />
       </PaddedSection>
     </>
   );

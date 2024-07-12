@@ -124,7 +124,7 @@ const DishCard = ({ id, name, cookTime, diet, s3Url, tags }: Props) => {
               </span>
             </IconStat>
             <IconForDiet id={`diet_${id}`} diet={diet} />
-            <MaxWidthTagSelect values={tags} onlyShow instanceId={`id`}/>
+            <MaxWidthTagSelect values={tags} onlyShow instanceId={`id`} />
           </DishStatLine>
         </DishStats>
       </StyledCard>

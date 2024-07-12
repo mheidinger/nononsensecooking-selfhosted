@@ -2,27 +2,33 @@ import styled from "styled-components";
 
 const COLUMN_MAX_WIDTH = "1300px";
 
-export const InputRow = styled.div<{headingRow?: boolean} & React.HTMLProps<HTMLDivElement>>`
+export const InputRow = styled.div<
+  { headingRow?: boolean } & React.HTMLProps<HTMLDivElement>
+>`
   display: flex;
   justify-content: space-between;
   margin-top: 1rem;
-  margin-bottom: ${props => props.headingRow ? "-.5rem" : "0"};
+  margin-bottom: ${(props) => (props.headingRow ? "-.5rem" : "0")};
   gap: 5px;
 `;
 
-export const InputLabel = styled.label<{indent?: boolean, width?: string} & React.HTMLProps<HTMLLabelElement>>`
+export const InputLabel = styled.label<
+  { indent?: boolean; width?: string } & React.HTMLProps<HTMLLabelElement>
+>`
   font-size: var(--font-size-base);
   font-weight: 600;
   margin: auto 0;
-  margin-left: ${props => props.indent ? "3rem" : "0"};
-  ${props => props.width ? `width: ${props.width};` : ""}
+  margin-left: ${(props) => (props.indent ? "3rem" : "0")};
+  ${(props) => (props.width ? `width: ${props.width};` : "")}
 
   @media screen and (max-width: ${COLUMN_MAX_WIDTH}) {
-    margin-left: ${props => props.indent ? "1rem" : "0"};
+    margin-left: ${(props) => (props.indent ? "1rem" : "0")};
   }
 `;
 
-export const Input = styled.input<{grow?: number, width?: string} & React.HTMLProps<HTMLInputElement>>`
+export const Input = styled.input<
+  { grow?: number; width?: string } & React.HTMLProps<HTMLInputElement>
+>`
   font-family: var(--font-stack);
   font-size: var(--font-size-base);
   background: var(--color-background-alt);
@@ -32,12 +38,15 @@ export const Input = styled.input<{grow?: number, width?: string} & React.HTMLPr
   appearance: none;
   color: var(--color-text-primary);
   height: 2.5rem;
-  filter: ${props => props.disabled ? "brightness(150%)" : "brightness(100%)"};
-  flex-grow: ${props => props.grow || 0};
-  ${props => props.width ? `width: ${props.width};` : ""}
+  filter: ${(props) =>
+    props.disabled ? "brightness(150%)" : "brightness(100%)"};
+  flex-grow: ${(props) => props.grow || 0};
+  ${(props) => (props.width ? `width: ${props.width};` : "")}
 `;
 
-export const Select = styled.select<{grow?: number, width?: string} & React.HTMLProps<HTMLSelectElement>>`
+export const Select = styled.select<
+  { grow?: number; width?: string } & React.HTMLProps<HTMLSelectElement>
+>`
   font-family: var(--font-stack);
   font-size: var(--font-size-base);
   background: var(--color-background-alt);
@@ -51,8 +60,8 @@ export const Select = styled.select<{grow?: number, width?: string} & React.HTML
   background-size: 1em;
   color: var(--color-text-primary);
   height: 2.5rem;
-  ${props => props.width ? `width: ${props.width};` : ""}
-  flex-grow: ${props => props.grow || 0};
+  ${(props) => (props.width ? `width: ${props.width};` : "")}
+  flex-grow: ${(props) => props.grow || 0};
 
   & > option {
     background-color: var(--color-background-alt-solid);
@@ -69,7 +78,7 @@ export const GroupedInput = styled.div`
   justify-content: space-between;
   gap: 1rem;
   align-items: center;
-  cursor: ${props => props.draggable ? "grab" : "default" };
+  cursor: ${(props) => (props.draggable ? "grab" : "default")};
   flex-grow: 1;
 
   &.dragHover {
@@ -78,7 +87,7 @@ export const GroupedInput = styled.div`
   &.dragHover * {
     pointer-events: none;
   }
-`
+`;
 
 export const Button = styled.button`
   background: var(--color-primary);
@@ -94,7 +103,7 @@ export const Button = styled.button`
 `;
 
 export const AddButton = styled(Button)`
-	margin: auto 0 auto auto;
+  margin: auto 0 auto auto;
   padding: 0 1rem;
 `;
 

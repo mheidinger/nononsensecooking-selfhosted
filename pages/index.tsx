@@ -25,8 +25,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
   const allRecipes = await fetchRecipeIndex();
   // TODO: Cache this and refresh every day
-  const recipesOfTheDay = shuffle(allRecipes)
-    .slice(0, 3);
+  const recipesOfTheDay = shuffle(allRecipes).slice(0, 3);
   const latestRecipes = allRecipes.sort(byPublishedAt).slice(0, 3);
   const lang = context.locale ? context.locale : "en-US";
 
@@ -35,7 +34,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       ...(await serverSideTranslations(lang, ["common", "footer", "header"])),
       recipesOfTheDay,
       latestRecipes,
-    }
+    },
   };
 };
 
@@ -49,9 +48,9 @@ export default function Home({
   const router = useRouter();
   useEffect(() => {
     if (router.query.invalidate) {
-      router.replace('/', undefined, { scroll: false, shallow: true });
+      router.replace("/", undefined, { scroll: false, shallow: true });
     }
-  }, [router])
+  }, [router]);
 
   return (
     <>
@@ -74,6 +73,9 @@ export default function Home({
   );
 }
 
-function byPublishedAt(a: Pick<Recipe, "publishedAt">, b: Pick<Recipe, "publishedAt">) {
+function byPublishedAt(
+  a: Pick<Recipe, "publishedAt">,
+  b: Pick<Recipe, "publishedAt">,
+) {
   return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
 }

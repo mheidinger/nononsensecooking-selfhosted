@@ -17,7 +17,9 @@ const fadeOut = keyframes`
   to { opacity: 0; }
 `;
 
-const ErrorBox = styled.div<{show: boolean} & React.HTMLProps<HTMLDivElement>>`
+const ErrorBox = styled.div<
+  { show: boolean } & React.HTMLProps<HTMLDivElement>
+>`
   background-color: red;
   position: absolute;
   left: 0;
@@ -30,13 +32,13 @@ const ErrorBox = styled.div<{show: boolean} & React.HTMLProps<HTMLDivElement>>`
   color: white;
   text-align: center;
   padding: 1rem;
-  opacity: ${props => props.show ? "1" : "0"};
-  animation: ${props => props.show ? fadeIn : fadeOut} 1s;
+  opacity: ${(props) => (props.show ? "1" : "0")};
+  animation: ${(props) => (props.show ? fadeIn : fadeOut)} 1s;
 `;
 
-const ErrorNotification = ({message, show}: Props) => {
+const ErrorNotification = ({ message, show }: Props) => {
   const { t: tr } = useTranslation("recipe");
-  const [ firstShown, setFirstShown ] = useState(false);
+  const [firstShown, setFirstShown] = useState(false);
 
   useEffect(() => {
     if (message && !firstShown) {

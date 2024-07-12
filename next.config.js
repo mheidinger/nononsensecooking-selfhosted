@@ -1,9 +1,9 @@
 const { i18n } = require("./next-i18next.config");
-const webpack = require('webpack');
-const dotenv = require('dotenv');
+const webpack = require("webpack");
+const dotenv = require("dotenv");
 
 const { parsed: awsEnv } = dotenv.config({
-    path:'/run/secrets/nononsensecooking-aws'
+  path: "/run/secrets/nononsensecooking-aws",
 });
 
 module.exports = {
@@ -18,8 +18,8 @@ module.exports = {
   },
   webpack(config) {
     if (awsEnv) {
-      config.plugins.push(new webpack.EnvironmentPlugin(awsEnv))
+      config.plugins.push(new webpack.EnvironmentPlugin(awsEnv));
     }
-    return config
+    return config;
   },
 };

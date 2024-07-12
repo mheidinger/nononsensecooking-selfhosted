@@ -34,7 +34,7 @@ function parseBody(body: any): Recipe {
     tags: [],
   };
 
-  if (!body.name || typeof body.name !== "string"|| body.name === "") {
+  if (!body.name || typeof body.name !== "string" || body.name === "") {
     throw new ValidationError("no recipe name");
   }
   recipe.name = body.name;
@@ -68,34 +68,60 @@ function parseBody(body: any): Recipe {
     recipe.steps.push(step);
   }
 
-  if (!body.ingredients || !Array.isArray(body.ingredients) || body.ingredients.length === 0) {
+  if (
+    !body.ingredients ||
+    !Array.isArray(body.ingredients) ||
+    body.ingredients.length === 0
+  ) {
     throw new ValidationError("no recipe steps");
   }
   for (const ingredient of body.ingredients) {
     const cleanIngredient: Ingredient = {
       name: "",
-      unit: Unit.NONE
+      unit: Unit.NONE,
     };
     if (!ingredient || typeof ingredient !== "object") {
       throw new ValidationError("ingredient is not an object");
     }
-    if (!ingredient.name || typeof ingredient.name !== "string" || ingredient.name === "") {
+    if (
+      !ingredient.name ||
+      typeof ingredient.name !== "string" ||
+      ingredient.name === ""
+    ) {
       throw new ValidationError("no ingredient name");
     }
     cleanIngredient.name = ingredient.name;
-    if (ingredient.unit && typeof ingredient.unit === "string" && ingredient.unit !== "") {
+    if (
+      ingredient.unit &&
+      typeof ingredient.unit === "string" &&
+      ingredient.unit !== ""
+    ) {
       cleanIngredient.unit = ingredient.unit;
     }
-    if (cleanIngredient.unit !== Unit.NONE && ingredient.amount && typeof ingredient.amount === "number" && ingredient.amount > 0) {
+    if (
+      cleanIngredient.unit !== Unit.NONE &&
+      ingredient.amount &&
+      typeof ingredient.amount === "number" &&
+      ingredient.amount > 0
+    ) {
       cleanIngredient.amount = ingredient.amount;
     } else if (cleanIngredient.unit !== Unit.NONE) {
-      throw new ValidationError(`ingredient unit set but no amount for '${cleanIngredient.name}'`);
+      throw new ValidationError(
+        `ingredient unit set but no amount for '${cleanIngredient.name}'`,
+      );
     }
     recipe.ingredients.push(cleanIngredient);
   }
 
-  if (!body.servings || typeof body.servings !== "object" || !body.servings.count || body.servings.count <= 0) {
-    throw new ValidationError("no servings, servings count or count not greater 0");
+  if (
+    !body.servings ||
+    typeof body.servings !== "object" ||
+    !body.servings.count ||
+    body.servings.count <= 0
+  ) {
+    throw new ValidationError(
+      "no servings, servings count or count not greater 0",
+    );
   }
   recipe.servings.count = body.servings.count;
   if (body.servings.label) {
@@ -115,20 +141,19 @@ function parseBody(body: any): Recipe {
 
 export default async function create(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   if (!methodIs(["POST", "PUT"], req, res)) return;
 
   try {
     const recipe = parseBody(req.body);
     const imagePutURL = await createRecipe(recipe, req.method === "PUT");
-    res.status(200).json({recipeID: recipe.id, imagePutURL: imagePutURL});
+    res.status(200).json({ recipeID: recipe.id, imagePutURL: imagePutURL });
   } catch (error) {
     if (error instanceof ValidationError) {
-      res.status(400).json({message: error.message});
+      res.status(400).json({ message: error.message });
       return;
     }
-    res.status(500).json({message: error.message});
+    res.status(500).json({ message: error.message });
   }
 }
-

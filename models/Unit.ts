@@ -9,9 +9,7 @@ export enum Unit {
   TEASPOONS = "tsp",
 }
 
-const NonScalingUnits = [
-  Unit.NONE,
-]
+const NonScalingUnits = [Unit.NONE];
 
 export function isScalingUnit(unit: Unit): boolean {
   return !NonScalingUnits.includes(unit);

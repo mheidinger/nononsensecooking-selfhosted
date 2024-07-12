@@ -1,4 +1,9 @@
-import { GetServerSideProps, GetStaticProps, InferGetServerSidePropsType, InferGetStaticPropsType } from "next";
+import {
+  GetServerSideProps,
+  GetStaticProps,
+  InferGetServerSidePropsType,
+  InferGetStaticPropsType,
+} from "next";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/router";
@@ -10,14 +15,22 @@ import { deleteRecipe } from "../../../lib/client/upload";
 import { fetchSingleRecipe } from "../../../lib/recipes";
 import { useEffect, useState } from "react";
 
-export const getServerSideProps: GetServerSideProps = async ({ locale, query }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  locale,
+  query,
+}) => {
   const { id } = query;
   const recipe = await fetchSingleRecipe(id as string);
 
   const lang = locale ? locale : "en-US";
   return {
     props: {
-      ...(await serverSideTranslations(lang, ["common", "header", "footer", "recipe"])),
+      ...(await serverSideTranslations(lang, [
+        "common",
+        "header",
+        "footer",
+        "recipe",
+      ])),
       recipe,
     },
   };
@@ -56,20 +69,20 @@ const DeleteButton = styled(Button)`
   background: #d94040;
 `;
 
-export default function DeleteRecipe({recipe}: InferGetServerSidePropsType<
-  typeof getServerSideProps
->) {
+export default function DeleteRecipe({
+  recipe,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { t } = useTranslation("common");
   const { t: tr } = useTranslation("recipe");
-  const [ errorMessage, setErrorMessage ] = useState();
-  const [ showErrorMessage, setShowErrorMessage ] = useState(false);
+  const [errorMessage, setErrorMessage] = useState();
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
     if (errorMessage) {
       setTimeout(() => setShowErrorMessage(false), 5000);
     }
-  }, [errorMessage])
+  }, [errorMessage]);
 
   function goBack() {
     router.push(`/r/${recipe.id}`);
@@ -78,7 +91,7 @@ export default function DeleteRecipe({recipe}: InferGetServerSidePropsType<
   async function delRecipe() {
     try {
       await deleteRecipe(recipe.id);
-      router.push('/');
+      router.push("/");
     } catch (error) {
       console.error(error);
       setErrorMessage(error.toString());
@@ -97,10 +110,7 @@ export default function DeleteRecipe({recipe}: InferGetServerSidePropsType<
           <DeleteButton onClick={delRecipe}>{tr("delete.delete")}</DeleteButton>
         </LinkBox>
       </DeletePage>
-      <ErrorNotification
-        show={showErrorMessage}
-        message={errorMessage}
-      />
+      <ErrorNotification show={showErrorMessage} message={errorMessage} />
     </>
   );
 }

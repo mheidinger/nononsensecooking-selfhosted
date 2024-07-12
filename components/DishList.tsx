@@ -7,12 +7,12 @@ import DishListItem from "./DishListItem";
 import TagSelect from "./TagSelect";
 
 type Props = {
-  recipes: Recipe[],
-  availableTags: string[],
-}
+  recipes: Recipe[];
+  availableTags: string[];
+};
 
 const Filters = styled.div`
-	display: flex;
+  display: flex;
   width: 100%;
   margin-bottom: 1rem;
   gap: 1rem;
@@ -48,23 +48,27 @@ interface DietFilterOption {
 
 function DishList({ recipes, availableTags }: Props) {
   const { t } = useTranslation("common");
-  const [ dietFilter, setDietFilter ] = useState<string[]>([]);
-  const [ tagFilter, setTagFilter ] = useState<string[]>([]);
+  const [dietFilter, setDietFilter] = useState<string[]>([]);
+  const [tagFilter, setTagFilter] = useState<string[]>([]);
 
   const dietFilterOptions = useMemo(() => {
     const options: DietFilterOption[] = [];
     for (const diet in Diet) {
-      options.push({value: Diet[diet], label: diet});
+      options.push({ value: Diet[diet], label: diet });
     }
     return options;
   }, []);
 
   let filteredRecipes = recipes;
   if (dietFilter.length > 0) {
-    filteredRecipes = filteredRecipes.filter((recipe) => dietFilter.includes(recipe.diet));
+    filteredRecipes = filteredRecipes.filter((recipe) =>
+      dietFilter.includes(recipe.diet),
+    );
   }
   if (tagFilter.length > 0) {
-    filteredRecipes = filteredRecipes.filter((recipe) => tagFilter.some(tag => recipe.tags.includes(tag)))
+    filteredRecipes = filteredRecipes.filter((recipe) =>
+      tagFilter.some((tag) => recipe.tags.includes(tag)),
+    );
   }
 
   const dietFilterStyle: StylesConfig<unknown, true> = {
@@ -79,7 +83,9 @@ function DishList({ recipes, availableTags }: Props) {
     }),
     option: (styles, state) => ({
       ...styles,
-      backgroundColor: state.isFocused ? "var(--color-background)" : "var(--color-background-alt-solid)",
+      backgroundColor: state.isFocused
+        ? "var(--color-background)"
+        : "var(--color-background-alt-solid)",
     }),
   };
 
@@ -89,7 +95,9 @@ function DishList({ recipes, availableTags }: Props) {
         <DietFilter
           options={dietFilterOptions}
           isMulti={true}
-          onChange={(values: DietFilterOption[]) => setDietFilter(values.map((val) => val.value))}
+          onChange={(values: DietFilterOption[]) =>
+            setDietFilter(values.map((val) => val.value))
+          }
           placeholder={t("all.filter.diet")}
           instanceId={"diet-filter"}
           styles={dietFilterStyle}
@@ -97,18 +105,14 @@ function DishList({ recipes, availableTags }: Props) {
         <TagFilter
           options={availableTags}
           values={tagFilter}
-          onChange={values => setTagFilter(values.map((val) => val.value))}
+          onChange={(values) => setTagFilter(values.map((val) => val.value))}
           instanceId={"tag-filter"}
         />
       </Filters>
       <List>
-        {filteredRecipes
-          .map((recipe: Recipe) => (
-            <DishListItem
-              key={recipe.id}
-              {...recipe}
-            />
-          ))}
+        {filteredRecipes.map((recipe: Recipe) => (
+          <DishListItem key={recipe.id} {...recipe} />
+        ))}
       </List>
     </>
   );

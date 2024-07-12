@@ -83,7 +83,7 @@ const SearchBar = ({ placeholder }: Props) => {
     debounce(fetchSearchResults, 250, {
       maxWait: 1500,
     }),
-    [searchTerm]
+    [searchTerm],
   );
 
   useEffect(() => {

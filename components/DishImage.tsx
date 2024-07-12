@@ -6,14 +6,13 @@ type Props = Omit<ImageProps, "src"> & {
 };
 
 const DishImage = (props: Props) => {
-  const {s3Url, ...imageProps} = props;
+  const { s3Url, ...imageProps } = props;
   const [showPlaceholder, setShowPlaceholder] = useState(false);
 
   let src = "/img/placeholder.jpg";
   if (s3Url && s3Url !== "" && !showPlaceholder) {
     src = s3Url;
   }
-
 
   return (
     <Image

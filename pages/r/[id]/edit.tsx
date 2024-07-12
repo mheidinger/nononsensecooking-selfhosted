@@ -1,4 +1,9 @@
-import { GetServerSideProps, GetStaticProps, InferGetServerSidePropsType, InferGetStaticPropsType } from "next";
+import {
+  GetServerSideProps,
+  GetStaticProps,
+  InferGetServerSidePropsType,
+  InferGetStaticPropsType,
+} from "next";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useEffect, useState } from "react";
@@ -9,7 +14,10 @@ import PageTitle from "../../../components/PageTitle";
 import EditRecipe from "../../../components/edit/EditRecipe";
 import ErrorNotification from "../../../components/edit/ErrorNotification";
 
-export const getServerSideProps: GetServerSideProps = async ({ locale, query }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  locale,
+  query,
+}) => {
   const { id } = query;
   const recipe = await fetchSingleRecipe(id as string);
   const availableTags = await getRecipeTags();
@@ -17,28 +25,36 @@ export const getServerSideProps: GetServerSideProps = async ({ locale, query }) 
   const lang = locale ? locale : "en-US";
   return {
     props: {
-      ...(await serverSideTranslations(lang, ["common", "header", "footer", "recipe"])),
+      ...(await serverSideTranslations(lang, [
+        "common",
+        "header",
+        "footer",
+        "recipe",
+      ])),
       recipe,
       availableTags,
     },
   };
 };
 
-export default function CreateRecipe({recipe: origRecipe, availableTags}: InferGetServerSidePropsType<
-  typeof getServerSideProps
->) {
+export default function CreateRecipe({
+  recipe: origRecipe,
+  availableTags,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { t } = useTranslation("common");
-  const [ recipe, setRecipe ] = useState(origRecipe);
-  const [ recipeImageFile, setRecipeImageFile ] = useState<File | undefined>(undefined);
-  const [ errorMessage, setErrorMessage ] = useState();
-  const [ showErrorMessage, setShowErrorMessage ] = useState(false);
+  const [recipe, setRecipe] = useState(origRecipe);
+  const [recipeImageFile, setRecipeImageFile] = useState<File | undefined>(
+    undefined,
+  );
+  const [errorMessage, setErrorMessage] = useState();
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
     if (errorMessage) {
       setTimeout(() => setShowErrorMessage(false), 5000);
     }
-  }, [errorMessage])
+  }, [errorMessage]);
 
   async function saveRecipe() {
     try {
@@ -66,11 +82,7 @@ export default function CreateRecipe({recipe: origRecipe, availableTags}: InferG
         setRecipeImageFile={setRecipeImageFile}
         availableTags={availableTags}
       />
-      <ErrorNotification
-        message={errorMessage}
-        show={showErrorMessage}
-      />
+      <ErrorNotification message={errorMessage} show={showErrorMessage} />
     </>
   );
 }
-

@@ -42,19 +42,19 @@ export interface RecipeFile {
 
 export type RecipeInIndex = Pick<
   Recipe,
-  | "id"
-  | "name"
-  | "cookTime"
-  | "diet"
-  | "publishedAt"
-  | "tags"
+  "id" | "name" | "cookTime" | "diet" | "publishedAt" | "tags"
 > & {
-  s3Url?: string
+  s3Url?: string;
 };
 
-export function toRecipeInIndex(
-  {id, name, cookTime, diet, publishedAt, tags}: Recipe,
-): RecipeInIndex {
+export function toRecipeInIndex({
+  id,
+  name,
+  cookTime,
+  diet,
+  publishedAt,
+  tags,
+}: Recipe): RecipeInIndex {
   return {
     id,
     name,
@@ -62,5 +62,5 @@ export function toRecipeInIndex(
     diet,
     publishedAt,
     tags,
-  }
+  };
 }

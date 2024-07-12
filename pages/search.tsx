@@ -18,11 +18,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       props: {
         searchTerm: "",
         results: [],
-        ...(await serverSideTranslations(lang, [
-          "common",
-          "header",
-          "footer",
-        ])),
+        ...(await serverSideTranslations(lang, ["common", "header", "footer"])),
       },
     };
   }
@@ -34,11 +30,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       searchTerm,
       results,
       availableTags,
-      ...(await serverSideTranslations(lang, [
-        "common",
-        "header",
-        "footer",
-      ])),
+      ...(await serverSideTranslations(lang, ["common", "header", "footer"])),
     },
   };
 };

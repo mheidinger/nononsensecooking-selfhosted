@@ -23,9 +23,7 @@ export function sanitize(term: string) {
   return term.trim().replace(/[<>]/g, "");
 }
 
-export async function searchRecipes(
-  searchTerm: string
-) {
+export async function searchRecipes(searchTerm: string) {
   const recipes = await fetchRecipeIndex();
   const fuse = new Fuse(recipes, searchOptions);
 
@@ -34,7 +32,7 @@ export async function searchRecipes(
 
 export default async function search(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   if (!methodIs(["GET"], req, res)) return;
   const { query } = req.query;

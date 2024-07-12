@@ -6,8 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint",
-    "format": "prettier",
+    "lint": "eslint .",
+    "format": "prettier --write .",
     "new-recipe": "ts-node ./scripts/new-recipe.ts",
     "check-translations": "ts-node ./scripts/check-translations.ts"
   },

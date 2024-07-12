@@ -43,7 +43,11 @@ interface Props {
   onServingsCountChanged: (newServings: number) => void;
 }
 
-const ServingsChooser = ({ count, label, onServingsCountChanged: onServingsChanged }: Props) => {
+const ServingsChooser = ({
+  count,
+  label,
+  onServingsCountChanged: onServingsChanged,
+}: Props) => {
   const { t } = useTranslation("recipe");
   return (
     <StyledServingsChooser>
@@ -66,10 +70,7 @@ const ServingsChooser = ({ count, label, onServingsCountChanged: onServingsChang
           <Icon path={mdiPlus} size={1} title="More servings" />
         </IconButton>
       </ChooserInputLine>
-      {label ?
-        <Heading>{label}</Heading> :
-        <Heading>{t("servings")}</Heading>
-      }
+      {label ? <Heading>{label}</Heading> : <Heading>{t("servings")}</Heading>}
     </StyledServingsChooser>
   );
 };

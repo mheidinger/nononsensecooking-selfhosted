@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 export function methodIs(
   methods: string[],
   req: NextApiRequest,
-  res: NextApiResponse<any>
+  res: NextApiResponse<any>,
 ) {
   if (methods.findIndex((method) => req.method === method) === -1) {
     res

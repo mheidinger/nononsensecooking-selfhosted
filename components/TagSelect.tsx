@@ -1,12 +1,12 @@
 import chroma from "chroma-js";
 import Select, { StylesConfig } from "react-select";
-import Creatable from 'react-select/creatable';
+import Creatable from "react-select/creatable";
 import stc from "string-to-color";
 
 export type TagSelectValue = {
   label: string;
   value: string;
-}
+};
 
 type Props = {
   options?: string[];
@@ -26,9 +26,21 @@ function getTagColors(tag: string) {
   };
 }
 
-const TagSelect = ({options, values, onChange, creatable, className, onlyShow, instanceId}: Props) => {
-  const selectOptions: TagSelectValue[] = options ? options.map((option) => ({label: option, value: option})) : [];
-  const selectValues: TagSelectValue[] = values ? values.map((value) => ({label: value, value: value})) : [];
+const TagSelect = ({
+  options,
+  values,
+  onChange,
+  creatable,
+  className,
+  onlyShow,
+  instanceId,
+}: Props) => {
+  const selectOptions: TagSelectValue[] = options
+    ? options.map((option) => ({ label: option, value: option }))
+    : [];
+  const selectValues: TagSelectValue[] = values
+    ? values.map((value) => ({ label: value, value: value }))
+    : [];
 
   const colorStyles: StylesConfig<TagSelectValue, true> = {
     multiValue: (styles, { data }) => {
@@ -65,7 +77,9 @@ const TagSelect = ({options, values, onChange, creatable, className, onlyShow, i
     }),
     option: (styles, state) => ({
       ...styles,
-      backgroundColor: state.isFocused ? "var(--color-background)" : "var(--color-background-alt-solid)",
+      backgroundColor: state.isFocused
+        ? "var(--color-background)"
+        : "var(--color-background-alt-solid)",
     }),
   };
 
@@ -76,19 +90,12 @@ const TagSelect = ({options, values, onChange, creatable, className, onlyShow, i
     isMulti: true,
     styles: colorStyles,
     isDisabled: onlyShow,
-    instanceId
+    instanceId,
   };
 
   return (
     <div className={className}>
-      { creatable ?
-        <Creatable
-          {...selectProps}
-        /> :
-        <Select
-          {...selectProps}
-        />
-      }
+      {creatable ? <Creatable {...selectProps} /> : <Select {...selectProps} />}
     </div>
   );
 };

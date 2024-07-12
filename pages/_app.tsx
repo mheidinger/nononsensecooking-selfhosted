@@ -33,7 +33,11 @@ function MyApp({ Component, pageProps }) {
           href="/public/favicon-16x16.png"
         />
         <link rel="manifest" href="/public/site.webmanifest" />
-        <link rel="mask-icon" href="/public/safari-pinned-tab.svg" color="#5686f5" />
+        <link
+          rel="mask-icon"
+          href="/public/safari-pinned-tab.svg"
+          color="#5686f5"
+        />
         <meta name="msapplication-TileColor" content="#5686f5" />
         <meta name="theme-color" content="#5686f5" />
       </Head>

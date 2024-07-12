@@ -1,7 +1,15 @@
 import { useTranslation } from "next-i18next";
 import { Ingredient } from "../../models/Ingredient";
 import { Unit } from "../../models/Unit";
-import { AddButton, GroupedInput, Input, InputLabel, InputRow, Select, RemoveButton } from "../Inputs";
+import {
+  AddButton,
+  GroupedInput,
+  Input,
+  InputLabel,
+  InputRow,
+  Select,
+  RemoveButton,
+} from "../Inputs";
 import Icon from "@mdi/react";
 import { mdiClose, mdiDrag } from "@mdi/js";
 import { useCallback, useMemo } from "react";
@@ -12,7 +20,7 @@ type Props = {
   setIngredients(ingredients: Ingredient[]): void;
 };
 
-const Ingredients = ({ingredients, setIngredients}: Props) => {
+const Ingredients = ({ ingredients, setIngredients }: Props) => {
   const { t: tr } = useTranslation("recipe");
 
   function setIngredient(ingredient: Ingredient, index: number) {
@@ -28,16 +36,23 @@ const Ingredients = ({ingredients, setIngredients}: Props) => {
   const unitOptions = useMemo(() => {
     const options: JSX.Element[] = [];
     for (const unit in Unit) {
-      options.push(<option value={Unit[unit]} key={Unit[unit]}>{tr(`unit.${Unit[unit]}`, {amount: ""}).trim()}</option>)
+      options.push(
+        <option value={Unit[unit]} key={Unit[unit]}>
+          {tr(`unit.${Unit[unit]}`, { amount: "" }).trim()}
+        </option>,
+      );
     }
     return options;
   }, [tr]);
 
-  const onDrop = useCallback((sourceIndex: number, targetIndex: number) => {
-    const [removed] = ingredients.splice(sourceIndex, 1);
-    ingredients.splice(targetIndex, 0, removed);
-    setIngredients(ingredients);
-  }, [ingredients, setIngredients]);
+  const onDrop = useCallback(
+    (sourceIndex: number, targetIndex: number) => {
+      const [removed] = ingredients.splice(sourceIndex, 1);
+      ingredients.splice(targetIndex, 0, removed);
+      setIngredients(ingredients);
+    },
+    [ingredients, setIngredients],
+  );
 
   const toDnDProps = useDnD({
     contextName: "ingredients",
@@ -47,23 +62,33 @@ const Ingredients = ({ingredients, setIngredients}: Props) => {
 
   return (
     <>
-      <InputRow headingRow><InputLabel>{tr("edit.ingredients")}</InputLabel></InputRow>
-      {ingredients.map((ingredient, index) =>
+      <InputRow headingRow>
+        <InputLabel>{tr("edit.ingredients")}</InputLabel>
+      </InputRow>
+      {ingredients.map((ingredient, index) => (
         <InputRow key={`ingredient${index}`}>
-          <GroupedInput
-            {...toDnDProps(index)}
-          >
+          <GroupedInput {...toDnDProps(index)}>
             <Icon path={mdiDrag} size={1.4} />
             <Input
               name={`ingredient${index}Amount`}
-              value={ingredient.amount && ingredient.unit !== Unit.NONE ? ingredient.amount : ""}
+              value={
+                ingredient.amount && ingredient.unit !== Unit.NONE
+                  ? ingredient.amount
+                  : ""
+              }
               disabled={ingredient.unit === Unit.NONE}
               onKeyPress={(e) => !/[0-9]/.test(e.key) && e.preventDefault()}
               onChange={(event) => {
                 if (event.currentTarget.value.length > 0) {
-                  setIngredient({...ingredient, amount: parseInt(event.currentTarget.value)}, index);
+                  setIngredient(
+                    {
+                      ...ingredient,
+                      amount: parseInt(event.currentTarget.value),
+                    },
+                    index,
+                  );
                 } else {
-                  setIngredient({...ingredient, amount: undefined}, index);
+                  setIngredient({ ...ingredient, amount: undefined }, index);
                 }
               }}
               width="20%"
@@ -71,7 +96,12 @@ const Ingredients = ({ingredients, setIngredients}: Props) => {
             <Select
               id={`ingredient${index}Unit`}
               value={ingredient.unit ? ingredient.unit : Unit.NONE}
-              onChange={event => setIngredient({...ingredient, unit: event.currentTarget.value as Unit}, index)}
+              onChange={(event) =>
+                setIngredient(
+                  { ...ingredient, unit: event.currentTarget.value as Unit },
+                  index,
+                )
+              }
               width="20%"
             >
               {unitOptions}
@@ -79,22 +109,31 @@ const Ingredients = ({ingredients, setIngredients}: Props) => {
             <Input
               name={`ingredient${index}Name`}
               value={ingredient.name}
-              onChange={event => setIngredient({...ingredient, name: event.currentTarget.value}, index)}
+              onChange={(event) =>
+                setIngredient(
+                  { ...ingredient, name: event.currentTarget.value },
+                  index,
+                )
+              }
               width="60%"
             />
             <RemoveButton onClick={() => removeIngredient(index)}>
               <Icon path={mdiClose} size={0.8} />
             </RemoveButton>
           </GroupedInput>
-        </InputRow>)
-      }
-      <InputRow><AddButton
-        onClick={() => setIngredients([...ingredients, {name: "", unit: Unit.NONE}])}
-      >
-        {tr("edit.addIngredient")}
-      </AddButton></InputRow>
+        </InputRow>
+      ))}
+      <InputRow>
+        <AddButton
+          onClick={() =>
+            setIngredients([...ingredients, { name: "", unit: Unit.NONE }])
+          }
+        >
+          {tr("edit.addIngredient")}
+        </AddButton>
+      </InputRow>
     </>
   );
-}
+};
 
 export default Ingredients;
