@@ -1,72 +1,73 @@
 kind: pipeline
+type: docker
 name: default
 
 steps:
-- name: build
-  image: node
-  environment:
-    S3_DOMAIN: example.com
-  commands:
-    - npm ci
-    - npm run build
-  when:
-    branch:
-      exclude:
+  - name: build
+    image: node
+    environment:
+      S3_DOMAIN: example.com
+    commands:
+      - npm ci
+      - npm run build
+    when:
+      branch:
+        exclude:
+          - deploy
+
+  - name: push-private-registry
+    image: plugins/docker
+    settings:
+      repo: registry-castor.max-heidinger.de/nononsensecooking-selfhosted
+      registry: registry-castor.max-heidinger.de
+      tags:
+        - latest
+        - ci-${DRONE_BUILD_NUMBER}
+      username:
+        from_secret: tac_username
+      password:
+        from_secret: tac_password
+      purge: false
+    when:
+      branch:
         - deploy
+        - main
+      event:
+        exclude:
+          - pull_request
 
-- name: push-private-registry
-  image: plugins/docker
-  settings:
-    repo: registry-castor.max-heidinger.de/nononsensecooking-selfhosted
-    registry: registry-castor.max-heidinger.de
-    tags:
-      - latest
-      - ci-${DRONE_BUILD_NUMBER}
-    username:
-      from_secret: tac_username
-    password:
-      from_secret: tac_password
-    purge: false
-  when:
-    branch:
-    - deploy
-    - main
-    event:
-      exclude:
-      - pull_request
-      
-- name: push-public-registry
-  image: plugins/docker
-  settings:
-    repo: ghcr.io/mheidinger/nononsensecooking-selfhosted
-    registry: ghcr.io
-    tags:
-      - latest
-      - ci-${DRONE_BUILD_NUMBER}
-    username:
-      from_secret: github_username
-    password:
-      from_secret: github_password
-    purge: false
-  when:
-    branch:
-    - deploy
-    - main
-    event:
-      exclude:
-      - pull_request
+  - name: push-public-registry
+    image: plugins/docker
+    settings:
+      repo: ghcr.io/mheidinger/nononsensecooking-selfhosted
+      registry: ghcr.io
+      tags:
+        - latest
+        - ci-${DRONE_BUILD_NUMBER}
+      username:
+        from_secret: github_username
+      password:
+        from_secret: github_password
+      purge: false
+    when:
+      branch:
+        - deploy
+        - main
+      event:
+        exclude:
+          - pull_request
 
-- name: update-deployment
-  image: plugins/webhook
-  settings:
-    urls: https://portainer-castor.max-heidinger.de/api/webhooks/e67369b6-bab2-46a7-b1bf-4d3c6f64a59e
-    username:
-      from_secret: tac_username
-    password:
-      from_secret: tac_password
-  when:
-    branch:
-    - deploy
-    event:
-      exclude:
-      - pull_request
+  - name: update-deployment
+    image: plugins/webhook
+    settings:
+      urls: https://portainer-castor.max-heidinger.de/api/webhooks/e67369b6-bab2-46a7-b1bf-4d3c6f64a59e
+      username:
+        from_secret: tac_username
+      password:
+        from_secret: tac_password
+    when:
+      branch:
+        - deploy
+      event:
+        exclude:
+          - pull_request
