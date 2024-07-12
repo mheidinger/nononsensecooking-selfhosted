@@ -34,7 +34,7 @@
     "react-select": "5.7.4",
     "slug": "8.2.3",
     "string-to-color": "2.2.2",
-    "styled-components": "5.3.11",
+    "styled-components": "6.1.11",
     "typescript": "5.1.6",
     "use-file-picker": "1.7.0",
     "yaml": "2.3.1"
