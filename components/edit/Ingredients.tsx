@@ -60,8 +60,8 @@ const Ingredients = ({ingredients, setIngredients}: Props) => {
               disabled={ingredient.unit === Unit.NONE}
               onKeyPress={(e) => !/[0-9]/.test(e.key) && e.preventDefault()}
               onChange={(event) => {
-                if (event.target.value.length > 0) {
-                  setIngredient({...ingredient, amount: parseInt(event.target.value)}, index);
+                if (event.currentTarget.value.length > 0) {
+                  setIngredient({...ingredient, amount: parseInt(event.currentTarget.value)}, index);
                 } else {
                   setIngredient({...ingredient, amount: undefined}, index);
                 }
@@ -71,7 +71,7 @@ const Ingredients = ({ingredients, setIngredients}: Props) => {
             <Select
               id={`ingredient${index}Unit`}
               value={ingredient.unit ? ingredient.unit : Unit.NONE}
-              onChange={event => setIngredient({...ingredient, unit: event.target.value as Unit}, index)}
+              onChange={event => setIngredient({...ingredient, unit: event.currentTarget.value as Unit}, index)}
               width="20%"
             >
               {unitOptions}
@@ -79,7 +79,7 @@ const Ingredients = ({ingredients, setIngredients}: Props) => {
             <Input
               name={`ingredient${index}Name`}
               value={ingredient.name}
-              onChange={event => setIngredient({...ingredient, name: event.target.value}, index)}
+              onChange={event => setIngredient({...ingredient, name: event.currentTarget.value}, index)}
               width="60%"
             />
             <RemoveButton onClick={() => removeIngredient(index)}>

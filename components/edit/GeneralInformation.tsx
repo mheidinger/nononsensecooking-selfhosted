@@ -30,7 +30,7 @@ const GeneralInformation = ({recipe, setRecipe, setRecipeImageFile, availableTag
     return options;
   }, []);
 
-  const [openFileSelector, {plainFiles, clear: clearFile}] = useFilePicker({
+  const { openFilePicker, plainFiles, clear: clearFile } = useFilePicker({
     accept: ".jpg",
     readFilesContent: false,
     multiple: false,
@@ -49,7 +49,7 @@ const GeneralInformation = ({recipe, setRecipe, setRecipeImageFile, availableTag
         <Input
           name="recipeName"
           value={recipe.name}
-          onChange={event => setRecipe({...recipe, name: event.target.value})}
+          onChange={event => setRecipe({...recipe, name: event.currentTarget.value})}
           grow={1}
         />
       </InputRow>
@@ -58,7 +58,7 @@ const GeneralInformation = ({recipe, setRecipe, setRecipeImageFile, availableTag
         <Select
           id="recipeDiet"
           value={recipe.diet}
-          onChange={event => setRecipe({...recipe, diet: event.target.value as Diet})}
+          onChange={event => setRecipe({...recipe, diet: event.currentTarget.value as Diet})}
           grow={1}
         >
           {dietOptions}
@@ -72,8 +72,8 @@ const GeneralInformation = ({recipe, setRecipe, setRecipeImageFile, availableTag
           onKeyPress={(e) => !/[0-9]/.test(e.key) && e.preventDefault()}
           onChange={(event) => {
             const newServings = {...recipe.servings};
-            if (event.target.value.length > 0) {
-              newServings.count = parseInt(event.target.value);
+            if (event.currentTarget.value.length > 0) {
+              newServings.count = parseInt(event.currentTarget.value);
             } else {
               newServings.count = 0;
             }
@@ -87,8 +87,8 @@ const GeneralInformation = ({recipe, setRecipe, setRecipeImageFile, availableTag
           placeholder={tr("servings")}
           onChange={(event) => {
             const newServings = {...recipe.servings};
-            if (event.target.value.length > 0) {
-              newServings.label = event.target.value;
+            if (event.currentTarget.value.length > 0) {
+              newServings.label = event.currentTarget.value;
             } else {
               delete newServings.label;
             }
@@ -104,8 +104,8 @@ const GeneralInformation = ({recipe, setRecipe, setRecipeImageFile, availableTag
           value={recipe.cookTime}
           onKeyPress={(e) => !/[0-9]/.test(e.key) && e.preventDefault()}
           onChange={(event) => {
-            if (event.target.value.length > 0) {
-              setRecipe({...recipe, cookTime: parseInt(event.target.value)});
+            if (event.currentTarget.value.length > 0) {
+              setRecipe({...recipe, cookTime: parseInt(event.currentTarget.value)});
             } else {
               setRecipe({...recipe, cookTime: 0});
             }
@@ -118,7 +118,7 @@ const GeneralInformation = ({recipe, setRecipe, setRecipeImageFile, availableTag
         <Input
           name="recipeSource"
           value={recipe.source}
-          onChange={(event) => setRecipe({...recipe, source: event.target.value})}
+          onChange={(event) => setRecipe({...recipe, source: event.currentTarget.value})}
           grow={1}
         />
       </InputRow>
@@ -126,7 +126,7 @@ const GeneralInformation = ({recipe, setRecipe, setRecipeImageFile, availableTag
         <InputLabel width="30%">{tr("edit.image")}</InputLabel>
         <GroupedInput>
           <FileSelector
-            onClick={() => openFileSelector()}
+            onClick={() => openFilePicker()}
           >
             {selectedFile ? selectedFile.name : tr("edit.fileSelect")}
           </FileSelector>
