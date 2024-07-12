@@ -6,6 +6,7 @@ export enum Unit {
   MILILITERS = "ml",
   LITERS = "l",
   TABLESPOONS = "tbsp",
+  TEASPOONS = "tsp",
 }
 
 const NonScalingUnits = [

@@ -7,7 +7,8 @@
     "pc": "{{amount}}pc",
     "ml": "{{amount}}ml",
     "l": "{{amount}}l",
-    "tbsp": "{{amount}}tbsp"
+    "tbsp": "{{amount}}tbsp",
+    "tsp": "{{amount}}tsp"
   },
   "edit": {
     "name": "Name:",

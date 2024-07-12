@@ -7,7 +7,8 @@
     "pc": "{{amount}} Stück",
     "ml": "{{amount}}ml",
     "l": "{{amount}}l",
-    "tbsp": "{{amount}} Esslöffel"
+    "tbsp": "{{amount}} Esslöffel",
+    "tsp": "{{amount}} Teelöffel"
   },
   "edit": {
     "name": "Name:",
