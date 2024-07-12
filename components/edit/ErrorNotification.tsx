@@ -18,7 +18,7 @@ const fadeOut = keyframes`
 `;
 
 const ErrorBox = styled.div<
-  { show: boolean } & React.HTMLProps<HTMLDivElement>
+  { $show: boolean } & React.HTMLProps<HTMLDivElement>
 >`
   background-color: red;
   position: absolute;
@@ -32,8 +32,8 @@ const ErrorBox = styled.div<
   color: white;
   text-align: center;
   padding: 1rem;
-  opacity: ${(props) => (props.show ? "1" : "0")};
-  animation: ${(props) => (props.show ? fadeIn : fadeOut)} 1s;
+  opacity: ${({$show}) => ($show ? "1" : "0")};
+  animation: ${({$show}) => ($show ? fadeIn : fadeOut)} 1s;
 `;
 
 const ErrorNotification = ({ message, show }: Props) => {
@@ -47,7 +47,7 @@ const ErrorNotification = ({ message, show }: Props) => {
   }, [message, firstShown]);
 
   return (
-    <ErrorBox show={show} hidden={!firstShown}>
+    <ErrorBox $show={show} hidden={!firstShown}>
       {message ? message : ""}
     </ErrorBox>
   );

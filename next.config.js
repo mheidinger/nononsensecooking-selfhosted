@@ -14,7 +14,11 @@ module.exports = {
   },
   images: {
     formats: ["image/avif", "image/webp"],
-    domains: [process.env.S3_DOMAIN],
+    remotePatterns: [
+      {
+        hostname: process.env.S3_DOMAIN,
+      },
+    ],
   },
   webpack(config) {
     if (awsEnv) {

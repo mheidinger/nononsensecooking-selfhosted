@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import PageLoadingIndicator from "../components/PageLoadingIndicator";
+import nextI18nConfig from '../next-i18next.config'
 import "../styles/globals.css";
 
 const Main = styled.main`
@@ -50,4 +51,4 @@ function MyApp({ Component, pageProps }) {
   );
 }
 
-export default appWithTranslation(MyApp);
+export default appWithTranslation(MyApp, nextI18nConfig);

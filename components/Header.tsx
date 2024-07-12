@@ -91,7 +91,7 @@ const MenuButton = styled.button`
   }
 `;
 
-const Menu = styled.div<{ open: boolean }>`
+const Menu = styled.div<{ $open: boolean }>`
   position: absolute;
   z-index: 200;
   top: 100%;
@@ -101,11 +101,11 @@ const Menu = styled.div<{ open: boolean }>`
   box-shadow: var(--shadow);
   background: var(--color-background);
   padding: 2rem 2rem 2rem 2rem;
-  visibility: ${({ open }) => (open ? "visible" : "hidden")};
-  pointer-events: ${({ open }) => (open ? "auto" : "none")};
+  visibility: ${({ $open }) => ($open ? "visible" : "hidden")};
+  pointer-events: ${({ $open }) => ($open ? "auto" : "none")};
   transition: all 0.15s ease-in;
-  transform: ${({ open }) => (open ? "scale(1)" : "scale(0.95)")};
-  opacity: ${({ open }) => (open ? 1 : 0)};
+  transform: ${({ $open }) => ($open ? "scale(1)" : "scale(0.95)")};
+  opacity: ${({ $open }) => ($open ? 1 : 0)};
   transform-origin: top center;
 
   @media screen and (min-width: 950px) {
@@ -153,7 +153,7 @@ const Header = () => {
       <MenuButton onClick={toggleMenu}>
         <Icon path={mdiMenu} size={1} />
       </MenuButton>
-      <Menu open={menuOpen}>
+      <Menu $open={menuOpen}>
         <StyledNav>
           <StyledLink href="/r" prefetch={false}>
             <Icon path={mdiPotSteamOutline} size={1} />

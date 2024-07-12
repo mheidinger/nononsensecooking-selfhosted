@@ -57,12 +57,12 @@ const Steps = ({ steps, setSteps }: Props) => {
 
   return (
     <>
-      <InputRow headingRow>
+      <InputRow $headingRow>
         <InputLabel>{tr("edit.steps")}</InputLabel>
       </InputRow>
       {steps.map((step, index) => (
         <InputRow key={`step${index}`}>
-          <InputLabel indent width="10%">
+          <InputLabel $indent width="10%">
             #{index + 1}:
           </InputLabel>
           <GroupedInput {...toDnDProps(index)}>

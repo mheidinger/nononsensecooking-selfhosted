@@ -73,7 +73,7 @@ const GeneralInformation = ({
           onChange={(event) =>
             setRecipe({ ...recipe, name: event.currentTarget.value })
           }
-          grow={1}
+          $grow={1}
         />
       </InputRow>
       <InputRow>
@@ -84,7 +84,7 @@ const GeneralInformation = ({
           onChange={(event) =>
             setRecipe({ ...recipe, diet: event.currentTarget.value as Diet })
           }
-          grow={1}
+          $grow={1}
         >
           {dietOptions}
         </Select>
@@ -119,7 +119,7 @@ const GeneralInformation = ({
             }
             setRecipe({ ...recipe, servings: newServings });
           }}
-          grow={1}
+          $grow={1}
         />
       </InputRow>
       <InputRow>
@@ -138,7 +138,7 @@ const GeneralInformation = ({
               setRecipe({ ...recipe, cookTime: 0 });
             }
           }}
-          grow={1}
+          $grow={1}
         />
       </InputRow>
       <InputRow>
@@ -149,7 +149,7 @@ const GeneralInformation = ({
           onChange={(event) =>
             setRecipe({ ...recipe, source: event.currentTarget.value })
           }
-          grow={1}
+          $grow={1}
         />
       </InputRow>
       <InputRow>
@@ -172,7 +172,7 @@ const GeneralInformation = ({
             setRecipe({ ...recipe, tags: values.map((value) => value.value) })
           }
           creatable
-          instanceId={recipe.id}
+          instanceId={"edit-general-information-tag-select"}
         />
       </InputRow>
     </>

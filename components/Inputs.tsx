@@ -3,31 +3,31 @@ import styled from "styled-components";
 const COLUMN_MAX_WIDTH = "1300px";
 
 export const InputRow = styled.div<
-  { headingRow?: boolean } & React.HTMLProps<HTMLDivElement>
+  { $headingRow?: boolean } & React.HTMLProps<HTMLDivElement>
 >`
   display: flex;
   justify-content: space-between;
   margin-top: 1rem;
-  margin-bottom: ${(props) => (props.headingRow ? "-.5rem" : "0")};
+  margin-bottom: ${({$headingRow}) => ($headingRow ? "-.5rem" : "0")};
   gap: 5px;
 `;
 
 export const InputLabel = styled.label<
-  { indent?: boolean; width?: string } & React.HTMLProps<HTMLLabelElement>
+  { $indent?: boolean } & React.HTMLProps<HTMLLabelElement>
 >`
   font-size: var(--font-size-base);
   font-weight: 600;
   margin: auto 0;
-  margin-left: ${(props) => (props.indent ? "3rem" : "0")};
-  ${(props) => (props.width ? `width: ${props.width};` : "")}
+  margin-left: ${({$indent}) => ($indent ? "3rem" : "0")};
+  ${({width}) => (width ? `width: ${width};` : "")}
 
   @media screen and (max-width: ${COLUMN_MAX_WIDTH}) {
-    margin-left: ${(props) => (props.indent ? "1rem" : "0")};
+    margin-left: ${({$indent}) => ($indent ? "1rem" : "0")};
   }
 `;
 
 export const Input = styled.input<
-  { grow?: number; width?: string } & React.HTMLProps<HTMLInputElement>
+  { $grow?: number } & React.HTMLProps<HTMLInputElement>
 >`
   font-family: var(--font-stack);
   font-size: var(--font-size-base);
@@ -38,14 +38,14 @@ export const Input = styled.input<
   appearance: none;
   color: var(--color-text-primary);
   height: 2.5rem;
-  filter: ${(props) =>
-    props.disabled ? "brightness(150%)" : "brightness(100%)"};
-  flex-grow: ${(props) => props.grow || 0};
-  ${(props) => (props.width ? `width: ${props.width};` : "")}
+  filter: ${({disabled}) =>
+    disabled ? "brightness(150%)" : "brightness(100%)"};
+  flex-grow: ${({$grow}) => $grow || 0};
+  ${({width}) => (width ? `width: ${width};` : "")}
 `;
 
 export const Select = styled.select<
-  { grow?: number; width?: string } & React.HTMLProps<HTMLSelectElement>
+  { $grow?: number } & React.HTMLProps<HTMLSelectElement>
 >`
   font-family: var(--font-stack);
   font-size: var(--font-size-base);
@@ -60,8 +60,8 @@ export const Select = styled.select<
   background-size: 1em;
   color: var(--color-text-primary);
   height: 2.5rem;
-  ${(props) => (props.width ? `width: ${props.width};` : "")}
-  flex-grow: ${(props) => props.grow || 0};
+  ${({width}) => (width ? `width: ${width};` : "")}
+  flex-grow: ${({$grow}) => $grow || 0};
 
   & > option {
     background-color: var(--color-background-alt-solid);

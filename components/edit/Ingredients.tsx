@@ -62,7 +62,7 @@ const Ingredients = ({ ingredients, setIngredients }: Props) => {
 
   return (
     <>
-      <InputRow headingRow>
+      <InputRow $headingRow>
         <InputLabel>{tr("edit.ingredients")}</InputLabel>
       </InputRow>
       {ingredients.map((ingredient, index) => (
