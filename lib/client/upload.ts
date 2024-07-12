@@ -6,13 +6,18 @@ interface UploadRecipeResult {
 }
 
 export async function uploadRecipe(recipe: Recipe, update?: boolean): Promise<UploadRecipeResult> {
+  const recipeClone = structuredClone(recipe);
+  // Remove empty ingredients and steps to avoid API error
+  recipeClone.ingredients = recipeClone.ingredients.filter(i => i.name);
+  recipeClone.steps = recipeClone.steps.filter(s => s);
+
   const response = await fetch("/api/create", {
     method: update ? "PUT": "POST",
     headers: {
       "Accept": "application/json",
       "Content-Type": "application/json"
     },
-    body: JSON.stringify(recipe)
+    body: JSON.stringify(recipeClone)
   });
 
   const result = await response.json();
