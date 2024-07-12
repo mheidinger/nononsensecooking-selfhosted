@@ -41,7 +41,7 @@ const LinkContainer = styled.nav`
   flex-wrap: wrap;
 `;
 
-const StyledLink = styled.a`
+const StyledLink = styled(Link)`
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -66,27 +66,18 @@ export default function NotFound({}: InferGetStaticPropsType<
         <Title>{t("notfound.displaytitle")}</Title>
         <IntroParagraph>{t("notfound.explanation")}</IntroParagraph>
         <LinkContainer>
-          <Link href="/" passHref>
-            <StyledLink>
-              <Icon path={mdiArrowLeft} size={1} />
-              {t("notfound.links.home")}
-            </StyledLink>
-          </Link>
-          <Link href="/r" passHref>
-            <StyledLink>
-              <Icon path={mdiPotSteamOutline} size={1} />
-              {t("notfound.links.allrecipes")}
-            </StyledLink>
-          </Link>
-          <Link
-            href="https://github.com/mheidinger/nononsensecooking-selfhosted/issues"
-            passHref
-          >
-            <StyledLink>
-              <Icon path={mdiGithub} size={1} />
-              {t("notfound.links.github")}
-            </StyledLink>
-          </Link>
+          <StyledLink href="/">
+            <Icon path={mdiArrowLeft} size={1} />
+            {t("notfound.links.home")}
+          </StyledLink>
+          <StyledLink href="/r">
+            <Icon path={mdiPotSteamOutline} size={1} />
+            {t("notfound.links.allrecipes")}
+          </StyledLink>
+          <StyledLink href="https://github.com/mheidinger/nononsensecooking-selfhosted/issues">
+            <Icon path={mdiGithub} size={1} />
+            {t("notfound.links.github")}
+          </StyledLink>
         </LinkContainer>
       </NotFoundPage>
     </>

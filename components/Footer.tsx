@@ -20,7 +20,7 @@ const StyledFooter = styled.footer`
   }
 `;
 
-const StyledLink = styled.a`
+const StyledLink = styled(Link)`
   color: var(--color-primary);
   white-space: pre;
 `;
@@ -56,17 +56,17 @@ const Footer = () => {
         >
           GitHub
         </StyledLink>
-        <Link href="/create" passHref prefetch={false}>
-          <StyledLink>{t("link.createRecipe")}</StyledLink>
-        </Link>
+        <StyledLink href="/create" prefetch={false}>
+          {t("link.createRecipe")}
+        </StyledLink>
       </Nav>
       <Nav>
-        <a href="#" onClick={() => onToggleLanguageClick("en-US")}>
+        <StyledLink href="#" onClick={() => onToggleLanguageClick("en-US")}>
           en
-        </a>
-        <a href="#" onClick={() => onToggleLanguageClick("de-DE")}>
+        </StyledLink>
+        <StyledLink href="#" onClick={() => onToggleLanguageClick("de-DE")}>
           de
-        </a>
+        </StyledLink>
       </Nav>
     </StyledFooter>
   );

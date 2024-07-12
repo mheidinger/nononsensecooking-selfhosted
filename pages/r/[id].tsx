@@ -85,7 +85,7 @@ const LinkContainer = styled.div`
   gap: 1.5rem;
 `;
 
-const StyledLink = styled.a`
+const StyledLink = styled(Link)`
   color: var(--color-primary);
   white-space: pre;
 `;
@@ -148,8 +148,6 @@ const SingleRecipe = ({
         <ImageContainer>
           <DishImage
             s3Url={s3Url}
-            layout="fill"
-            objectFit="cover"
             sizes="(max-width: 400px) 400px, (max-width: 600px) 600px, (max-width: 800px) 800px, (min-width: 801px) 900px"
             alt=""
           />
@@ -165,12 +163,12 @@ const SingleRecipe = ({
         />
         <StepList steps={steps} />
         <LinkContainer>
-          <Link href={`/r/${id}/edit`} passHref prefetch={false}>
-            <StyledLink>{tr("link.edit")}</StyledLink>
-          </Link>
-          <Link href={`/r/${id}/delete`} passHref prefetch={false}>
-            <StyledLink>{tr("link.delete")}</StyledLink>
-          </Link>
+          <StyledLink href={`/r/${id}/edit`} prefetch={false}>
+            {tr("link.edit")}
+          </StyledLink>
+          <StyledLink href={`/r/${id}/delete`} prefetch={false}>
+            {tr("link.delete")}
+          </StyledLink>
         </LinkContainer>
       </StyledArticle>
     </>

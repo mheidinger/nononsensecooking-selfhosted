@@ -18,6 +18,8 @@ const DishImage = (props: Props) => {
     <Image
       src={src}
       onError={() => setShowPlaceholder(true)}
+      fill
+      style={{ objectFit: "cover" }}
       {...imageProps}
       alt={imageProps.alt} // Satisfy linter
     />

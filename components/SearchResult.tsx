@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Recipe } from "../models/Recipe";
 import IconForDiet from "./IconForDiet";
 
-const StyledLink = styled.a`
+const StyledLink = styled(Link)`
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -25,12 +25,10 @@ const StyledLi = styled.li`
 
 const SearchResult = ({ id, name, diet }: Props) => (
   <StyledLi>
-    <Link href={getHref(id)} passHref>
-      <StyledLink>
-        <IconForDiet id={id} diet={diet} />
-        <span>{name}</span>
-      </StyledLink>
-    </Link>
+    <StyledLink href={getHref(id)}>
+      <IconForDiet id={id} diet={diet} />
+      <span>{name}</span>
+    </StyledLink>
   </StyledLi>
 );
 

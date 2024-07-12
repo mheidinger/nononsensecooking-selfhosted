@@ -19,7 +19,7 @@ type Props = {
 
 const HEIGHT = 8; //rem
 
-const Dish = styled.a`
+const Dish = styled.div`
   position: relative;
   display: flex;
   align-items: center;
@@ -73,13 +73,11 @@ const IconStat = styled.span`
 const DishListItem = ({ id, name, cookTime, diet, s3Url, tags }: Props) => {
   const { t } = useTranslation("common");
   return (
-    <Link href={`/r/${id}`} passHref prefetch={false}>
+    <Link href={`/r/${id}`} prefetch={false}>
       <Dish>
         <ImageContainer>
           <DishImage
             s3Url={s3Url}
-            layout="fill"
-            objectFit="cover"
             quality={60}
             sizes="(max-width: 600px) 100px, (min-width: 601px) 160px"
             alt=""

@@ -1,9 +1,4 @@
-import {
-  GetServerSideProps,
-  GetStaticProps,
-  InferGetServerSidePropsType,
-  InferGetStaticPropsType,
-} from "next";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/router";

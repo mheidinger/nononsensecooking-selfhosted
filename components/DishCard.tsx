@@ -17,7 +17,7 @@ type Props = {
   tags: Recipe["tags"];
 };
 
-const StyledCard = styled.a`
+const StyledCard = styled.div`
   background: var(--color-background-alt);
   border-radius: var(--rounded-lg);
   cursor: pointer;
@@ -97,13 +97,11 @@ const MaxWidthTagSelect = styled(TagSelect)`
 const DishCard = ({ id, name, cookTime, diet, s3Url, tags }: Props) => {
   const { t } = useTranslation("common");
   return (
-    <Link href={`/r/${id}`} passHref>
+    <Link href={`/r/${id}`}>
       <StyledCard>
         <ImageContainer>
           <DishImage
             s3Url={s3Url}
-            layout="fill"
-            objectFit="cover"
             quality={80}
             sizes="(max-width: 600px) 200px, (max-width: 1200px) 400px, (max-width: 1800px) 500, (max-width: 2400px) 600px, (min-width: 2401px) 700px"
             alt=""
