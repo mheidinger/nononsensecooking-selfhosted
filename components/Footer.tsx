@@ -1,5 +1,6 @@
 import { useTranslation } from "next-i18next";
 import Link from "next/link";
+import {useRouter} from "next/router";
 import styled from "styled-components";
 
 const StyledFooter = styled.footer`
@@ -39,6 +40,12 @@ const Nav = styled.nav`
 
 const Footer = () => {
   const { t } = useTranslation("footer");
+  const router = useRouter();
+
+  const onToggleLanguageClick = (newLocale) => {
+    const { pathname, asPath, query } = router;
+    router.push({ pathname, query }, asPath, { locale: newLocale });
+  };
 
   return (
     <StyledFooter>
@@ -52,6 +59,10 @@ const Footer = () => {
         <Link href="/create" passHref prefetch={false}>
           <StyledLink>{t("link.createRecipe")}</StyledLink>
         </Link>
+      </Nav>
+      <Nav>
+        <a href="#" onClick={() => onToggleLanguageClick("en-US")}>en</a>
+        <a href="#" onClick={() => onToggleLanguageClick("de-DE")}>de</a>
       </Nav>
     </StyledFooter>
   );
