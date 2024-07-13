@@ -46,6 +46,7 @@ export async function fetchRecipeIndex(): Promise<RecipeInIndex[]> {
     index = recipes.map((recipe) => toRecipeInIndex(recipe));
     recipeCache.set(INDEX_CACHE_KEY, index);
   }
+
   return Promise.all(
     index.map(async (item) => {
       item.s3Url = await getRecipeImageUrl(item.id);
@@ -75,19 +76,33 @@ export async function fetchSingleRecipe(id: string): Promise<Recipe> {
   return recipe;
 }
 
-export async function getRecipeImageUrl(id: string) {
+interface RecipeImageCacheEntry {
+  url: string | null;
+}
+
+export async function getRecipeImageUrl(
+  id: string,
+): Promise<string | null> {
   const cacheKey = `SIGNED_IMAGE_URL_${id}`;
-  let url = recipeCache.get(cacheKey) as string;
-  if (url == undefined) {
-    url = await getSignedGetObjectUrl(
-      getKeyForImage(id),
-      SIGNED_IMAGE_URL_TTL * 1.2,
-    );
-    recipeCache.set(cacheKey, url);
+  const cacheHit = recipeCache.get(cacheKey) as RecipeImageCacheEntry;
+  if (cacheHit == undefined) {
+    const imageKey = getKeyForImage(id);
+    const exists = await fileExists(imageKey);
+    let url: string | null = null;
+    if (exists) {
+      url = await getSignedGetObjectUrl(
+        getKeyForImage(id),
+        SIGNED_IMAGE_URL_TTL * 1.2,
+      );
+    }
+    recipeCache.set(cacheKey, {
+      url,
+    } satisfies RecipeImageCacheEntry);
+    return url;
   } else {
     console.log("Cache hit for recipe image URL", id);
   }
-  return url;
+  return cacheHit.url;
 }
 
 // Called from API => different recipeCache instance!
@@ -148,10 +163,11 @@ function parseServings(servings: RecipeFile["servings"]): Recipe["servings"] {
   return returnServings;
 }
 
-const parseIngredients = (
+function parseIngredients(
   ingredients: RecipeFile["ingredients"],
-): Recipe["ingredients"] =>
-  ingredients.map((ingredient) => ({
+): Recipe["ingredients"] {
+  return ingredients.map((ingredient) => ({
     ...ingredient,
     unit: ingredient.unit || Unit.NONE,
   }));
+}

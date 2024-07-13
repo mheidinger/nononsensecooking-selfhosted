@@ -44,7 +44,7 @@ export type RecipeInIndex = Pick<
   Recipe,
   "id" | "name" | "cookTime" | "diet" | "publishedAt" | "tags"
 > & {
-  s3Url?: string;
+  s3Url: string | null;
 };
 
 export function toRecipeInIndex({
@@ -62,5 +62,6 @@ export function toRecipeInIndex({
     diet,
     publishedAt,
     tags,
+    s3Url: null,
   };
 }
