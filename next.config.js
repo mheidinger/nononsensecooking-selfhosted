@@ -20,6 +20,7 @@ module.exports = {
       },
     ],
   },
+  experimental: { instrumentationHook: true },
   webpack(config) {
     if (awsEnv) {
       config.plugins.push(new webpack.EnvironmentPlugin(awsEnv));

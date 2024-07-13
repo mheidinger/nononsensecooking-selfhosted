@@ -9,16 +9,19 @@ import {
 import { Unit } from "../models/Unit";
 import {
   deleteFile,
-  fetchFile,
+  fetchFileAsString,
   fileExists,
   getSignedGetObjectUrl,
   getSignedPutObjectUrl,
   listFiles,
   uploadFile,
 } from "./s3client";
-
-const s3RecipeFilesBasePath = "recipes";
-const s3RecipeImagesBasePath = "images";
+import {
+  getPathForImage,
+  getPathForOptimizedImage,
+  getPathForRecipe,
+  S3RecipeFilesBasePath,
+} from "./s3Paths";
 
 const INDEX_CACHE_KEY = "index";
 const SIGNED_IMAGE_URL_TTL = 3600;
@@ -37,7 +40,7 @@ export function invalidateCache(id: string) {
 export async function fetchRecipeIndex(): Promise<RecipeInIndex[]> {
   let index = recipeCache.get(INDEX_CACHE_KEY) as RecipeInIndex[];
   if (index == undefined) {
-    const recipeFiles = await listFiles(s3RecipeFilesBasePath + "/");
+    const recipeFiles = await listFiles(S3RecipeFilesBasePath + "/");
     const recipes = await Promise.all(
       recipeFiles.map((file) =>
         fetchSingleRecipe(file.key.replace(".yaml", "")),
@@ -66,7 +69,7 @@ export async function fetchSingleRecipe(id: string): Promise<Recipe> {
   let recipe = recipeCache.get(id) as Recipe;
   if (recipe == undefined) {
     console.log("Read recipe from S3 for id", id);
-    const file = await fetchFile(getKeyForRecipe(id));
+    const file = await fetchFileAsString(getPathForRecipe(id));
     const recipeData = YAML.parse(file);
     recipe = parseRecipeData(id, recipeData);
     recipeCache.set(id, recipe);
@@ -80,24 +83,31 @@ interface RecipeImageCacheEntry {
   url: string | null;
 }
 
-export async function getRecipeImageUrl(
-  id: string,
-): Promise<string | null> {
+export async function getRecipeImageUrl(id: string): Promise<string | null> {
   const cacheKey = `SIGNED_IMAGE_URL_${id}`;
   const cacheHit = recipeCache.get(cacheKey) as RecipeImageCacheEntry;
   if (cacheHit == undefined) {
-    const imageKey = getKeyForImage(id);
-    const exists = await fileExists(imageKey);
+    let imagePath = getPathForOptimizedImage(id);
+    const optimizedExists = await fileExists(imagePath);
+    let exists = optimizedExists;
+    if (!exists) {
+      imagePath = getPathForImage(id);
+      exists = await fileExists(imagePath);
+    }
+
     let url: string | null = null;
     if (exists) {
       url = await getSignedGetObjectUrl(
-        getKeyForImage(id),
+        imagePath,
         SIGNED_IMAGE_URL_TTL * 1.2,
       );
     }
-    recipeCache.set(cacheKey, {
-      url,
-    } satisfies RecipeImageCacheEntry);
+    if (optimizedExists) {
+      recipeCache.set(cacheKey, {
+        url,
+      } satisfies RecipeImageCacheEntry);
+    }
+
     return url;
   } else {
     console.log("Cache hit for recipe image URL", id);
@@ -110,37 +120,29 @@ export async function createRecipe(
   recipe: Recipe,
   allowExisting: boolean,
 ): Promise<string> {
-  const key = getKeyForRecipe(recipe.id);
+  const key = getPathForRecipe(recipe.id);
   if ((await fileExists(key)) && !allowExisting) {
     throw new Error("recipe id (name) already exists");
   }
   uploadFile(key, JSON.stringify(recipe));
-  return getSignedPutObjectUrl(getKeyForImage(recipe.id));
+  return getSignedPutObjectUrl(getPathForImage(recipe.id));
 }
 
 // Called from API => different recipeCache instance!
 export async function deleteRecipe(id: string) {
-  const recipeKey = getKeyForRecipe(id);
+  const recipeKey = getPathForRecipe(id);
   try {
     deleteFile(recipeKey);
   } catch (error) {
     console.error("Failed to delete recipe with id: ", id);
   }
 
-  const imageKey = getKeyForImage(id);
+  const imageKey = getPathForImage(id);
   try {
     deleteFile(imageKey);
   } catch (error) {
     console.error("Failed to delete recipe image with id: ", id);
   }
-}
-
-function getKeyForRecipe(id: string): string {
-  return `${s3RecipeFilesBasePath}/${id}.yaml`;
-}
-
-function getKeyForImage(id: string): string {
-  return `${s3RecipeImagesBasePath}/${id}.jpg`;
 }
 
 const parseRecipeData = (id: string, recipeData: RecipeFile): Recipe => ({

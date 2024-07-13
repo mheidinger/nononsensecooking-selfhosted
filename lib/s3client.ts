@@ -11,6 +11,7 @@ import { createRequest } from "@aws-sdk/util-create-request";
 import { formatUrl } from "@aws-sdk/util-format-url";
 import { HttpRequest } from "@aws-sdk/types";
 import { Readable } from "stream";
+import { StreamingBlobPayloadInputTypes } from "@smithy/types";
 
 const client = new S3Client({
   endpoint: process.env.S3_ENDPOINT,
@@ -19,10 +20,11 @@ const client = new S3Client({
 const signer: S3RequestPresigner = new S3RequestPresigner({ ...client.config });
 const bucket = process.env.BUCKET_NAME;
 
-type S3File = {
+export interface S3File {
   prefix: string;
   key: string;
-};
+  path: string;
+}
 
 export async function listFiles(prefix: string): Promise<S3File[]> {
   const command = new ListObjectsCommand({ Bucket: bucket, Prefix: prefix });
@@ -33,18 +35,28 @@ export async function listFiles(prefix: string): Promise<S3File[]> {
       return {
         key: item.Key!.replace(prefix, ""),
         prefix,
+        path: item.Key!,
       };
     })
     .filter((item) => item.key !== "");
 }
 
-export async function fetchFile(key: string): Promise<string> {
+export async function fetchFileAsString(key: string): Promise<string> {
   const command = new GetObjectCommand({ Bucket: bucket, Key: key });
   const results = await client.send(command);
   return streamToString(results.Body as Readable);
 }
 
-export async function uploadFile(key: string, file: string) {
+export async function fetchFileAsBuffer(key: string): Promise<Buffer> {
+  const command = new GetObjectCommand({ Bucket: bucket, Key: key });
+  const results = await client.send(command);
+  return streamToBuffer(results.Body as Readable);
+}
+
+export async function uploadFile(
+  key: string,
+  file: StreamingBlobPayloadInputTypes,
+) {
   const command = new PutObjectCommand({
     Bucket: bucket,
     Key: key,
@@ -114,4 +126,12 @@ async function streamToString(stream: Readable): Promise<string> {
     stream.on("error", reject);
     stream.on("end", () => resolve(Buffer.concat(chunks).toString("utf-8")));
   });
+}
+
+async function streamToBuffer(stream: Readable): Promise<Buffer> {
+  const chunks: any[] = [];
+  for await (const chunk of stream) {
+    chunks.push(chunk);
+  }
+  return Buffer.concat(chunks);
 }

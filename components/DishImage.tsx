@@ -3,7 +3,7 @@ import { useState } from "react";
 import placeholderImg from "../public/img/placeholder.jpg";
 
 type Props = Omit<ImageProps, "src"> & {
-  s3Url?: string;
+  s3Url: string | null;
 };
 
 const DishImage = (props: Props) => {

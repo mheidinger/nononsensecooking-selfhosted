@@ -13,7 +13,7 @@ type Props = {
   name: Recipe["name"];
   cookTime: Recipe["cookTime"];
   diet: Recipe["diet"];
-  s3Url?: RecipeInIndex["s3Url"];
+  s3Url: RecipeInIndex["s3Url"];
   tags: Recipe["tags"];
 };
 
