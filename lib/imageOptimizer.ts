@@ -38,6 +38,7 @@ async function doOptimization({ key, path }: S3File) {
         effort: 4,
         smartSubsample: true,
       })
+      .keepMetadata()
       .sharpen()
       .toBuffer();
 

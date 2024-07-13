@@ -97,10 +97,7 @@ export async function getRecipeImageUrl(id: string): Promise<string | null> {
 
     let url: string | null = null;
     if (exists) {
-      url = await getSignedGetObjectUrl(
-        imagePath,
-        SIGNED_IMAGE_URL_TTL * 1.2,
-      );
+      url = await getSignedGetObjectUrl(imagePath, SIGNED_IMAGE_URL_TTL * 1.2);
     }
     if (optimizedExists) {
       recipeCache.set(cacheKey, {
