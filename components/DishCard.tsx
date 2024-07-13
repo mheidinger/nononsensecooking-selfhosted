@@ -3,18 +3,13 @@ import Icon from "@mdi/react";
 import { useTranslation } from "next-i18next";
 import Link from "next/link";
 import styled from "styled-components";
-import { Recipe, RecipeInIndex } from "../models/Recipe";
+import { Recipe } from "../models/Recipe";
 import DishImage from "./DishImage";
 import IconForDiet from "./IconForDiet";
 import TagSelect from "./TagSelect";
 
 type Props = {
-  id: Recipe["id"];
-  name: Recipe["name"];
-  cookTime: Recipe["cookTime"];
-  diet: Recipe["diet"];
-  s3Url: RecipeInIndex["s3Url"];
-  tags: Recipe["tags"];
+  recipe: Recipe;
 };
 
 const StyledCard = styled.div`
@@ -94,14 +89,14 @@ const MaxWidthTagSelect = styled(TagSelect)`
   max-width: 300px;
 `;
 
-const DishCard = ({ id, name, cookTime, diet, s3Url, tags }: Props) => {
+const DishCard = ({ recipe: {id, name, cookTime, diet, imageUrl, tags} }: Props) => {
   const { t } = useTranslation("common");
   return (
     <Link href={`/r/${id}`}>
       <StyledCard>
         <ImageContainer>
           <DishImage
-            s3Url={s3Url}
+            imageUrl={imageUrl}
             quality={80}
             sizes="(max-width: 600px) 200px, (max-width: 1200px) 400px, (max-width: 1800px) 500, (max-width: 2400px) 600px, (min-width: 2401px) 700px"
             alt=""

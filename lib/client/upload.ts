@@ -25,14 +25,12 @@ export async function uploadRecipe(
 
   const result = await response.json();
   if (response.status !== 200) {
-    throw new Error(
-      `Create recipe API request failed: ${JSON.stringify(result)}`,
-    );
+    console.error("Create recipe API request failed", result);
+    throw result;
   }
   if (!result || !result.recipeID || !result.imagePutURL) {
-    throw new Error(
-      `Create recipe result not as expected: ${JSON.stringify(result)}`,
-    );
+    console.error("Create recipe result not as expected", result);
+    throw new Error("Create recipe result not as expected");
   }
 
   return result;

@@ -7,8 +7,8 @@ import DishCard from "../components/DishCard";
 import { PaddedSection } from "../components/PaddedSection";
 import PageTitle from "../components/PageTitle";
 import Track from "../components/Track";
-import { fetchRecipeIndex, invalidateCache } from "../lib/recipes";
-import { Recipe, RecipeInIndex } from "../models/Recipe";
+import { fetchRecipes, invalidateCache } from "../lib/recipes";
+import { Recipe } from "../models/Recipe";
 
 function shuffle(a: any[]) {
   for (let i = a.length - 1; i > 0; i--) {
@@ -23,7 +23,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   if (invalidate && invalidate === "true") {
     invalidateCache(id as string);
   }
-  const allRecipes = await fetchRecipeIndex();
+  const allRecipes = await fetchRecipes();
   // TODO: Cache this and refresh every day
   const recipesOfTheDay = shuffle(allRecipes).slice(0, 3);
   const latestRecipes = allRecipes.sort(byPublishedAt).slice(0, 3);
@@ -57,15 +57,15 @@ export default function Home({
       <PageTitle />
       <PaddedSection title={t("home.todaysrecipes")} smallHeadings>
         <Track sm={1} md={2} lg={3}>
-          {recipesOfTheDay.map((recipe: RecipeInIndex) => (
-            <DishCard {...recipe} key={recipe.id} />
+          {recipesOfTheDay.map((recipe) => (
+            <DishCard recipe={recipe} key={recipe.id} />
           ))}
         </Track>
       </PaddedSection>
       <PaddedSection title={t("home.latestrecipes")} smallHeadings>
         <Track sm={1} md={2} lg={3}>
-          {latestRecipes.map((recipe: RecipeInIndex) => (
-            <DishCard {...recipe} key={recipe.id} />
+          {latestRecipes.map((recipe) => (
+            <DishCard recipe={recipe} key={recipe.id} />
           ))}
         </Track>
       </PaddedSection>

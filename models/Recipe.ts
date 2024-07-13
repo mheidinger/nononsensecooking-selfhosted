@@ -1,67 +1,25 @@
+import { z } from "zod";
+import { Diet } from "./Diet";
 import { Ingredient } from "./Ingredient";
+import { Servings } from "./Servings";
 
-export enum Diet {
-  Meat = "meat",
-  Fish = "fish",
-  Vegetarian = "vegetarian",
-  Vegan = "vegan",
-}
+export const BaseRecipe = z.object({
+  name: z.string().min(1),
+  cookTime: z.number(),
+  diet: Diet,
+  steps: z.array(z.string()),
+  ingredients: z.array(Ingredient),
+  publishedAt: z.string(),
+  source: z.string(),
+  servings: Servings,
+  tags: z.array(z.string()),
+});
 
-export interface Recipe {
-  id: string;
-  name: string;
-  cookTime: number;
-  diet: Diet;
-  steps: string[];
-  ingredients: Ingredient[];
-  publishedAt: string;
-  source: string;
-  servings: Servings;
-  tags: string[];
-}
+export type BaseRecipe = z.infer<typeof BaseRecipe>;
 
-export interface Servings {
-  count: number;
-  label?: string;
-}
+export const Recipe = BaseRecipe.extend({
+  id: z.string(),
+  imageUrl: z.string().nullable(),
+});
 
-export interface RecipeFile {
-  name: string;
-  cookTime: number;
-  diet: Diet;
-  steps: string[];
-  ingredients: Ingredient[];
-  publishedAt: string;
-  source: string;
-  servings: {
-    count: number;
-    label?: string;
-  };
-  tags: string[];
-}
-
-export type RecipeInIndex = Pick<
-  Recipe,
-  "id" | "name" | "cookTime" | "diet" | "publishedAt" | "tags"
-> & {
-  s3Url: string | null;
-};
-
-export function toRecipeInIndex({
-  id,
-  name,
-  cookTime,
-  diet,
-  publishedAt,
-  tags,
-}: Recipe): RecipeInIndex {
-  return {
-    id,
-    name,
-    cookTime,
-    diet,
-    publishedAt,
-    tags,
-    s3Url: null,
-  };
-}
+export type Recipe = z.infer<typeof Recipe>;

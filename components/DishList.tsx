@@ -2,12 +2,13 @@ import { useTranslation } from "next-i18next";
 import { useMemo, useState } from "react";
 import Select, { StylesConfig } from "react-select";
 import styled from "styled-components";
-import { Diet, Recipe, RecipeInIndex } from "../models/Recipe";
+import { Recipe } from "../models/Recipe";
 import DishListItem from "./DishListItem";
 import TagSelect from "./TagSelect";
+import {Diet} from "../models/Diet";
 
 type Props = {
-  recipes: RecipeInIndex[];
+  recipes: Recipe[];
   availableTags: string[];
 };
 
@@ -111,7 +112,7 @@ function DishList({ recipes, availableTags }: Props) {
       </Filters>
       <List>
         {filteredRecipes.map((recipe) => (
-          <DishListItem key={recipe.id} {...recipe} />
+          <DishListItem key={recipe.id} recipe={recipe} />
         ))}
       </List>
     </>

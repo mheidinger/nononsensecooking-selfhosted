@@ -4,17 +4,17 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import DishList from "../components/DishList";
 import { PaddedSection } from "../components/PaddedSection";
 import PageTitle from "../components/PageTitle";
-import { fetchRecipeIndex, getRecipeTags } from "../lib/recipes";
+import { fetchRecipes, getRecipeTags } from "../lib/recipes";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const recipeIndex = await fetchRecipeIndex();
+  const recipes = await fetchRecipes();
   const availableTags = await getRecipeTags();
   const lang = context.locale ? context.locale : "en-US";
 
   return {
     props: {
       ...(await serverSideTranslations(lang, ["common", "footer", "header"])),
-      recipes: recipeIndex,
+      recipes,
       availableTags,
     },
   };

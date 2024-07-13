@@ -147,7 +147,7 @@ const SingleRecipe = ({
         <div></div>
         <ImageContainer>
           <DishImage
-            s3Url={s3Url}
+            imageUrl={s3Url}
             sizes="(max-width: 400px) 400px, (max-width: 600px) 600px, (max-width: 800px) 800px, (min-width: 801px) 900px"
             alt=""
           />

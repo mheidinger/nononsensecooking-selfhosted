@@ -37,7 +37,6 @@ const ErrorBox = styled.div<
 `;
 
 const ErrorNotification = ({ message, show }: Props) => {
-  const { t: tr } = useTranslation("recipe");
   const [firstShown, setFirstShown] = useState(false);
 
   useEffect(() => {

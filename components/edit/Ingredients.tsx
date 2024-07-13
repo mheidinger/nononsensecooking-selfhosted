@@ -34,15 +34,11 @@ const Ingredients = ({ ingredients, setIngredients }: Props) => {
   }
 
   const unitOptions = useMemo(() => {
-    const options: JSX.Element[] = [];
-    for (const unit in Unit) {
-      options.push(
-        <option value={Unit[unit]} key={Unit[unit]}>
-          {tr(`unit.${Unit[unit]}`, { amount: "" }).trim()}
-        </option>,
-      );
-    }
-    return options;
+    return Unit.options.map((option) => (
+      <option value={option} key={option}>
+        {tr(`unit.${option}`, { amount: "" }).trim()}
+      </option>
+    ));
   }, [tr]);
 
   const onDrop = useCallback(
@@ -72,11 +68,11 @@ const Ingredients = ({ ingredients, setIngredients }: Props) => {
             <Input
               name={`ingredient${index}Amount`}
               value={
-                ingredient.amount && ingredient.unit !== Unit.NONE
+                ingredient.amount && ingredient.unit !== Unit.enum.none
                   ? ingredient.amount
                   : ""
               }
-              disabled={ingredient.unit === Unit.NONE}
+              disabled={ingredient.unit === Unit.enum.none}
               onKeyPress={(e) => !/[0-9]/.test(e.key) && e.preventDefault()}
               onChange={(event) => {
                 if (event.currentTarget.value.length > 0) {
@@ -95,7 +91,7 @@ const Ingredients = ({ ingredients, setIngredients }: Props) => {
             />
             <Select
               id={`ingredient${index}Unit`}
-              value={ingredient.unit ? ingredient.unit : Unit.NONE}
+              value={ingredient.unit ?? Unit.enum.none}
               onChange={(event) =>
                 setIngredient(
                   { ...ingredient, unit: event.currentTarget.value as Unit },
@@ -126,7 +122,7 @@ const Ingredients = ({ ingredients, setIngredients }: Props) => {
       <InputRow>
         <AddButton
           onClick={() =>
-            setIngredients([...ingredients, { name: "", unit: Unit.NONE }])
+            setIngredients([...ingredients, { name: "", unit: Unit.enum.none }])
           }
         >
           {tr("edit.addIngredient")}

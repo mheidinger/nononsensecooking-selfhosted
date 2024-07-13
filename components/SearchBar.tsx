@@ -10,7 +10,7 @@ import {
   useState,
 } from "react";
 import styled from "styled-components";
-import { RecipeInIndex } from "../models/Recipe";
+import { Recipe } from "../models/Recipe";
 import SearchResult from "./SearchResult";
 
 const StyledForm = styled.form`
@@ -143,7 +143,7 @@ const SearchBar = ({ placeholder }: Props) => {
       {searchResults.length > 0 ? (
         <SearchResultsSheet>
           <SearchResultsList>
-            {searchResults.map(({ item }: { item: RecipeInIndex }) => (
+            {searchResults.map(({ item }: { item: Recipe }) => (
               <SearchResult
                 key={item.id}
                 id={item.id}

@@ -1,13 +1,13 @@
 import { useTranslation } from "next-i18next";
 import { useCallback } from "react";
 import styled from "styled-components";
-import { Ingredient } from "../../models/Ingredient";
 import { Recipe } from "../../models/Recipe";
 import { StyledHeading } from "../StyledHeading";
 import GeneralInformation from "./GeneralInformation";
 import Ingredients from "./Ingredients";
 import { AddButton, InputRow } from "../Inputs";
 import Steps from "./Steps";
+import {Ingredient} from "../../models/Ingredient";
 
 type Props = {
   title: string;

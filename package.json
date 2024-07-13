@@ -41,7 +41,8 @@
     "string-to-color": "2.2.2",
     "styled-components": "^6.1.11",
     "use-file-picker": "^2.1.2",
-    "yaml": "^2.4.5"
+    "yaml": "^2.4.5",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/autosize": "4.0.3",

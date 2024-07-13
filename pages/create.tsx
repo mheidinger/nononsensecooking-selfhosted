@@ -2,7 +2,7 @@ import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import PageTitle from "../components/PageTitle";
-import { Diet, Recipe } from "../models/Recipe";
+import { BaseRecipe, Recipe } from "../models/Recipe";
 import EditRecipe from "../components/edit/EditRecipe";
 import { useEffect, useState } from "react";
 import { Unit } from "../models/Unit";
@@ -10,15 +10,15 @@ import { useRouter } from "next/router";
 import { uploadImage, uploadRecipe } from "../lib/client/upload";
 import ErrorNotification from "../components/edit/ErrorNotification";
 import { getRecipeTags } from "../lib/recipes";
+import {Diet} from "../models/Diet";
 
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
-  const initRecipe: Recipe = {
-    id: "",
+  const initRecipe: BaseRecipe = {
     name: "New Recipe",
-    diet: Diet.Meat,
+    diet: Diet.enum.meat,
     cookTime: 20,
     publishedAt: "",
-    ingredients: [{ name: "", unit: Unit.NONE }],
+    ingredients: [{ name: "", unit: Unit.enum.none }],
     steps: [""],
     source: "",
     servings: {
@@ -71,8 +71,8 @@ export default function CreateRecipe({
 
       router.push(`/r/${result.recipeID}?invalidate=true`);
     } catch (error) {
-      console.error(error);
-      setErrorMessage(error.toString());
+      const errorMessage = error.message ?? error.toString();
+      setErrorMessage(errorMessage);
       setShowErrorMessage(true);
     }
   }

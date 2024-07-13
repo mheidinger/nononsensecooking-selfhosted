@@ -65,8 +65,8 @@ export default function CreateRecipe({
 
       router.push(`/r/${result.recipeID}?invalidate=true`);
     } catch (error) {
-      console.error(error);
-      setErrorMessage(error.toString());
+      const errorMessage = error.message ?? error.toString();
+      setErrorMessage(errorMessage);
       setShowErrorMessage(true);
     }
   }

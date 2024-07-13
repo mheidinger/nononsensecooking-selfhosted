@@ -4,7 +4,7 @@ import { useTranslation } from "next-i18next";
 import { useEffect, useMemo } from "react";
 import styled from "styled-components";
 import { useFilePicker } from "use-file-picker";
-import { Diet, Recipe } from "../../models/Recipe";
+import { Recipe } from "../../models/Recipe";
 import {
   InputLabel,
   InputRow,
@@ -15,6 +15,7 @@ import {
   RemoveButton,
 } from "../Inputs";
 import TagSelect from "../TagSelect";
+import {Diet} from "../../models/Diet";
 
 type Props = {
   recipe: Recipe;
@@ -33,19 +34,16 @@ const GeneralInformation = ({
   setRecipeImageFile,
   availableTags,
 }: Props) => {
+  const { t } = useTranslation("common");
   const { t: tr } = useTranslation("recipe");
 
   const dietOptions = useMemo(() => {
-    const options: JSX.Element[] = [];
-    for (const diet in Diet) {
-      options.push(
-        <option value={Diet[diet]} key={Diet[diet]}>
-          {diet}
-        </option>,
-      );
-    }
-    return options;
-  }, []);
+    return Diet.options.map((option) => (
+      <option value={option} key={option}>
+        {t(`diet.selection.${option}`)}
+      </option>
+    ));
+  }, [t]);
 
   const {
     openFilePicker,

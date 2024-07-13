@@ -3,18 +3,13 @@ import Icon from "@mdi/react";
 import { useTranslation } from "next-i18next";
 import Link from "next/link";
 import styled from "styled-components";
-import { Recipe, RecipeInIndex } from "../models/Recipe";
+import { Recipe } from "../models/Recipe";
 import DishImage from "./DishImage";
 import IconForDiet from "./IconForDiet";
 import TagSelect from "./TagSelect";
 
 type Props = {
-  id: Recipe["id"];
-  name: Recipe["name"];
-  cookTime: Recipe["cookTime"];
-  diet: Recipe["diet"];
-  s3Url: RecipeInIndex["s3Url"];
-  tags: Recipe["tags"];
+  recipe: Recipe
 };
 
 const HEIGHT = 8; //rem
@@ -70,14 +65,14 @@ const IconStat = styled.span`
   gap: 0.25rem;
 `;
 
-const DishListItem = ({ id, name, cookTime, diet, s3Url, tags }: Props) => {
+const DishListItem = ({ recipe: {id, name, cookTime, diet, imageUrl, tags} }: Props) => {
   const { t } = useTranslation("common");
   return (
     <Link href={`/r/${id}`} prefetch={false}>
       <Dish>
         <ImageContainer>
           <DishImage
-            s3Url={s3Url}
+            imageUrl={imageUrl}
             quality={60}
             sizes="(max-width: 600px) 100px, (min-width: 601px) 160px"
             alt=""

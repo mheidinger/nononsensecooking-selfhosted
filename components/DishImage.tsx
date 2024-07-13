@@ -3,16 +3,16 @@ import { useState } from "react";
 import placeholderImg from "../public/img/placeholder.jpg";
 
 type Props = Omit<ImageProps, "src"> & {
-  s3Url: string | null;
+  imageUrl: string | null;
 };
 
 const DishImage = (props: Props) => {
-  const { s3Url, ...imageProps } = props;
+  const { imageUrl , ...imageProps } = props;
   const [showPlaceholder, setShowPlaceholder] = useState(false);
 
   return (
     <Image
-      src={s3Url && !showPlaceholder ? s3Url : placeholderImg}
+      src={imageUrl && !showPlaceholder ? imageUrl : placeholderImg}
       onError={() => setShowPlaceholder(true)}
       fill
       style={{ objectFit: "cover" }}

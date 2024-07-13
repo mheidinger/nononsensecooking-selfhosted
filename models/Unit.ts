@@ -1,16 +1,9 @@
-export enum Unit {
-  NONE = "none",
-  GRAM = "g",
-  KILOGRAM = "kg",
-  PIECE = "pc",
-  MILILITERS = "ml",
-  LITERS = "l",
-  TABLESPOONS = "tbsp",
-  TEASPOONS = "tsp",
-}
+import { z } from "zod";
 
-const NonScalingUnits = [Unit.NONE];
+export const Unit = z.enum(["none", "g", "kg", "pc", "ml", "l", "tbsp", "tsp"]);
+
+export type Unit = z.infer<typeof Unit>;
 
 export function isScalingUnit(unit: Unit): boolean {
-  return !NonScalingUnits.includes(unit);
+  return unit !== Unit.enum.none;
 }

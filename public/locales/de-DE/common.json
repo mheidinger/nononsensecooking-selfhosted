@@ -10,6 +10,12 @@
     "nextpage": "Nächste Seite"
   },
   "diet": {
+    "selection": {
+      "meat": "Fleisch",
+      "fish": "Fisch",
+      "vegetarian": "Vegetarisch",
+      "vegan": "Vegan"
+    },
     "meat": "Enthält Fleisch",
     "fish": "Enthält Fisch",
     "vegetarian": "Vegetarisch",

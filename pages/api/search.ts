@@ -1,6 +1,6 @@
 import Fuse from "fuse.js";
 import { NextApiRequest, NextApiResponse } from "next";
-import { fetchRecipeIndex } from "../../lib/recipes";
+import { fetchRecipes } from "../../lib/recipes";
 import { methodIs } from "./utils/methodIs";
 
 const searchOptions = {
@@ -24,7 +24,7 @@ export function sanitize(term: string) {
 }
 
 export async function searchRecipes(searchTerm: string) {
-  const recipes = await fetchRecipeIndex();
+  const recipes = await fetchRecipes();
   const fuse = new Fuse(recipes, searchOptions);
 
   return fuse.search(sanitize(searchTerm));
