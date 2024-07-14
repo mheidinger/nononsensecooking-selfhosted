@@ -1,6 +1,6 @@
-import {type PropsWithChildren} from "react";
-import styles from "./PaddedSection.module.css";
 import clsx from "clsx";
+import { type PropsWithChildren } from "react";
+import styles from "./PaddedSection.module.css";
 
 type Props = {
   title?: string;
@@ -14,10 +14,14 @@ export default function PaddedSection({
   narrow,
   smallHeadings,
 }: PropsWithChildren<Props>) {
-	return (
-  <section className={clsx(styles.section, narrow && styles.sectionNarrow)}>
-    {title ? <h3 className={clsx(styles.title, smallHeadings && styles.titleSmall)}>{title}</h3> : null}
-    {children}
-  </section>
-);
+  return (
+    <section className={clsx(styles.section, narrow && styles.sectionNarrow)}>
+      {title ? (
+        <h3 className={clsx(styles.title, smallHeadings && styles.titleSmall)}>
+          {title}
+        </h3>
+      ) : null}
+      {children}
+    </section>
+  );
 }

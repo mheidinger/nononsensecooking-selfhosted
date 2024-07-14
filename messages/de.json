@@ -1,74 +1,69 @@
 {
   "common": {
-    "home": {
-      "todaysrecipes": "Rezepte des Tages",
-      "recentlyaddedrecipes": "Neue Rezepte",
-      "mostpopularrecipes": "Beliebteste Rezepte",
-      "allrecipes": "Alle Rezepte",
-      "latestrecipes": "Neueste Rezepte",
-      "pageindicator": "Seite {currentPage} von {totalPages}",
-      "previouspage": "Vorherige Seite",
-      "nextpage": "Nächste Seite"
-    },
-    "diet": {
-      "selection": {
-        "meat": "Fleisch",
-        "fish": "Fisch",
-        "vegetarian": "Vegetarisch",
-        "vegan": "Vegan"
-      },
-      "meat": "Enthält Fleisch",
-      "fish": "Enthält Fisch",
-      "vegetarian": "Vegetarisch",
-      "vegan": "Vegan"
-    },
-    "preparationTime": {
-      "label": "Zubereitungszeit",
-      "inMinutes": "{minutes}min"
-    },
-    "meta": {
-      "description": {
-        "recipe": "Koche {name} mit einem simplen Rezept auf NoNonsenseCooking",
-        "main": "Finde simple und leckere Rezepte auf NoNonsenseCooking"
-      }
-    },
-    "search": {
-      "action": "Suchen",
-      "placeholder": "Suche nach Rezepten",
-      "pagetitle": "Suchergebnisse",
-      "sectiontitle": "Suchergebnisse für {searchTerm}",
-      "findrecipes": "Finde deine Lieblingsrezepte"
-    },
-    "notfound": {
-      "pagetitle": "Seite nicht gefunden",
-      "displaytitle": "404 - Seite nicht gefunden 👀",
-      "explanation": "Leider konnten wir die Seite, die Du besuchen möchtest nicht finden. Hoffentlich helfen dir diese Links weiter:",
-      "links": {
-        "home": "Zurück zur Startseite",
-        "allrecipes": "Alle Rezepte",
-        "github": "Fehler auf GitHub melden"
-      }
-    },
-    "create": {
-      "pagetitle": "Rezept erstellen",
-      "displaytitle": "Neues Rezept erstellen"
-    },
-    "edit": {
-      "pagetitle": "Rezept bearbeiten",
-      "displaytitle": "Rezept bearbeiten"
-    },
-    "delete": {
-      "pagetitle": "Rezept löschen"
-    },
     "all": {
       "filter": {
         "diet": "Ernährungsfilter"
       }
-    }
-  },
-  "header": {
-    "link": {
-      "allrecipes": "Alle Rezepte"
+    },
+    "create": {
+      "displaytitle": "Neues Rezept erstellen",
+      "pagetitle": "Rezept erstellen"
+    },
+    "delete": {
+      "pagetitle": "Rezept löschen"
+    },
+    "diet": {
+      "fish": "Enthält Fisch",
+      "meat": "Enthält Fleisch",
+      "selection": {
+        "fish": "Fisch",
+        "meat": "Fleisch",
+        "vegan": "Vegan",
+        "vegetarian": "Vegetarisch"
+      },
+      "vegan": "Vegan",
+      "vegetarian": "Vegetarisch"
+    },
+    "edit": {
+      "displaytitle": "Rezept bearbeiten",
+      "pagetitle": "Rezept bearbeiten"
+    },
+    "home": {
+      "allrecipes": "Alle Rezepte",
+      "latestrecipes": "Neueste Rezepte",
+      "mostpopularrecipes": "Beliebteste Rezepte",
+      "nextpage": "Nächste Seite",
+      "pageindicator": "Seite {currentPage} von {totalPages}",
+      "previouspage": "Vorherige Seite",
+      "recentlyaddedrecipes": "Neue Rezepte",
+      "todaysrecipes": "Rezepte des Tages"
+    },
+    "meta": {
+      "description": {
+        "main": "Finde simple und leckere Rezepte auf NoNonsenseCooking",
+        "recipe": "Koche {name} mit einem simplen Rezept auf NoNonsenseCooking"
+      }
+    },
+    "notfound": {
+      "displaytitle": "404 - Seite nicht gefunden 👀",
+      "explanation": "Leider konnten wir die Seite, die Du besuchen möchtest nicht finden. Hoffentlich helfen dir diese Links weiter:",
+      "links": {
+        "allrecipes": "Alle Rezepte",
+        "github": "Fehler auf GitHub melden",
+        "home": "Zurück zur Startseite"
+      },
+      "pagetitle": "Seite nicht gefunden"
+    },
+    "preparationTime": {
+      "inMinutes": "{minutes}min",
+      "label": "Zubereitungszeit"
+    },
+    "search": {
+      "action": "Suchen",
+      "findrecipes": "Finde deine Lieblingsrezepte",
+      "pagetitle": "Suchergebnisse",
+      "placeholder": "Suche nach Rezepten",
+      "sectiontitle": "Suchergebnisse für {searchTerm}"
     }
   },
   "footer": {
@@ -76,41 +71,46 @@
       "createRecipe": "Rezept erstellen"
     }
   },
+  "header": {
+    "link": {
+      "allrecipes": "Alle Rezepte"
+    }
+  },
   "recipe": {
-    "servings": "Portionen",
-    "unit": {
-      "none": "{amount}",
-      "g": "{amount}g",
-      "kg": "{amount}kg",
-      "pc": "{amount} Stück",
-      "ml": "{amount}ml",
-      "l": "{amount}l",
-      "tbsp": "{amount} Esslöffel",
-      "tsp": "{amount} Teelöffel"
+    "delete": {
+      "back": "Zurück zum Rezept",
+      "delete": "Rezept löschen",
+      "question": "Folgendes Rezept wirklich löschen?"
     },
     "edit": {
-      "name": "Name:",
-      "diet": "Ernährung:",
-      "cookTime": "Kochzeit (in min):",
-      "ingredients": "Zutaten:",
       "addIngredient": "Zutat hinzufügen",
-      "steps": "Schritte:",
       "addStep": "Schritt hinzufügen",
-      "source": "Quelle:",
-      "image": "Bild:",
+      "cookTime": "Kochzeit (in min):",
+      "diet": "Ernährung:",
       "fileSelect": "Datei auswählen...",
-      "servings": "Portionen:",
+      "image": "Bild:",
+      "ingredients": "Zutaten:",
+      "name": "Name:",
       "save": "Rezept speichern",
+      "servings": "Portionen:",
+      "source": "Quelle:",
+      "steps": "Schritte:",
       "tags": "Tags:"
     },
-    "delete": {
-      "question": "Folgendes Rezept wirklich löschen?",
-      "back": "Zurück zum Rezept",
-      "delete": "Rezept löschen"
-    },
     "link": {
-      "edit": "Rezept bearbeiten",
-      "delete": "Rezept löschen"
+      "delete": "Rezept löschen",
+      "edit": "Rezept bearbeiten"
+    },
+    "servings": "Portionen",
+    "unit": {
+      "g": "{amount}g",
+      "kg": "{amount}kg",
+      "l": "{amount}l",
+      "ml": "{amount}ml",
+      "none": "{amount}",
+      "pc": "{amount} Stück",
+      "tbsp": "{amount} Esslöffel",
+      "tsp": "{amount} Teelöffel"
     }
   }
 }

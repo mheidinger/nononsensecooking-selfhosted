@@ -1,6 +1,6 @@
-import { fetchRecipes, invalidateCache } from "~/server/recipes";
 import shuffle from "lodash/shuffle";
 import sortBy from "lodash/sortBy";
+import { fetchRecipes, invalidateCache } from "~/server/recipes";
 import Home from "./Home";
 
 interface SearchParams {

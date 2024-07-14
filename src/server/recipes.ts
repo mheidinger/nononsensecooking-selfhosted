@@ -1,5 +1,7 @@
-import YAML from "yaml";
+import Fuse from "fuse.js";
 import NodeCache from "node-cache";
+import "server-only";
+import YAML from "yaml";
 import { BaseRecipe, type Recipe } from "../models/Recipe";
 import {
   deleteFile,
@@ -116,7 +118,6 @@ export async function getRecipeImageUrl(id: string): Promise<string | null> {
   return cacheHit.url;
 }
 
-// Called from API => different recipeCache instance!
 export async function createRecipe(
   id: string,
   recipe: BaseRecipe,
@@ -130,7 +131,6 @@ export async function createRecipe(
   return getSignedPutObjectUrl(getPathForImage(id));
 }
 
-// Called from API => different recipeCache instance!
 export async function deleteRecipe(id: string) {
   const recipePath = getPathForRecipe(id);
   try {
@@ -152,4 +152,26 @@ export async function deleteRecipe(id: string) {
   } catch (error) {
     console.error("Failed to delete optimized recipe image with id: ", id);
   }
+}
+
+export async function searchRecipes(searchTerm: string): Promise<Recipe[]> {
+  const recipes = await fetchRecipes();
+  const fuse = new Fuse(recipes, {
+    isCaseSensitive: false,
+    includeScore: true,
+    includeMatches: false,
+    findAllMatches: false,
+    minMatchCharLength: 2,
+    threshold: 0.4,
+    distance: 100,
+    useExtendedSearch: false,
+    ignoreLocation: false,
+    ignoreFieldNorm: false,
+    shouldSort: true,
+    keys: ["name"],
+    fieldNormWeight: 0,
+  });
+
+  const cleanSearchTerm = searchTerm.trim().replace(/[<>]/g, "");
+  return fuse.search(cleanSearchTerm).map((result) => result.item);
 }

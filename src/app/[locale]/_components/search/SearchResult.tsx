@@ -1,7 +1,7 @@
-import {type Recipe} from "~/models/Recipe";
-import styles from "./SearchResult.module.css";
-import {Link} from "~/navigation";
+import { type Recipe } from "~/models/Recipe";
+import { Link } from "~/navigation";
 import IconForDiet from "../recipe/DietIcon";
+import styles from "./SearchResult.module.css";
 
 interface Props {
   recipe: Recipe;
@@ -16,7 +16,7 @@ export default function SearchResult({ recipe }: Props) {
 
   return (
     <li className={styles.listItem}>
-      <Link href={getHref(id)}>
+      <Link href={getHref(id)} className={styles.link}>
         <IconForDiet id={id} diet={diet} />
         <span>{name}</span>
       </Link>

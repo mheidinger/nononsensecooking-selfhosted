@@ -6,21 +6,16 @@ import {
   mdiLeaf,
 } from "@mdi/js";
 import Icon from "@mdi/react";
-import {useTranslations} from "next-intl";
-import React from "react";
-import {Diet} from "~/models/Diet";
+import { useTranslations } from "next-intl";
+import { Diet } from "~/models/Diet";
 
 interface Props {
-	id?: string;
-	diet: Diet;
-	size?: number;
+  id?: string;
+  diet: Diet;
+  size?: number;
 }
 
-export default function IconForDiet({
-  id,
-  diet,
-  size = 1,
-}: Props) {
+export default function IconForDiet({ id, diet, size = 1 }: Props) {
   const t = useTranslations("common");
   switch (diet) {
     case Diet.enum.meat:
@@ -59,4 +54,4 @@ export default function IconForDiet({
         />
       );
   }
-};
+}

@@ -1,12 +1,13 @@
+"use client";
+
 import { mdiMagnify } from "@mdi/js";
 import Icon from "@mdi/react";
 import debounce from "lodash/debounce";
 import { useTranslations } from "next-intl";
 import { type ChangeEvent, type FormEvent, useCallback, useState } from "react";
-import { z } from "zod";
-import { Recipe } from "~/models/Recipe";
+import { searchRecipes } from "~/actions";
+import { type Recipe } from "~/models/Recipe";
 import { useRouter } from "~/navigation";
-// import SearchResult from "./SearchResult";
 import styles from "./SearchBar.module.css";
 import SearchResult from "./SearchResult";
 
@@ -27,14 +28,13 @@ export default function SearchBar() {
   async function onChange(event: ChangeEvent<HTMLInputElement>) {
     setSearchTerm(event.target.value);
     const searchTerm = encodeURIComponent(event.target.value);
-    console.log("Search term", searchTerm);
 
     await debouncedFetchSearchResults(searchTerm);
   }
 
   async function fetchSearchResults(searchTerm: string) {
-    const response = await fetch(`/api/search?query=${searchTerm}`);
-    const recipes = z.array(Recipe).parse(await response.json());
+    console.log("Searching for", searchTerm);
+    const recipes = await searchRecipes(searchTerm);
     setSearchResults(recipes);
   }
 
@@ -53,7 +53,11 @@ export default function SearchBar() {
         autoComplete="off"
         className={styles.input}
       />
-      <button type="submit" value={t("search.action")} className={styles.button}>
+      <button
+        type="submit"
+        value={t("search.action")}
+        className={styles.button}
+      >
         <Icon path={mdiMagnify} size={1} />
       </button>
       {searchResults.length > 0 ? (

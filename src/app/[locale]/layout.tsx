@@ -1,11 +1,11 @@
 import "~/styles/globals.css";
 
+import { type Metadata, type Viewport } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
-import { type Viewport, type Metadata } from "next";
+import Footer from "./_components/Footer";
 import Header from "./_components/Header";
 import styles from "./layout.module.css";
-import Footer from "./_components/Footer";
 
 export const viewport: Viewport = {
   themeColor: "#5686f5",

@@ -1,18 +1,19 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-return */
 import {
-  S3Client,
-  GetObjectCommand,
-  PutObjectCommand,
-  ListObjectsCommand,
-  HeadObjectCommand,
   DeleteObjectCommand,
+  GetObjectCommand,
+  HeadObjectCommand,
+  ListObjectsCommand,
+  PutObjectCommand,
+  S3Client,
 } from "@aws-sdk/client-s3";
 import { S3RequestPresigner } from "@aws-sdk/s3-request-presigner";
+import { type HttpRequest } from "@aws-sdk/types";
 import { createRequest } from "@aws-sdk/util-create-request";
 import { formatUrl } from "@aws-sdk/util-format-url";
-import { type HttpRequest } from "@aws-sdk/types";
-import { type Readable } from "stream";
 import { type StreamingBlobPayloadInputTypes } from "@smithy/types";
+import "server-only";
+import { type Readable } from "stream";
 import { env } from "~/env";
 
 const client = new S3Client({

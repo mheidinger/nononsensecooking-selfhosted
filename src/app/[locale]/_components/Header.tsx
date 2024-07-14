@@ -2,11 +2,11 @@
 
 import { mdiChefHat, mdiMenu, mdiPotSteamOutline } from "@mdi/js";
 import Icon from "@mdi/react";
+import clsx from "clsx";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Link } from "~/navigation";
 import styles from "./Header.module.css";
-import clsx from "clsx";
 import SearchBar from "./search/SearchBar";
 
 export default function Header() {
