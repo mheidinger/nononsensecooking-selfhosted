@@ -1,0 +1,22 @@
+.section {
+  width: 100%;
+  max-width: 2000px;
+  margin: 0 auto 4rem auto;
+  padding: 0 2rem;
+  box-sizing: border-box;
+}
+
+.sectionNarrow {
+  max-width: 700px;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 2rem;
+  color: var(--color-text-primary);
+}
+
+.titleSmall {
+  font-weight: 500;
+  font-size: 1.75rem;
+}

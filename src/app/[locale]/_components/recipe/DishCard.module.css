@@ -1,0 +1,76 @@
+.card {
+  background: var(--color-background-alt);
+  border-radius: var(--rounded-lg);
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  display: block;
+}
+
+.card img {
+  transition: transform 0.15s linear;
+}
+
+.card:hover img {
+  transform: scale(1.1);
+}
+
+.image {
+  width: 100%;
+  height: 0;
+  padding-top: 65%;
+  position: relative;
+}
+
+.stats {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  background: linear-gradient(
+    0deg,
+    hsla(var(--palette-gray-95), 80%) 0%,
+    hsla(var(--palette-gray-95), 32%) 70%,
+    hsla(var(--palette-gray-95), 0%) 100%
+  );
+  color: hsl(var(--palette-gray-00));
+  z-index: 2;
+  padding: 0.75rem 1rem;
+
+  @media screen and (min-width: 600px) {
+    padding: 1rem 2rem;
+  }
+}
+
+.name {
+  margin: 0 0 1rem 0;
+  font-weight: 400;
+
+  font-size: 1.25rem;
+
+  @media screen and (min-width: 600px) {
+    font-size: 1.5rem;
+  }
+}
+
+.statLine {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+
+  font-size: 0.9rem;
+
+  @media screen and (min-width: 600px) {
+    font-size: 1rem;
+  }
+}
+
+.iconStat {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.tagSelect {
+  max-width: 300px;
+}

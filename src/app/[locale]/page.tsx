@@ -1,21 +1,36 @@
-"use client";
+import { fetchRecipes, invalidateCache } from "~/server/recipes";
+import shuffle from "lodash/shuffle";
+import sortBy from "lodash/sortBy";
+import Home from "./Home";
 
-import { useTranslations } from "next-intl";
-import { Link, usePathname } from "~/navigation";
+interface SearchParams {
+  id?: string;
+  invalidate?: string;
+}
 
-export default function HomePage() {
-  const t = useTranslations("HomePage");
-  const pathname = usePathname();
+interface Props {
+  searchParams: SearchParams;
+}
 
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      {t("title")}
-      <Link href={pathname} locale="de">
-        de
-      </Link>
-      <Link href={pathname} locale="en">
-        en
-      </Link>
-    </main>
-  );
+async function getData({ id, invalidate }: SearchParams) {
+  if (id && invalidate === "true") {
+    invalidateCache(id);
+  }
+  const allRecipes = await fetchRecipes();
+  // TODO: Cache this and refresh every day
+  const recipesOfTheDay = shuffle(allRecipes).slice(0, 3);
+  const latestRecipes = sortBy(allRecipes, (recipe) =>
+    new Date(recipe.publishedAt).getTime(),
+  ).slice(0, 3);
+
+  return {
+    recipesOfTheDay,
+    latestRecipes,
+  };
+}
+
+export default async function Page({ searchParams }: Props) {
+  const data = await getData(searchParams);
+
+  return <Home {...data} />;
 }

@@ -1,0 +1,120 @@
+.header {
+  padding: 1rem 2rem;
+  margin: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  position: relative;
+}
+
+.logoLink {
+  display: flex;
+  align-items: center;
+  max-width: 100%;
+  color: var(--color-text-primary);
+}
+
+.logoIcon {
+  background: var(--color-primary);
+  width: 3rem;
+  height: 3rem;
+  border-radius: var(--rounded);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: hsla(var(--palette-gray-00), 100%);
+}
+
+.logoHeading {
+  font-size: 1.3rem;
+  margin: 0;
+  font-weight: 400;
+  margin-left: 0.75rem;
+  display: none;
+
+  @media screen and (min-width: 400px) {
+    display: block;
+  }
+
+  @media screen and (min-width: 800px) {
+    font-size: 1.5rem;
+  }
+}
+
+.menuButton {
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+  /* background: var(--color-primary); */
+  background: none;
+  border: none;
+  /* color: var(--color-text-on-primary); */
+  color: var(--color-text-primary);
+  width: 3rem;
+  height: 3rem;
+  border-radius: var(--rounded);
+
+  @media screen and (min-width: 950px) {
+    display: none;
+  }
+}
+
+.menu {
+  position: absolute;
+  z-index: 200;
+  top: 100%;
+  left: 0;
+  right: 0;
+  width: 100%;
+  box-shadow: var(--shadow);
+  background: var(--color-background);
+  padding: 2rem 2rem 2rem 2rem;
+  visibility: hidden;
+  pointer-events: none;
+  transition: all 0.15s ease-in;
+  transform: scale(0.95);
+  opacity: 0;
+  transform-origin: top center;
+
+  @media screen and (min-width: 950px) {
+    position: static;
+    visibility: visible;
+    pointer-events: all;
+    padding: 0;
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: none;
+    width: auto;
+    top: 0%;
+  }
+}
+
+.menuOpen {
+  visibility: visible;
+  pointer-events: auto;
+  transform: scale(1);
+  opacity: 1;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  max-width: 100%;
+}
+
+.navLink {
+  color: var(--color-text-secondary);
+  transition: color 0.1s linear;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  &:hover {
+    color: var(--color-primary);
+  }
+}

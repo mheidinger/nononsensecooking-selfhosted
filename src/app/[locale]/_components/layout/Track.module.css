@@ -1,0 +1,21 @@
+.track {
+  display: grid;
+  width: 100%;
+  gap: 2rem;
+  /* Default to small screen */
+  grid-template-columns: repeat(var(--sm), 1fr);
+}
+
+@media screen and (min-width: 700px) {
+  .track {
+    /* Adjust to medium screen if --md is defined, else fallback to --sm */
+    grid-template-columns: repeat(var(--md, var(--sm)), 1fr);
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .track {
+    /* Adjust to large screen if --lg is defined, else fallback to --md or --sm */
+    grid-template-columns: repeat(var(--lg, var(--md, var(--sm))), 1fr);
+  }
+}
