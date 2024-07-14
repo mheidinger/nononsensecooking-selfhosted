@@ -1,5 +1,7 @@
 import "~/styles/globals.css";
 
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages } from "next-intl/server";
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 
@@ -9,12 +11,18 @@ export const metadata: Metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const messages = await getMessages();
+
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
-      <body>{children}</body>
+      <body>
+        <NextIntlClientProvider messages={messages}>
+          {children}
+        </NextIntlClientProvider>
+      </body>
     </html>
   );
 }
