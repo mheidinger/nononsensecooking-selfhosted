@@ -1,0 +1,18 @@
+.notice {
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.centered {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+  max-width: 700px;
+  margin: 25vh auto 0 auto;
+  padding: 0 2rem;
+  box-sizing: border-box;
+}

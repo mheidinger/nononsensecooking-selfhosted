@@ -3,18 +3,21 @@ import sortBy from "lodash/sortBy";
 import { fetchRecipes, invalidateCache } from "~/server/recipes";
 import Home from "./Home";
 
-interface SearchParams {
-  id?: string;
-  invalidate?: string;
-}
-
 interface Props {
-  searchParams: SearchParams;
+  searchParams: Record<string, string | string[] | undefined>;
 }
 
-async function getData({ id, invalidate }: SearchParams) {
-  if (id && invalidate === "true") {
-    invalidateCache(id);
+async function getData({ id, invalidate }: Props["searchParams"]) {
+  if (invalidate === "true") {
+    const finalId =
+      Array.isArray(id) && id.length > 0
+        ? id[0]
+        : typeof id === "string"
+          ? id
+          : undefined;
+    if (finalId) {
+      invalidateCache(finalId);
+    }
   }
   const allRecipes = await fetchRecipes();
   // TODO: Cache this and refresh every day
