@@ -1,0 +1,23 @@
+.filters {
+  display: flex;
+  width: 100%;
+  margin-bottom: 1rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.filter {
+  width: 40%;
+  z-index: 300;
+  min-width: 300px;
+}
+
+.list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+
+  @media screen and (min-width: 1000px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

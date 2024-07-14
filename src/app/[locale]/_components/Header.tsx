@@ -30,7 +30,7 @@ export default function Header() {
       </button>
       <div className={clsx(styles.menu, menuOpen && styles.menuOpen)}>
         <nav className={styles.nav}>
-          <Link href="/r" className={styles.navLink}>
+          <Link href="/recipes" className={styles.navLink}>
             <Icon path={mdiPotSteamOutline} size={1} />
             <span>{t("link.allrecipes")}</span>
           </Link>

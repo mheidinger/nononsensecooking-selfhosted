@@ -1,0 +1,50 @@
+.container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  color: var(--color-text-primary);
+}
+
+.container img {
+  transition: transform 0.15s linear;
+}
+
+.container:hover img {
+  transform: scale(1.1);
+}
+
+.image {
+  width: 12.312rem; /* 8 * 1.539 */
+  height: 8rem;
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--rounded);
+  background: var(--color-background-alt);
+}
+
+.stats {
+  width: 100%;
+  bottom: 0;
+  z-index: 2;
+  padding: 1rem 2rem;
+}
+
+.name {
+  margin: 0 0 1rem 0;
+  font-weight: 400;
+  font-size: 1.25rem;
+}
+
+.statLine {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.iconStat {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
