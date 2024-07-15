@@ -6,6 +6,7 @@ import { z } from "zod";
 import { BaseRecipe } from "./models/Recipe";
 import {
   createRecipe,
+  deleteRecipe as serverDeleteRecipe,
   searchRecipes as serverSearchRecipes,
 } from "./server/recipes";
 
@@ -24,4 +25,10 @@ export const uploadRecipe = actionClient
     const id = providedId || slug(recipe.name);
     const imagePutURL = await createRecipe(id, recipe, !!providedId);
     return { recipeID: id, imagePutURL };
+  });
+
+export const deleteRecipe = actionClient
+  .schema(z.string())
+  .action(async ({ parsedInput: id }) => {
+    await serverDeleteRecipe(id);
   });

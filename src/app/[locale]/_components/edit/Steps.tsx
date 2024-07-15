@@ -3,10 +3,10 @@ import Icon from "@mdi/react";
 import autosize from "autosize";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef } from "react";
-import Button from "./inputs/Button";
-import GroupedInput from "./inputs/GroupedInput";
-import InputLabel from "./inputs/InputLabel";
-import InputRow from "./inputs/InputRow";
+import Button from "../inputs/Button";
+import GroupedInput from "../inputs/GroupedInput";
+import InputLabel from "../inputs/InputLabel";
+import InputRow from "../inputs/InputRow";
 import { useDnD } from "./useDnD";
 
 import styles from "./Steps.module.css";

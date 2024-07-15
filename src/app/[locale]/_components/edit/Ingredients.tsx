@@ -6,12 +6,12 @@ import { useTranslations } from "next-intl";
 import { useCallback, useMemo } from "react";
 import { type Ingredient } from "~/models/Ingredient";
 import { Unit } from "~/models/Unit";
-import Button from "./inputs/Button";
-import GroupedInput from "./inputs/GroupedInput";
-import Input from "./inputs/Input";
-import InputLabel from "./inputs/InputLabel";
-import InputRow from "./inputs/InputRow";
-import Select from "./inputs/Select";
+import Button from "../inputs/Button";
+import GroupedInput from "../inputs/GroupedInput";
+import Input from "../inputs/Input";
+import InputLabel from "../inputs/InputLabel";
+import InputRow from "../inputs/InputRow";
+import Select from "../inputs/Select";
 import { useDnD } from "./useDnD";
 
 type Props = {

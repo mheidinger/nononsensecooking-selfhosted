@@ -6,10 +6,10 @@ import { useCallback } from "react";
 import { type Ingredient } from "~/models/Ingredient";
 import { type BaseRecipe } from "~/models/Recipe";
 import Heading from "../Heading";
+import Button from "../inputs/Button";
+import InputRow from "../inputs/InputRow";
 import GeneralInformation from "./GeneralInformation";
 import Ingredients from "./Ingredients";
-import Button from "./inputs/Button";
-import InputRow from "./inputs/InputRow";
 import Steps from "./Steps";
 
 import styles from "./EditRecipe.module.css";

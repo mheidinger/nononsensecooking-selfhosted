@@ -5,13 +5,13 @@ import { useEffect, useMemo } from "react";
 import { useFilePicker } from "use-file-picker";
 import { Diet } from "~/models/Diet";
 import { type BaseRecipe } from "~/models/Recipe";
+import Button from "../inputs/Button";
+import GroupedInput from "../inputs/GroupedInput";
+import Input from "../inputs/Input";
+import InputLabel from "../inputs/InputLabel";
+import InputRow from "../inputs/InputRow";
+import Select from "../inputs/Select";
 import TagSelect from "../recipe/TagSelect";
-import Button from "./inputs/Button";
-import GroupedInput from "./inputs/GroupedInput";
-import Input from "./inputs/Input";
-import InputLabel from "./inputs/InputLabel";
-import InputRow from "./inputs/InputRow";
-import Select from "./inputs/Select";
 
 import styles from "./GeneralInformation.module.css";
 
