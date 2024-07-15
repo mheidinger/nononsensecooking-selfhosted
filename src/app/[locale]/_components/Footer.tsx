@@ -2,6 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "~/navigation";
+
 import styles from "./Footer.module.css";
 
 export default function Footer() {

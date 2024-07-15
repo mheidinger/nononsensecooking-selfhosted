@@ -1,4 +1,5 @@
 import React, { type PropsWithChildren } from "react";
+
 import styles from "./Track.module.css";
 
 interface Props {

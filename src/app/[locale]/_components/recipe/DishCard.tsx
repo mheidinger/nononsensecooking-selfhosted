@@ -4,9 +4,10 @@ import { useTranslations } from "next-intl";
 import { type Recipe } from "~/models/Recipe";
 import { Link } from "~/navigation";
 import IconForDiet from "./DietIcon";
-import styles from "./DishCard.module.css";
 import DishImage from "./DishImage";
 import TagSelect from "./TagSelect";
+
+import styles from "./DishCard.module.css";
 
 type Props = {
   recipe: Recipe;

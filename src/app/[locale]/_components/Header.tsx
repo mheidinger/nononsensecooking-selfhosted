@@ -6,8 +6,9 @@ import clsx from "clsx";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Link } from "~/navigation";
-import styles from "./Header.module.css";
 import SearchBar from "./search/SearchBar";
+
+import styles from "./Header.module.css";
 
 export default function Header() {
   const t = useTranslations("header");

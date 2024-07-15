@@ -1,6 +1,7 @@
 import { mdiMinus, mdiPlus } from "@mdi/js";
 import Icon from "@mdi/react";
 import { useTranslations } from "next-intl";
+
 import styles from "./ServingsChooser.module.css";
 
 interface Props {

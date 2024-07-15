@@ -5,8 +5,9 @@ import { type Recipe } from "~/models/Recipe";
 import { Link } from "~/navigation";
 import IconForDiet from "./DietIcon";
 import DishImage from "./DishImage";
-import styles from "./DishListItem.module.css";
 import TagSelect from "./TagSelect";
+
+import styles from "./DishListItem.module.css";
 
 type Props = {
   recipe: Recipe;

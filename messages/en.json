@@ -102,6 +102,7 @@
       "edit": "Edit Recipe"
     },
     "servings": "Servings",
+    "source": "Source",
     "unit": {
       "g": "{amount}g",
       "kg": "{amount}kg",

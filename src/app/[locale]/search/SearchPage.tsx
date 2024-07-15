@@ -3,6 +3,7 @@ import { type Recipe } from "~/models/Recipe";
 import PaddedSection from "../_components/layout/PaddedSection";
 import DishList from "../_components/recipe/DishList";
 import SearchBar from "../_components/search/SearchBar";
+
 import styles from "./SearchPage.module.css";
 
 interface Props {

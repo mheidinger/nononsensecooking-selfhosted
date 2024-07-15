@@ -29,6 +29,9 @@ dependencies:
   '@t3-oss/env-nextjs':
     specifier: ^0.10.1
     version: 0.10.1(typescript@5.5.3)(zod@3.23.8)
+  autosize:
+    specifier: ^6.0.1
+    version: 6.0.1
   chroma-js:
     specifier: ^2.4.2
     version: 2.4.2
@@ -65,6 +68,9 @@ dependencies:
   string-to-color:
     specifier: ^2.2.2
     version: 2.2.2
+  use-file-picker:
+    specifier: ^2.1.2
+    version: 2.1.2(react@18.3.1)
   yaml:
     specifier: ^2.4.5
     version: 2.4.5
@@ -76,6 +82,9 @@ devDependencies:
   '@smithy/types':
     specifier: ^3.3.0
     version: 3.3.0
+  '@types/autosize':
+    specifier: ^4.0.3
+    version: 4.0.3
   '@types/chroma-js':
     specifier: ^2.4.4
     version: 2.4.4
@@ -2000,6 +2009,10 @@ packages:
       zod: 3.23.8
     dev: false
 
+  /@types/autosize@4.0.3:
+    resolution: {integrity: sha512-o0ZyU3ePp3+KRbhHsY4ogjc+ZQWgVN5h6j8BHW5RII4cFKi6PEKK9QPAcphJVkD0dGpyFnD3VRR0WMvHVjCv9w==}
+    dev: true
+
   /@types/chroma-js@2.4.4:
     resolution: {integrity: sha512-/DTccpHTaKomqussrn+ciEvfW4k6NAHzNzs/sts1TCqg333qNxOhy8TNIoQCmbGG3Tl8KdEhkGAssb1n3mTXiQ==}
     dev: true
@@ -2421,6 +2434,10 @@ packages:
   /ast-types-flow@0.0.8:
     resolution: {integrity: sha512-OH/2E5Fg20h2aPrbe+QL8JZQFko0YZaF+j4mnQ7BGhfavO7OpSLa8a0y9sBwomHdSbkhTS8TQNayBfnW5DwbvQ==}
     dev: true
+
+  /autosize@6.0.1:
+    resolution: {integrity: sha512-f86EjiUKE6Xvczc4ioP1JBlWG7FKrE13qe/DxBCpe8GCipCq2nFw73aO8QEBKHfSbYGDN5eB9jXWKen7tspDqQ==}
+    dev: false
 
   /available-typed-arrays@1.0.7:
     resolution: {integrity: sha512-wvUjBtSGN7+7SjNpq/9M2Tg350UZD3q62IFZLbRAR1bSMlCo1ZaeW+BJ+D090e4hIIZLBcTDWe4Mh4jvUDajzQ==}
@@ -3252,6 +3269,13 @@ packages:
     dependencies:
       flat-cache: 3.2.0
     dev: true
+
+  /file-selector@0.2.4:
+    resolution: {integrity: sha512-ZDsQNbrv6qRi1YTDOEWzf5J2KjZ9KMI1Q2SGeTkCJmNNW25Jg4TW4UMcmoqcg4WrAyKRcpBXdbWRxkfrOzVRbA==}
+    engines: {node: '>= 10'}
+    dependencies:
+      tslib: 2.6.3
+    dev: false
 
   /fill-range@7.1.1:
     resolution: {integrity: sha512-YsGpe3WHLK8ZYi4tWDg2Jy3ebRz2rXowDxnld4bkQB00cc/1Zw9AWnC0i9ztDJitivtQvaI9KaLyKrc+hBW0yg==}
@@ -4772,6 +4796,16 @@ packages:
     dependencies:
       punycode: 2.3.1
     dev: true
+
+  /use-file-picker@2.1.2(react@18.3.1):
+    resolution: {integrity: sha512-ZEIzRi1wXeIXDWr5i55gRBVER8rTkSGskDUY94bciTTAZJHlBnOTRLL/LDYjgz6d+US3yELHnRvtBhLxFGtB0A==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      react: '>=16'
+    dependencies:
+      file-selector: 0.2.4
+      react: 18.3.1
+    dev: false
 
   /use-intl@3.17.0(react@18.3.1):
     resolution: {integrity: sha512-2X4r3xy6PWD+7U9l/u4lmdwQZ1b7QyhF5A87SdF4UFbLlGH4vSiUdQJ/g3OM+wc78I6aBLT5aFaEPb14dG2TDA==}

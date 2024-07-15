@@ -5,9 +5,10 @@ import { useMemo, useState } from "react";
 import Select, { type MultiValue, type StylesConfig } from "react-select";
 import { Diet } from "~/models/Diet";
 import { type Recipe } from "~/models/Recipe";
-import styles from "./DishList.module.css";
 import DishListItem from "./DishListItem";
 import TagSelect from "./TagSelect";
+
+import styles from "./DishList.module.css";
 
 type Props = {
   recipes: Recipe[];

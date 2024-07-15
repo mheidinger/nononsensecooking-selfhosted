@@ -8,8 +8,9 @@ import { type ChangeEvent, type FormEvent, useCallback, useState } from "react";
 import { searchRecipes } from "~/actions";
 import { type Recipe } from "~/models/Recipe";
 import { useRouter } from "~/navigation";
-import styles from "./SearchBar.module.css";
 import SearchResult from "./SearchResult";
+
+import styles from "./SearchBar.module.css";
 
 export default function SearchBar() {
   const t = useTranslations("common");

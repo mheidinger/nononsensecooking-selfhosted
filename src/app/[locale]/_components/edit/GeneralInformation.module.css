@@ -1,0 +1,17 @@
+.tagSelect {
+  width: 70%;
+}
+
+.fileSelector {
+  font-family: var(--font-stack);
+  font-size: var(--font-size-base);
+  background: var(--color-background-alt);
+  border-radius: var(--rounded);
+  border: none;
+  padding: 0.75rem 1rem;
+  appearance: none;
+  color: var(--color-text-primary);
+  width: 90%;
+  height: 2.5rem;
+  cursor: pointer;
+}

@@ -1,0 +1,22 @@
+.button {
+  background: var(--color-primary);
+  height: 2rem;
+  appearance: none;
+  cursor: pointer;
+  border-radius: var(--rounded);
+  outline: none;
+  border: none;
+  color: hsla(var(--palette-gray-00), 100%);
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.addButton {
+  margin: auto 0 auto auto;
+  padding: 0 1rem;
+}
+
+.removeButton {
+  width: 2.5rem;
+  background: #d94040;
+}

@@ -1,0 +1,19 @@
+.input {
+  font-family: var(--font-stack);
+  font-size: var(--font-size-base);
+  background: var(--color-background-alt);
+  border-radius: var(--rounded);
+  border: none;
+  padding: 0.75rem 1rem;
+  appearance: none;
+  color: var(--color-text-primary);
+  height: 2.5rem;
+}
+
+.disabled {
+  filter: brightness(150%);
+}
+
+.enabled {
+  filter: brightness(100%);
+}

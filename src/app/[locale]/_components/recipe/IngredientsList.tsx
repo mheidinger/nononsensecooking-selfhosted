@@ -1,5 +1,6 @@
 import { type Ingredient as IngredientModel } from "~/models/Ingredient";
 import Ingredient from "./Ingredient";
+
 import styles from "./IngredientsList.module.css";
 
 interface Props {

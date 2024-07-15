@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import { type PropsWithChildren } from "react";
+
 import styles from "./PaddedSection.module.css";
 
 type Props = {

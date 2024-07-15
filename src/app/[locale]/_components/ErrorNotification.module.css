@@ -1,0 +1,40 @@
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.errorBox {
+  background-color: red;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 20rem;
+  border-radius: var(--rounded);
+  color: white;
+  text-align: center;
+  padding: 1rem;
+}
+
+.fadeIn {
+  animation: fadeIn 1s;
+}
+
+.fadeOut {
+  animation: fadeOut 1s;
+}

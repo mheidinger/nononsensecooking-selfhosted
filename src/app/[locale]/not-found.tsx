@@ -3,6 +3,7 @@ import Icon from "@mdi/react";
 import { useTranslations } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { Link } from "~/navigation";
+
 import styles from "./not-found.module.css";
 
 interface Props {
@@ -13,7 +14,7 @@ export async function generateMetadata({ params: { locale } }: Props) {
   const t = await getTranslations({ locale, namespace: "common" });
 
   return {
-    title: t("notfound.pagetitle"),
+    title: `${t("notfound.pagetitle")} - NoNonsenseCooking`,
   };
 }
 

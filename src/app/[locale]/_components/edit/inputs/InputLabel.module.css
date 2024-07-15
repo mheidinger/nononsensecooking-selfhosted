@@ -1,0 +1,16 @@
+.label {
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  margin: auto 0;
+}
+
+.indented {
+  margin-left: 3rem;
+}
+
+@media screen and (max-width: 768px) {
+  /* Assuming COLUMN_MAX_WIDTH is 768px */
+  .indented {
+    margin-left: 1rem;
+  }
+}

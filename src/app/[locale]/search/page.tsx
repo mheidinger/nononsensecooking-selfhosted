@@ -12,7 +12,7 @@ export async function generateMetadata({ params: { locale } }: Props) {
   const t = await getTranslations({ locale, namespace: "common" });
 
   return {
-    title: t("search.pagetitle"),
+    title: `${t("search.pagetitle")} - NoNonsenseCooking`,
   };
 }
 

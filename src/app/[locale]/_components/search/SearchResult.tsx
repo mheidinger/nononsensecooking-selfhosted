@@ -1,6 +1,7 @@
 import { type Recipe } from "~/models/Recipe";
 import { Link } from "~/navigation";
 import IconForDiet from "../recipe/DietIcon";
+
 import styles from "./SearchResult.module.css";
 
 interface Props {

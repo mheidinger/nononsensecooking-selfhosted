@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
-import { fetchRecipes, getRecipeTags } from "~/server/recipes";
-import AllRecipesPage from "./AllRecipesPage";
+import { getRecipeTags } from "~/server/recipes";
+import CreatePage from "./CreatePage";
 
 interface Props {
   params: { locale: string };
@@ -10,16 +10,14 @@ export async function generateMetadata({ params: { locale } }: Props) {
   const t = await getTranslations({ locale, namespace: "common" });
 
   return {
-    title: `${t("home.allrecipes")} - NoNonsenseCooking`,
+    title: `${t("create.pagetitle")} - NoNonsenseCooking`,
   };
 }
 
 async function getData() {
-  const recipes = await fetchRecipes();
   const availableTags = await getRecipeTags();
 
   return {
-    recipes,
     availableTags,
   };
 }
@@ -27,5 +25,5 @@ async function getData() {
 export default async function Page() {
   const data = await getData();
 
-  return <AllRecipesPage {...data} />;
+  return <CreatePage {...data} />;
 }

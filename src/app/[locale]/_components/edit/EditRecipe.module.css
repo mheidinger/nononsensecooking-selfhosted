@@ -1,0 +1,66 @@
+.container {
+  margin: auto;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  min-height: 80vh;
+  max-width: 2000px;
+  padding: 0 2rem;
+}
+
+@media screen and (max-width: 1300px) {
+  .container {
+    flex-direction: column;
+  }
+}
+
+.leftSide {
+  flex-shrink: 1;
+}
+
+.rightSide {
+  flex-grow: 1;
+}
+
+.horizontalLine {
+  margin-top: 1.5rem;
+  margin-bottom: -0.5rem;
+  width: 90%;
+  border: 1px solid;
+  border-radius: 5px;
+  background-color: black;
+}
+
+.columnHorizontalLine {
+  display: none;
+}
+
+@media screen and (max-width: 1300px) {
+  .columnHorizontalLine {
+    display: block;
+  }
+}
+
+.rowVerticalLine {
+  border: 1px solid;
+  border-radius: 5px;
+  background-color: black;
+}
+
+@media screen and (max-width: 1300px) {
+  .rowVerticalLine {
+    display: none;
+  }
+}
+
+.saveButton {
+  height: 2.8rem;
+  font-size: 1.2rem;
+}
+
+@media screen and (max-width: 1300px) {
+  .saveButton {
+    font-size: 1rem;
+  }
+}

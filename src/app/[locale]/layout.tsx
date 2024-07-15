@@ -5,6 +5,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import Footer from "./_components/Footer";
 import Header from "./_components/Header";
+
 import styles from "./layout.module.css";
 
 export const viewport: Viewport = {
