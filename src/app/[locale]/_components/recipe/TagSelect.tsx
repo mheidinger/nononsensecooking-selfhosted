@@ -2,6 +2,7 @@
 
 import chroma from "chroma-js";
 import { useTranslations } from "next-intl";
+import { useMemo } from "react";
 import Select, { type MultiValue } from "react-select";
 import Creatable from "react-select/creatable";
 import stc from "string-to-color";
@@ -41,12 +42,23 @@ export default function TagSelect({
 }: Props) {
   const t = useTranslations("common");
 
-  const selectOptions: TagSelectValue[] = options
-    ? options.map((option) => ({ label: option, value: option }))
-    : [];
-  const selectValues: TagSelectValue[] = values
-    ? values.map((value) => ({ label: value, value: value }))
-    : [];
+  const selectOptions = useMemo(
+    () =>
+      options?.map((option) => ({
+        label: option,
+        value: option,
+      })),
+    [options],
+  );
+
+  const selectValues = useMemo(
+    () =>
+      values?.map((value) => ({
+        label: value,
+        value: value,
+      })),
+    [values],
+  );
 
   const selectProps = {
     options: selectOptions,

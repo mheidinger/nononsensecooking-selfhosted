@@ -1,6 +1,5 @@
 import { getTranslations } from "next-intl/server";
-import { searchRecipes } from "~/actions";
-import { getRecipeTags } from "~/server/recipes";
+import { getRecipeTags, searchRecipes } from "~/server/recipes";
 import SearchPage from "./SearchPage";
 
 interface Props {

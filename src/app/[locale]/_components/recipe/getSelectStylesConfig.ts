@@ -24,8 +24,8 @@ export default function getSelectStylesConfig<T>(
       const colors = getTagColors?.(data);
       return {
         ...styles,
-        backgroundColor: colors?.backgroundColor,
-        color: colors?.fontColor,
+        backgroundColor: colors?.backgroundColor ?? "var(--color-primary)",
+        color: colors?.fontColor ?? "var(--color-text-on-primary)",
         visibility: "visible",
       };
     },
