@@ -18,7 +18,7 @@ const DishListItem = ({
   const t = useTranslations("common");
 
   return (
-    <Link href={`/r/${id}`}>
+    <Link href={`/recipes/${id}`}>
       <div className={styles.container}>
         <div className={styles.image}>
           <DishImage

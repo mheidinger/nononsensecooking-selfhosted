@@ -9,7 +9,7 @@ interface Props {
   latestRecipes: Recipe[];
 }
 
-export default function Home({ recipesOfTheDay, latestRecipes }: Props) {
+export default function HomePage({ recipesOfTheDay, latestRecipes }: Props) {
   const t = useTranslations("common");
 
   return (

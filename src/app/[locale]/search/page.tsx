@@ -1,7 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { searchRecipes } from "~/actions";
 import { getRecipeTags } from "~/server/recipes";
-import Search from "./Search";
+import SearchPage from "./SearchPage";
 
 interface Props {
   params: { locale: string };
@@ -45,5 +45,5 @@ async function getData({ query }: Props["searchParams"]) {
 export default async function Page({ searchParams }: Props) {
   const data = await getData(searchParams);
 
-  return <Search {...data} />;
+  return <SearchPage {...data} />;
 }

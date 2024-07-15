@@ -1,0 +1,49 @@
+.article {
+  max-width: 1000px;
+  width: 100%;
+  margin: 2rem auto;
+  padding: 0 2rem;
+  box-sizing: border-box;
+}
+
+.stats {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.iconStat {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.hidden {
+  display: none;
+}
+
+.image {
+  width: 100%;
+  height: 0px;
+  padding-top: 60%;
+  position: relative;
+  border-radius: var(--rounded-lg);
+  overflow: hidden;
+  background: var(--color-background-alt);
+}
+
+.linkContainer {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+}
+
+.link {
+  color: var(--color-primary);
+  white-space: pre;
+}

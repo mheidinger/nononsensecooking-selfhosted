@@ -1,0 +1,34 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.iconButton {
+  appearance: none;
+  border: none;
+  background: var(--color-background-alt);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: var(--rounded-full);
+  width: 2.5rem;
+  height: 2.5rem;
+  color: var(--color-text-primary);
+}
+
+.inputLine {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.servings {
+  font-size: 1.275rem;
+}
+
+.servingsLabel {
+  font-weight: 500;
+  font-size: 1.275rem;
+}

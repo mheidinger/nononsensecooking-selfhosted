@@ -8,7 +8,7 @@ interface Props {
   availableTags: string[];
 }
 
-export default function Recipes({ recipes, availableTags }: Props) {
+export default function AllRecipesPage({ recipes, availableTags }: Props) {
   const t = useTranslations("common");
 
   return (

@@ -3,7 +3,7 @@ import { type Recipe } from "~/models/Recipe";
 import PaddedSection from "../_components/layout/PaddedSection";
 import DishList from "../_components/recipe/DishList";
 import SearchBar from "../_components/search/SearchBar";
-import styles from "./Search.module.css";
+import styles from "./SearchPage.module.css";
 
 interface Props {
   searchTerm?: string;
@@ -11,7 +11,11 @@ interface Props {
   availableTags: string[];
 }
 
-export default function Search({ searchTerm, results, availableTags }: Props) {
+export default function SearchPage({
+  searchTerm,
+  results,
+  availableTags,
+}: Props) {
   const t = useTranslations("common");
 
   if (!searchTerm) {

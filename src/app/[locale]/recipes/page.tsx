@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { fetchRecipes, getRecipeTags } from "~/server/recipes";
-import Recipes from "./Recipes";
+import AllRecipesPage from "./AllRecipesPage";
 
 interface Props {
   params: { locale: string };
@@ -27,5 +27,5 @@ async function getData() {
 export default async function Page() {
   const data = await getData();
 
-  return <Recipes {...data} />;
+  return <AllRecipesPage {...data} />;
 }
