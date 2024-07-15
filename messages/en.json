@@ -1,10 +1,5 @@
 {
   "common": {
-    "all": {
-      "filter": {
-        "diet": "Diet Filter"
-      }
-    },
     "create": {
       "displaytitle": "Create New Recipe",
       "pagetitle": "Create Recipe"
@@ -27,6 +22,11 @@
     "edit": {
       "displaytitle": "Edit Recipe",
       "pagetitle": "Edit Recipe"
+    },
+    "filter": {
+      "diet": "Filter for Diet...",
+      "tags": "Filter for Tags...",
+      "tags-creatable": "Tags"
     },
     "home": {
       "allrecipes": "All Recipes",

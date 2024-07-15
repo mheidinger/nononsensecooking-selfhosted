@@ -8,3 +8,4 @@
 - [ ] error page?
 - [ ] smaller hitbox for dish list items
 - [ ] deduplication of components / css (e.g. links)
+- [ ] Improve dark mode for selects

@@ -1,30 +1,36 @@
 "use client";
 
-import clsx from "clsx";
 import { useEffect, useState } from "react";
 
+import clsx from "clsx";
 import styles from "./ErrorNotification.module.css";
 
 type Props = {
   message?: string;
   show: boolean;
+  onHide?: () => void;
 };
 
-const ErrorNotification = ({ message, show }: Props) => {
-  const [shown, setShown] = useState(false);
+const ErrorNotification = ({ message, show, onHide }: Props) => {
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    if (message && !shown) {
-      setShown(true);
+    if (show) {
+      setIsVisible(true);
+      const timer = setTimeout(() => {
+        setIsVisible(false);
+        if (onHide) {
+          onHide();
+        }
+      }, 5000);
+
+      return () => clearTimeout(timer);
     }
-  }, [message, shown]);
+  }, [show, onHide]);
 
   return (
-    <div
-      hidden={!shown}
-      className={clsx(styles.errorBox, show ? styles.fadeIn : styles.fadeOut)}
-    >
-      {message ? message : ""}
+    <div className={clsx(styles.notification, isVisible && styles.show)}>
+      {message}
     </div>
   );
 };

@@ -1,9 +1,11 @@
 "use client";
 
 import chroma from "chroma-js";
-import Select, { type MultiValue, type StylesConfig } from "react-select";
+import { useTranslations } from "next-intl";
+import Select, { type MultiValue } from "react-select";
 import Creatable from "react-select/creatable";
 import stc from "string-to-color";
+import getSelectStylesConfig from "./getSelectStylesConfig";
 
 export type TagSelectValue = {
   label: string;
@@ -20,15 +22,15 @@ type Props = {
   instanceId?: string;
 };
 
-function getTagColors(tag: string) {
-  const tagColor = stc(tag);
+function getTagColors(data: TagSelectValue) {
+  const tagColor = stc(data.value);
   return {
     backgroundColor: tagColor,
     fontColor: chroma.contrast(tagColor, "black") > 4.5 ? "black" : "white",
   };
 }
 
-const TagSelect = ({
+export default function TagSelect({
   options,
   values,
   onChange,
@@ -36,7 +38,9 @@ const TagSelect = ({
   className,
   onlyShow,
   instanceId,
-}: Props) => {
+}: Props) {
+  const t = useTranslations("common");
+
   const selectOptions: TagSelectValue[] = options
     ? options.map((option) => ({ label: option, value: option }))
     : [];
@@ -44,56 +48,14 @@ const TagSelect = ({
     ? values.map((value) => ({ label: value, value: value }))
     : [];
 
-  /* eslint-disable @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-argument */
-  const colorStyles: StylesConfig<TagSelectValue> = {
-    multiValue: (styles, { data }) => {
-      const colors = getTagColors(data.value);
-      return {
-        ...styles,
-        backgroundColor: colors.backgroundColor,
-        color: colors.fontColor,
-        visibility: "visible",
-      };
-    },
-    multiValueLabel: (styles, { data }) => ({
-      ...styles,
-      color: getTagColors(data.value).fontColor,
-      padding: "6px",
-      visibility: "visible",
-    }),
-    multiValueRemove: (styles) => ({
-      ...styles,
-      display: onlyShow ? "none" : "flex",
-    }),
-    container: (styles) => ({
-      ...styles,
-      visibility: onlyShow ? "hidden" : "visible",
-    }),
-    control: (styles) => ({
-      ...styles,
-      backgroundColor: "var(--color-background-alt)",
-      border: "none",
-    }),
-    menu: (styles) => ({
-      ...styles,
-      backgroundColor: "var(--color-background-alt-solid)",
-    }),
-    option: (styles, state) => ({
-      ...styles,
-      backgroundColor: state.isFocused
-        ? "var(--color-background)"
-        : "var(--color-background-alt-solid)",
-    }),
-  };
-  /* eslint-enable @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-argument */
-
   const selectProps = {
     options: selectOptions,
     value: selectValues,
     onChange: onChange,
-    styles: colorStyles,
+    styles: getSelectStylesConfig(onlyShow, getTagColors),
     isDisabled: onlyShow,
     instanceId,
+    placeholder: creatable ? t("filter.tags-creatable") : t("filter.tags"),
   };
 
   return (
@@ -105,6 +67,4 @@ const TagSelect = ({
       )}
     </div>
   );
-};
-
-export default TagSelect;
+}
