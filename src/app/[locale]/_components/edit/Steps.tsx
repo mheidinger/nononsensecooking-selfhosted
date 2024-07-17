@@ -1,3 +1,5 @@
+"use client";
+
 import { mdiClose, mdiDrag } from "@mdi/js";
 import Icon from "@mdi/react";
 import autosize from "autosize";

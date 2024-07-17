@@ -4,8 +4,9 @@
 
 - [ ] remove invalidate from url?
 - [ ] handle closing menus when navigating
-- [ ] add image optimization in
+- [ ] add image optimization back in
 - [ ] error page?
 - [ ] smaller hitbox for dish list items
 - [ ] deduplication of components / css (e.g. links)
-- [ ] Improve dark mode for selects
+- [x] Improve dark mode for selects
+- [ ] Use `Suspense`?

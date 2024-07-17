@@ -3,7 +3,6 @@ import clsx from "clsx";
 import styles from "./GroupedInput.module.css";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
-  draggable?: boolean;
   isDragHover?: boolean;
 }
 
@@ -20,7 +19,7 @@ export default function GroupedInput({
   );
 
   return (
-    <div {...props} className={finalClassName}>
+    <div {...props} draggable={draggable} className={finalClassName}>
       {children}
     </div>
   );

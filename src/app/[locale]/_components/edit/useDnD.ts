@@ -10,7 +10,7 @@ export type DnDConfig = {
 };
 
 type DnDProps = {
-  draggable: boolean;
+  draggable: true;
   onDragOver: DragEventHandler<HTMLDivElement>;
   onDragStart: DragEventHandler<HTMLDivElement>;
   onDrop: DragEventHandler<HTMLDivElement>;
@@ -36,7 +36,7 @@ export function useDnD(config: DnDConfig): ToDnDProps {
   const onDragStart = useCallback(
     (event: DragEvent<HTMLDivElement>, index: number) => {
       event.dataTransfer.setData(config.contextName, index.toString());
-      event.dataTransfer.effectAllowed = config.effect ? config.effect : "move";
+      event.dataTransfer.effectAllowed = config.effect ?? "move";
     },
     [config],
   );
