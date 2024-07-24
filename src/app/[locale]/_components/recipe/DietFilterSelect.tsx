@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
-import Select, { type MultiValue } from "react-select";
+import Select, { components, type MultiValue } from "react-select";
 import { Diet } from "~/models/Diet";
 import getSelectStylesConfig from "./getSelectStylesConfig";
 
@@ -40,6 +40,11 @@ export default function DietFilterSelect({
         placeholder={t("filter.diet")}
         instanceId={instanceId}
         styles={getSelectStylesConfig<DietFilterSelectValue>()}
+        components={{
+          Input: (props) => (
+            <components.Input {...props} aria-activedescendant={undefined} />
+          ),
+        }}
       />
     </div>
   );

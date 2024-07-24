@@ -3,7 +3,7 @@
 import chroma from "chroma-js";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
-import Select, { type MultiValue } from "react-select";
+import Select, { components, type MultiValue } from "react-select";
 import Creatable from "react-select/creatable";
 import stc from "string-to-color";
 import getSelectStylesConfig from "./getSelectStylesConfig";
@@ -73,9 +73,25 @@ export default function TagSelect({
   return (
     <div className={className}>
       {creatable ? (
-        <Creatable {...selectProps} isMulti />
+        <Creatable
+          {...selectProps}
+          isMulti
+          components={{
+            Input: (props) => (
+              <components.Input {...props} aria-activedescendant={undefined} />
+            ),
+          }}
+        />
       ) : (
-        <Select {...selectProps} isMulti />
+        <Select
+          {...selectProps}
+          isMulti
+          components={{
+            Input: (props) => (
+              <components.Input {...props} aria-activedescendant={undefined} />
+            ),
+          }}
+        />
       )}
     </div>
   );
