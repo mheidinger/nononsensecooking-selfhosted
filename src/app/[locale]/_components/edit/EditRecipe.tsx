@@ -17,6 +17,7 @@ import { Diet } from "~/models/Diet";
 import { useRouter } from "~/navigation";
 import { convertErrorsToMessage } from "~/util";
 import ErrorNotification from "../ErrorNotification";
+import LoadingSpinner from "../LoadingSpinner";
 import styles from "./EditRecipe.module.css";
 
 type Props = {
@@ -58,6 +59,7 @@ const EditRecipe = ({ title, initialRecipe, availableTags }: Props) => {
   const [recipeImageFile, setRecipeImageFile] = useState<File | undefined>(
     undefined,
   );
+  const [isSaving, setIsSaving] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | undefined>();
   const [showErrorMessage, setShowErrorMessage] = useState(false);
 
@@ -78,6 +80,8 @@ const EditRecipe = ({ title, initialRecipe, availableTags }: Props) => {
   );
 
   async function saveRecipe() {
+    setIsSaving(true);
+
     const recipeClone = structuredClone(editedRecipe);
     // Remove empty ingredients and steps to avoid API error
     recipeClone.ingredients = recipeClone.ingredients.filter((i) => i.name);
@@ -91,12 +95,14 @@ const EditRecipe = ({ title, initialRecipe, availableTags }: Props) => {
       setErrorMessage(
         convertErrorsToMessage(result.validationErrors) ?? "Validation error",
       );
+      setIsSaving(false);
       setShowErrorMessage(true);
       return;
     }
 
     if (!result?.data || result?.serverError) {
       setErrorMessage(result?.serverError ?? "Unknown error occured");
+      setIsSaving(false);
       setShowErrorMessage(true);
       return;
     }
@@ -109,6 +115,7 @@ const EditRecipe = ({ title, initialRecipe, availableTags }: Props) => {
 
   return (
     <>
+      {isSaving && <LoadingSpinner />}
       <div className={styles.container}>
         <div className={styles.leftSide}>
           <InputRow>
