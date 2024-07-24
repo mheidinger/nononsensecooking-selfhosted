@@ -4,15 +4,5 @@
   gap: 1rem;
   align-items: center;
   flex-grow: 1;
-
-  &.dragHover {
-    padding-top: 2rem;
-  }
-  &.dragHover * {
-    pointer-events: none;
-  }
 }
 
-.grabCursor {
-  cursor: grab;
-}

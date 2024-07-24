@@ -1,136 +1,119 @@
 "use client";
 
-import { mdiClose, mdiDrag } from "@mdi/js";
-import Icon from "@mdi/react";
+import { DndContext, type DragEndEvent } from "@dnd-kit/core";
+import { SortableContext } from "@dnd-kit/sortable";
+import { nanoid } from "nanoid";
 import { useTranslations } from "next-intl";
-import { useCallback, useMemo } from "react";
-import { type Ingredient } from "~/models/Ingredient";
+import { useCallback, useEffect, useState } from "react";
+import { type Ingredient as IngredientModel } from "~/models/Ingredient";
 import { Unit } from "~/models/Unit";
 import Button from "../inputs/Button";
-import GroupedInput from "../inputs/GroupedInput";
-import Input from "../inputs/Input";
 import InputLabel from "../inputs/InputLabel";
 import InputRow from "../inputs/InputRow";
-import Select from "../inputs/Select";
-import { useDnD } from "./useDnD";
+import Ingredient from "./Ingredient";
 
-type Props = {
-  ingredients: Ingredient[];
-  setIngredients(ingredients: Ingredient[]): void;
-};
+interface Props {
+  initialIngredients?: IngredientModel[];
+  onIngredientsUpdated(ingredients: IngredientModel[]): void;
+}
 
-export default function Ingredients({ ingredients, setIngredients }: Props) {
+interface IngredientWithID {
+  id: string;
+  ingredient: IngredientModel;
+}
+
+export default function Ingredients({
+  initialIngredients,
+  onIngredientsUpdated,
+}: Props) {
   const t = useTranslations("recipe");
 
-  function setIngredient(ingredient: Ingredient, index: number) {
-    ingredients[index] = ingredient;
-    setIngredients(ingredients);
+  const [ingredients, setIngredients] = useState<IngredientWithID[]>([]);
+
+  useEffect(() => {
+    if (!initialIngredients) {
+      setIngredients([
+        { id: nanoid(), ingredient: { name: "", unit: Unit.enum.none } },
+      ]);
+    } else {
+      setIngredients(
+        initialIngredients.map((ingredient) => ({ id: nanoid(), ingredient })),
+      );
+    }
+  }, [initialIngredients, setIngredients]);
+
+  useEffect(() => {
+    onIngredientsUpdated(ingredients.map(({ ingredient }) => ingredient));
+  }, [ingredients, onIngredientsUpdated]);
+
+  function updateIngredient(id: string, newIngredient: IngredientModel) {
+    setIngredients(function (prevIngredients) {
+      return prevIngredients.map((item) =>
+        item.id === id ? { ...item, ingredient: newIngredient } : item,
+      );
+    });
   }
 
-  function removeIngredient(index: number) {
-    ingredients.splice(index, 1);
-    setIngredients(ingredients);
+  function addIngredient() {
+    setIngredients((prevIngredients) => [
+      ...prevIngredients,
+      { id: nanoid(), ingredient: { name: "", unit: Unit.enum.none } },
+    ]);
   }
 
-  const unitOptions = useMemo(() => {
-    return Unit.options.map((option) => (
-      <option value={option} key={option}>
-        {t(`unit.${option}`, { amount: "" }).trim()}
-      </option>
-    ));
-  }, [t]);
+  function removeIngredient(id: string) {
+    setIngredients((prevIngredients) =>
+      prevIngredients.filter((item) => item.id !== id),
+    );
+  }
 
-  const onDrop = useCallback(
-    (sourceIndex: number, targetIndex: number) => {
-      const [removed] = ingredients.splice(sourceIndex, 1);
-      if (!removed) {
-        return;
+  const handleDragEnd = useCallback(
+    (event: DragEndEvent) => {
+      const { active, over } = event;
+
+      if (over && active.id !== over.id) {
+        const oldIndex = ingredients.findIndex(
+          (ingredient) => ingredient.id === active.id,
+        );
+        const newIndex = ingredients.findIndex(
+          (ingredient) => ingredient.id === over.id,
+        );
+
+        const newIngredients = Array.from(ingredients);
+        const [reorderedIngredient] = newIngredients.splice(oldIndex, 1);
+        newIngredients.splice(newIndex, 0, reorderedIngredient!);
+
+        setIngredients(newIngredients);
       }
-      ingredients.splice(targetIndex, 0, removed);
-      setIngredients(ingredients);
     },
-    [ingredients, setIngredients],
+    [ingredients],
   );
 
-  const toDnDProps = useDnD({
-    contextName: "ingredients",
-    hoverClass: "dragHover",
-    onDrop,
-  });
-
   return (
-    <>
+    <DndContext onDragEnd={handleDragEnd}>
       <InputRow headingRow>
         <InputLabel>{t("edit.ingredients")}</InputLabel>
       </InputRow>
-      {ingredients.map((ingredient, index) => (
-        <InputRow key={`ingredient${index}`}>
-          <GroupedInput {...toDnDProps(index)}>
-            <Icon path={mdiDrag} size={1.4} />
-            <Input
-              name={`ingredient${index}Amount`}
-              value={
-                ingredient.amount && ingredient.unit !== Unit.enum.none
-                  ? ingredient.amount
-                  : ""
-              }
-              disabled={ingredient.unit === Unit.enum.none}
-              onKeyPress={(e) => !/[0-9]/.test(e.key) && e.preventDefault()}
-              onChange={(event) => {
-                if (event.currentTarget.value.length > 0) {
-                  setIngredient(
-                    {
-                      ...ingredient,
-                      amount: parseInt(event.currentTarget.value),
-                    },
-                    index,
-                  );
-                } else {
-                  setIngredient({ ...ingredient, amount: undefined }, index);
-                }
-              }}
-              width="20%"
-            />
-            <Select
-              id={`ingredient${index}Unit`}
-              value={ingredient.unit ?? Unit.enum.none}
-              onChange={(event) =>
-                setIngredient(
-                  { ...ingredient, unit: event.currentTarget.value as Unit },
-                  index,
-                )
-              }
-              width="20%"
-            >
-              {unitOptions}
-            </Select>
-            <Input
-              name={`ingredient${index}Name`}
-              value={ingredient.name}
-              onChange={(event) =>
-                setIngredient(
-                  { ...ingredient, name: event.currentTarget.value },
-                  index,
-                )
-              }
-              width="60%"
-            />
-            <Button variant="remove" onClick={() => removeIngredient(index)}>
-              <Icon path={mdiClose} size={0.8} />
-            </Button>
-          </GroupedInput>
-        </InputRow>
-      ))}
+      <SortableContext items={ingredients}>
+        {ingredients.map(({ id, ingredient }, index) => (
+          <Ingredient
+            key={id}
+            id={id}
+            index={index}
+            ingredient={ingredient}
+            updateIngredient={(newIngredient) =>
+              updateIngredient(id, newIngredient)
+            }
+            removeIngredient={() => removeIngredient(id)}
+          />
+        ))}
+      </SortableContext>
+
       <InputRow>
-        <Button
-          variant="add"
-          onClick={() =>
-            setIngredients([...ingredients, { name: "", unit: Unit.enum.none }])
-          }
-        >
+        <Button variant="add" onClick={addIngredient}>
           {t("edit.addIngredient")}
         </Button>
       </InputRow>
-    </>
+    </DndContext>
   );
 }

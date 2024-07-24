@@ -14,7 +14,6 @@ import Steps from "./Steps";
 
 import { uploadRecipe } from "~/actions";
 import { Diet } from "~/models/Diet";
-import { Unit } from "~/models/Unit";
 import { useRouter } from "~/navigation";
 import { convertErrorsToMessage } from "~/util";
 import ErrorNotification from "../ErrorNotification";
@@ -31,8 +30,8 @@ const newRecipe: BaseRecipe = {
   diet: Diet.enum.meat,
   cookTime: 20,
   publishedAt: "",
-  ingredients: [{ name: "", unit: Unit.enum.none }],
-  steps: [""],
+  ingredients: [],
+  steps: [],
   source: "",
   servings: {
     count: 2,
@@ -66,16 +65,16 @@ const EditRecipe = ({ title, initialRecipe, availableTags }: Props) => {
 
   const setIngredients = useCallback(
     (ingredients: Ingredient[]) => {
-      setEditedRecipe({ ...editedRecipe, ingredients });
+      setEditedRecipe((prevValue) => ({ ...prevValue, ingredients }));
     },
-    [editedRecipe, setEditedRecipe],
+    [setEditedRecipe],
   );
 
   const setSteps = useCallback(
     (steps: string[]) => {
-      setEditedRecipe({ ...editedRecipe, steps });
+      setEditedRecipe((prevValue) => ({ ...prevValue, steps }));
     },
-    [editedRecipe, setEditedRecipe],
+    [setEditedRecipe],
   );
 
   async function saveRecipe() {
@@ -130,8 +129,8 @@ const EditRecipe = ({ title, initialRecipe, availableTags }: Props) => {
           />
           <hr className={styles.horizontalLine} />
           <Ingredients
-            ingredients={editedRecipe.ingredients}
-            setIngredients={setIngredients}
+            initialIngredients={initialRecipe?.ingredients}
+            onIngredientsUpdated={setIngredients}
           />
         </div>
         <hr
@@ -139,7 +138,10 @@ const EditRecipe = ({ title, initialRecipe, availableTags }: Props) => {
         />
         <div className={styles.rowVerticalLine} />
         <div className={styles.rightSide}>
-          <Steps steps={editedRecipe.steps} setSteps={setSteps} />
+          <Steps
+            initialSteps={initialRecipe?.steps}
+            onStepsUpdated={setSteps}
+          />
         </div>
       </div>
       <ErrorNotification

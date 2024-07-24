@@ -6,20 +6,14 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
   isDragHover?: boolean;
 }
 
-export default function GroupedInput({
-  draggable,
-  className,
-  children,
-  ...props
-}: Props) {
+export default function GroupedInput({ className, children, ...props }: Props) {
   const finalClassName = clsx(
     styles.groupedInput,
-    draggable && styles.grabCursor,
     className,
   );
 
   return (
-    <div {...props} draggable={draggable} className={finalClassName}>
+    <div {...props} className={finalClassName}>
       {children}
     </div>
   );

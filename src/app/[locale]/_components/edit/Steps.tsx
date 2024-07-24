@@ -1,95 +1,104 @@
 "use client";
 
-import { mdiClose, mdiDrag } from "@mdi/js";
-import Icon from "@mdi/react";
-import autosize from "autosize";
+import { DndContext, type DragEndEvent } from "@dnd-kit/core";
+import { SortableContext } from "@dnd-kit/sortable";
+import { nanoid } from "nanoid";
 import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Button from "../inputs/Button";
-import GroupedInput from "../inputs/GroupedInput";
 import InputLabel from "../inputs/InputLabel";
 import InputRow from "../inputs/InputRow";
-import { useDnD } from "./useDnD";
+import Step from "./Step";
 
-import styles from "./Steps.module.css";
+interface Props {
+  initialSteps?: string[];
+  onStepsUpdated(steps: string[]): void;
+}
 
-type Props = {
-  steps: string[];
-  setSteps(steps: string[]): void;
-};
+interface StepWithID {
+  id: string;
+  text: string;
+}
 
-export default function Steps({ steps, setSteps }: Props) {
+export default function Steps({
+  initialSteps: intialSteps,
+  onStepsUpdated,
+}: Props) {
   const t = useTranslations("recipe");
-  const textAreaRefs = useRef<(HTMLTextAreaElement | null)[]>([]);
+
+  const [steps, setSteps] = useState<StepWithID[]>([]);
 
   useEffect(() => {
-    for (const ref of textAreaRefs.current) {
-      if (ref) {
-        autosize(ref);
-      }
+    if (!intialSteps) {
+      setSteps([{ id: nanoid(), text: "" }]);
+    } else {
+      setSteps(intialSteps.map((text) => ({ id: nanoid(), text })));
     }
-  }, [steps]);
+  }, [intialSteps]);
 
-  function setStep(step: string, index: number) {
-    steps[index] = step;
-    setSteps(steps);
+  useEffect(() => {
+    onStepsUpdated(steps.map((step) => step.text));
+  }, [steps, onStepsUpdated]);
+
+  function updateStep(id: string, newStepText: string) {
+    setSteps(function (prevSteps) {
+      return prevSteps.map((item) =>
+        item.id === id ? { ...item, text: newStepText } : item,
+      );
+    });
   }
 
-  function removeStep(index: number) {
-    steps.splice(index, 1);
-    setSteps(steps);
+  function addStep() {
+    setSteps((prevSteps) => [...prevSteps, { id: nanoid(), text: "" }]);
   }
 
-  const onDrop = useCallback(
-    (sourceIndex: number, targetIndex: number) => {
-      const [removed] = steps.splice(sourceIndex, 1);
-      if (!removed) {
-        return;
+  function removeStep(id: string) {
+    setSteps((prevItems) => prevItems.filter((item) => item.id !== id));
+  }
+
+  const handleDragEnd = useCallback(
+    (event: DragEndEvent) => {
+      const { active, over } = event;
+
+      if (over && active.id !== over.id) {
+        const oldIndex = steps.findIndex((step) => step.id === active.id);
+        const newIndex = steps.findIndex((step) => step.id === over.id);
+
+        const newSteps = Array.from(steps);
+        const [reorderedStep] = newSteps.splice(oldIndex, 1);
+        newSteps.splice(newIndex, 0, reorderedStep!);
+
+        setSteps(newSteps);
       }
-      steps.splice(targetIndex, 0, removed);
-      setSteps(steps);
     },
-    [steps, setSteps],
+    [steps],
   );
 
-  const toDnDProps = useDnD({
-    contextName: "steps",
-    hoverClass: "dragHover",
-    onDrop,
-  });
-
   return (
-    <>
+    <DndContext onDragEnd={handleDragEnd}>
       <InputRow headingRow>
         <InputLabel>{t("edit.steps")}</InputLabel>
       </InputRow>
-      {steps.map((step, index) => (
-        <InputRow key={`step${index}`}>
-          <InputLabel indent width="10%">
-            #{index + 1}:
-          </InputLabel>
-          <GroupedInput {...toDnDProps(index)}>
-            <Icon path={mdiDrag} size={1.4} />
-            <textarea
-              name={`step${index}`}
-              value={step}
-              onChange={(event) => setStep(event.target.value, index)}
-              ref={(ref) => {
-                textAreaRefs.current[index] = ref;
-              }}
-              className={styles.step}
+      <>
+        <SortableContext items={steps}>
+          {steps.map(({ id, text }, index) => (
+            <Step
+              key={id}
+              id={id}
+              index={index}
+              stepText={text}
+              updateStep={(newStepText) => updateStep(id, newStepText)}
+              removeStep={() => removeStep(id)}
             />
-            <Button variant="remove" onClick={() => removeStep(index)}>
-              <Icon path={mdiClose} size={0.8} />
-            </Button>
-          </GroupedInput>
+          ))}
+        </SortableContext>
+
+        <InputRow>
+          <Button variant="add" onClick={addStep}>
+            {t("edit.addStep")}
+          </Button>
         </InputRow>
-      ))}
-      <InputRow>
-        <Button variant="add" onClick={() => setSteps([...steps, ""])}>
-          {t("edit.addStep")}
-        </Button>
-      </InputRow>
-    </>
+      </>
+    </DndContext>
   );
 }
