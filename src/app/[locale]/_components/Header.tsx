@@ -4,15 +4,20 @@ import { mdiChefHat, mdiMenu, mdiPotSteamOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import clsx from "clsx";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
-import { Link } from "~/navigation";
+import { useEffect, useState } from "react";
+import { Link, usePathname } from "~/navigation";
 import SearchBar from "./search/SearchBar";
 
 import styles from "./Header.module.css";
 
 export default function Header() {
   const t = useTranslations("header");
+  const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [pathname]);
 
   function toggleMenu() {
     setMenuOpen(!menuOpen);

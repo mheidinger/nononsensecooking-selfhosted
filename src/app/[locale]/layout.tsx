@@ -3,6 +3,7 @@ import "~/styles/globals.css";
 import { type Metadata, type Viewport } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
+import NextTopLoader from "nextjs-toploader";
 import Footer from "./_components/Footer";
 import Header from "./_components/Header";
 
@@ -58,6 +59,7 @@ export default async function RootLayout({
       <body className={styles.body}>
         <NextIntlClientProvider messages={messages}>
           <main className={styles.layout}>
+            <NextTopLoader color="#5686F5" height={5} />
             <Header />
             <div className={styles.content}>{children}</div>
             <Footer />

@@ -25,7 +25,12 @@ const ServingsChooser = ({
             onServingsChanged(Math.max(1, count - 1));
           }}
         >
-          <Icon path={mdiMinus} size={1} title="Less servings" />
+          <Icon
+            path={mdiMinus}
+            size={1}
+            title="Less servings"
+            id="less-servings"
+          />
         </button>
 
         <span className={styles.servings}>{count}</span>
@@ -36,7 +41,12 @@ const ServingsChooser = ({
             onServingsChanged(count + 1);
           }}
         >
-          <Icon path={mdiPlus} size={1} title="More servings" />
+          <Icon
+            path={mdiPlus}
+            size={1}
+            title="More servings"
+            id="more-servings"
+          />
         </button>
       </div>
       {label ? (
