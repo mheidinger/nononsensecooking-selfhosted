@@ -2,7 +2,7 @@
 
 ## todo
 
-- [ ] remove invalidate from url? - does that even work at all?
+- [x] remove invalidate from url
 - [ ] handle closing menus when navigating
 - [ ] add image optimization back in
 - [ ] error page?

@@ -1,5 +1,6 @@
 import { cache } from "react";
 import { fetchSingleRecipe, invalidateCache } from "~/server/recipes";
+import RemoveQueryParameter from "../../_components/RemoveQueryParameter";
 import RecipePage from "./RecipePage";
 
 interface Props {
@@ -35,5 +36,10 @@ async function getData({ searchParams, params }: Props) {
 export default async function Page(props: Props) {
   const data = await getData(props);
 
-  return <RecipePage {...data} />;
+  return (
+    <>
+      <RemoveQueryParameter parameter="invalidate" />
+      <RecipePage {...data} />
+    </>
+  );
 }

@@ -2,6 +2,7 @@ import shuffle from "lodash/shuffle";
 import sortBy from "lodash/sortBy";
 import { fetchRecipes, invalidateCache } from "~/server/recipes";
 import HomePage from "./HomePage";
+import RemoveQueryParameter from "./_components/RemoveQueryParameter";
 
 interface Props {
   searchParams: Record<string, string | string[] | undefined>;
@@ -35,5 +36,10 @@ async function getData({ id, invalidate }: Props["searchParams"]) {
 export default async function Page({ searchParams }: Props) {
   const data = await getData(searchParams);
 
-  return <HomePage {...data} />;
+  return (
+    <>
+      <RemoveQueryParameter parameter="invalidate" />
+      <HomePage {...data} />
+    </>
+  );
 }

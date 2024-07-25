@@ -1,17 +1,13 @@
-"use client";
-
 import { mdiClockOutline, mdiLinkVariant } from "@mdi/js";
 import Icon from "@mdi/react";
 import clsx from "clsx";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
 import { type Recipe } from "~/models/Recipe";
 import { Link } from "~/navigation";
 import Heading from "../../_components/Heading";
 import IconForDiet from "../../_components/recipe/DietIcon";
 import DishImage from "../../_components/recipe/DishImage";
 import IngredientsList from "../../_components/recipe/IngredientsList";
-import ServingsChooser from "../../_components/recipe/ServingsChooser";
 import StepList from "../../_components/recipe/StepList";
 import TagSelect from "../../_components/recipe/TagSelect";
 
@@ -39,7 +35,6 @@ export default function RecipePage({ recipe }: Props) {
     steps,
   } = recipe;
   const t = useTranslations("recipe");
-  const [currentServingsCount, setServingsCount] = useState(servings.count);
   const displaySource = truncate(source, 20);
 
   return (
@@ -75,15 +70,7 @@ export default function RecipePage({ recipe }: Props) {
             alt=""
           />
         </div>
-        <ServingsChooser
-          count={currentServingsCount}
-          label={servings.label}
-          onServingsCountChanged={setServingsCount}
-        />
-        <IngredientsList
-          ingredients={ingredients}
-          servingsMultiplier={currentServingsCount / servings.count}
-        />
+        <IngredientsList ingredients={ingredients} servings={servings} />
         <StepList steps={steps} />
         <div className={styles.linkContainer}>
           <Link href={`/recipes/${id}/edit`} className={styles.link}>
