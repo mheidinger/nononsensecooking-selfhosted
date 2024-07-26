@@ -1,3 +1,5 @@
+"use client";
+
 import { mdiMinus, mdiPlus } from "@mdi/js";
 import Icon from "@mdi/react";
 import { useTranslations } from "next-intl";
@@ -10,11 +12,7 @@ interface Props {
   onServingsCountChanged: (newServings: number) => void;
 }
 
-const ServingsChooser = ({
-  count,
-  label,
-  onServingsCountChanged: onServingsChanged,
-}: Props) => {
+const ServingsChooser = ({ count, label, onServingsCountChanged }: Props) => {
   const t = useTranslations("recipe");
   return (
     <div className={styles.container}>
@@ -22,7 +20,7 @@ const ServingsChooser = ({
         <button
           className={styles.iconButton}
           onClick={function () {
-            onServingsChanged(Math.max(1, count - 1));
+            onServingsCountChanged(Math.max(1, count - 1));
           }}
         >
           <Icon
@@ -38,7 +36,7 @@ const ServingsChooser = ({
         <button
           className={styles.iconButton}
           onClick={function () {
-            onServingsChanged(count + 1);
+            onServingsCountChanged(count + 1);
           }}
         >
           <Icon
