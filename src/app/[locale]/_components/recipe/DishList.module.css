@@ -15,7 +15,8 @@
 .list {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 2rem;
+  row-gap: 2rem;
+  column-gap: 4rem;
 
   @media screen and (min-width: 1000px) {
     grid-template-columns: repeat(2, 1fr);

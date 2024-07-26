@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import { type Recipe } from "~/models/Recipe";
+import DietFilterSelect from "./DietFilterSelect";
 import DishListItem from "./DishListItem";
 import TagSelect from "./TagSelect";
 
-import DietFilterSelect from "./DietFilterSelect";
 import styles from "./DishList.module.css";
 
 type Props = {
