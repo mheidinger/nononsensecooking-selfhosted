@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import EditRecipe from "../_components/edit/EditRecipe";
+import EditRecipe from "~components/edit/EditRecipe";
 
 interface Props {
   availableTags: string[];

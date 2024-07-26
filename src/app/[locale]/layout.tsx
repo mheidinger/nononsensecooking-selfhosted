@@ -4,8 +4,8 @@ import { type Metadata, type Viewport } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import NextTopLoader from "nextjs-toploader";
-import Footer from "./_components/Footer";
-import Header from "./_components/Header";
+import Footer from "~components/Footer";
+import Header from "~components/Header";
 
 import styles from "./layout.module.css";
 

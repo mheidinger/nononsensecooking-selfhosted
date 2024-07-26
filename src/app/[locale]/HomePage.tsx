@@ -1,8 +1,8 @@
 import { useTranslations } from "next-intl";
 import { type Recipe } from "~/models/Recipe";
-import PaddedSection from "./_components/layout/PaddedSection";
-import Track from "./_components/layout/Track";
-import DishCard from "./_components/recipe/DishCard";
+import PaddedSection from "~components/layout/PaddedSection";
+import Track from "~components/layout/Track";
+import DishCard from "~components/recipe/DishCard";
 
 interface Props {
   recipesOfTheDay: Recipe[];

@@ -1,6 +1,6 @@
 import { cache } from "react";
 import { fetchSingleRecipe, invalidateCache } from "~/server/recipes";
-import RemoveQueryParameter from "../../_components/RemoveQueryParameter";
+import RemoveQueryParameter from "~components/RemoveQueryParameter";
 import RecipePage from "./RecipePage";
 
 interface Props {

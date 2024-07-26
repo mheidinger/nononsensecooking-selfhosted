@@ -20,7 +20,8 @@
     "noEmit": true,
     "noUncheckedIndexedAccess": true,
     "paths": {
-      "~/*": ["./src/*"]
+      "~/*": ["./src/*"],
+      "~components/*": ["./src/app/[locale]/_components/*"]
     },
     "plugins": [
       { "name": "next" },

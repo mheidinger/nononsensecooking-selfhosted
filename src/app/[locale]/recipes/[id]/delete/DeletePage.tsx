@@ -3,8 +3,8 @@
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { type Recipe } from "~/models/Recipe";
-import ErrorNotification from "../../../_components/ErrorNotification";
-import Button from "../../../_components/inputs/Button";
+import ErrorNotification from "~components/ErrorNotification";
+import Button from "~components/inputs/Button";
 
 import { deleteRecipe } from "~/actions";
 import { useRouter } from "~/navigation";

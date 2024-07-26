@@ -4,12 +4,12 @@ import clsx from "clsx";
 import { useTranslations } from "next-intl";
 import { type Recipe } from "~/models/Recipe";
 import { Link } from "~/navigation";
-import Heading from "../../_components/Heading";
-import IconForDiet from "../../_components/recipe/DietIcon";
-import DishImage from "../../_components/recipe/DishImage";
-import IngredientsList from "../../_components/recipe/IngredientsList";
-import StepList from "../../_components/recipe/StepList";
-import TagSelect from "../../_components/recipe/TagSelect";
+import Heading from "~components/Heading";
+import IconForDiet from "~components/recipe/DietIcon";
+import DishImage from "~components/recipe/DishImage";
+import IngredientsList from "~components/recipe/IngredientsList";
+import StepList from "~components/recipe/StepList";
+import TagSelect from "~components/recipe/TagSelect";
 
 import styles from "./RecipePage.module.css";
 

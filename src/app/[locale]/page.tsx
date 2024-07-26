@@ -1,8 +1,8 @@
 import shuffle from "lodash/shuffle";
 import sortBy from "lodash/sortBy";
 import { fetchRecipes, invalidateCache } from "~/server/recipes";
+import RemoveQueryParameter from "~components/RemoveQueryParameter";
 import HomePage from "./HomePage";
-import RemoveQueryParameter from "./_components/RemoveQueryParameter";
 
 interface Props {
   searchParams: Record<string, string | string[] | undefined>;

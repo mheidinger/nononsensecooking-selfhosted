@@ -19,6 +19,9 @@ const nextConfig = {
       },
     ],
   },
+  experimental: {
+    serverComponentsExternalPackages: ["@aws-sdk"],
+  },
 };
 
 export default withNextIntl(nextConfig);

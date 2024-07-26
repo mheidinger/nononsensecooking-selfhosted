@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 import { type Recipe } from "~/models/Recipe";
-import EditRecipe from "../../../_components/edit/EditRecipe";
+import EditRecipe from "~components/edit/EditRecipe";
 
 interface Props {
   recipe: Recipe;
