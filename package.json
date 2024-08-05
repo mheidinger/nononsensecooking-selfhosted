@@ -12,10 +12,10 @@
     "check-translations": "ts-node ./scripts/check-translations.ts"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "3.614.0",
-    "@aws-sdk/s3-request-presigner": "3.614.0",
+    "@aws-sdk/client-s3": "3.624.0",
+    "@aws-sdk/s3-request-presigner": "3.624.0",
     "@aws-sdk/types": "3.609.0",
-    "@aws-sdk/util-create-request": "3.614.0",
+    "@aws-sdk/util-create-request": "3.622.0",
     "@aws-sdk/util-format-url": "3.609.0",
     "@mdi/js": "7.4.47",
     "@mdi/react": "1.6.1",
