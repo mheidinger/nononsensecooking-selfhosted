@@ -107,10 +107,13 @@ const EditRecipe = ({ title, initialRecipe, availableTags }: Props) => {
       return;
     }
 
+    const { recipeID, imagePutURL } = result.data;
+
     if (recipeImageFile) {
-      await uploadImage(result.data.imagePutURL, recipeImageFile);
+      await uploadImage(imagePutURL, recipeImageFile);
     }
-    router.push(`/recipes/${result.data.recipeID}?invalidate=true`);
+
+    router.push(`/recipes/${recipeID}`);
   }
 
   return (

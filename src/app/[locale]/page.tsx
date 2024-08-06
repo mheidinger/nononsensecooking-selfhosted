@@ -1,25 +1,9 @@
 import shuffle from "lodash/shuffle";
 import sortBy from "lodash/sortBy";
-import { fetchRecipes, invalidateCache } from "~/server/recipes";
-import RemoveQueryParameter from "~components/RemoveQueryParameter";
+import { fetchRecipes } from "~/server/recipes";
 import HomePage from "./HomePage";
 
-interface Props {
-  searchParams: Record<string, string | string[] | undefined>;
-}
-
-async function getData({ id, invalidate }: Props["searchParams"]) {
-  if (invalidate === "true") {
-    const finalId =
-      Array.isArray(id) && id.length > 0
-        ? id[0]
-        : typeof id === "string"
-          ? id
-          : undefined;
-    if (finalId) {
-      invalidateCache(finalId);
-    }
-  }
+async function getData() {
   const allRecipes = await fetchRecipes();
   // TODO: Cache this and refresh every day
   const recipesOfTheDay = shuffle(allRecipes).slice(0, 3);
@@ -33,13 +17,8 @@ async function getData({ id, invalidate }: Props["searchParams"]) {
   };
 }
 
-export default async function Page({ searchParams }: Props) {
-  const data = await getData(searchParams);
+export default async function Page() {
+  const data = await getData();
 
-  return (
-    <>
-      <RemoveQueryParameter parameter="invalidate" />
-      <HomePage {...data} />
-    </>
-  );
+  return <HomePage {...data} />;
 }

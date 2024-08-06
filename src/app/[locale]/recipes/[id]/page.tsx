@@ -1,6 +1,5 @@
 import { cache } from "react";
-import { fetchSingleRecipe, invalidateCache } from "~/server/recipes";
-import RemoveQueryParameter from "~components/RemoveQueryParameter";
+import { fetchSingleRecipe } from "~/server/recipes";
 import RecipePage from "./RecipePage";
 
 interface Props {
@@ -19,12 +18,8 @@ export async function generateMetadata({ params }: Props) {
   };
 }
 
-async function getData({ searchParams, params }: Props) {
+async function getData({ params }: Props) {
   const { id } = params;
-  const { invalidate } = searchParams;
-  if (invalidate === "true") {
-    invalidateCache(id);
-  }
 
   const recipe = await fetchRecipe(id);
 
@@ -36,10 +31,5 @@ async function getData({ searchParams, params }: Props) {
 export default async function Page(props: Props) {
   const data = await getData(props);
 
-  return (
-    <>
-      <RemoveQueryParameter parameter="invalidate" />
-      <RecipePage {...data} />
-    </>
-  );
+  return <RecipePage {...data} />;
 }

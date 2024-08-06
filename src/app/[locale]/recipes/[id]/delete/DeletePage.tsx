@@ -42,7 +42,7 @@ export default function DeleteRecipe({ recipe }: Props) {
       return;
     }
 
-    router.push("/?invalidate=true");
+    router.push("/");
   }
 
   return (
