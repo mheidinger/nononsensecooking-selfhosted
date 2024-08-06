@@ -48,10 +48,8 @@
   outline: none;
   appearance: none;
   cursor: pointer;
-  /* background: var(--color-primary); */
   background: none;
   border: none;
-  /* color: var(--color-text-on-primary); */
   color: var(--color-text-primary);
   width: 3rem;
   height: 3rem;

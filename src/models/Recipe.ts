@@ -12,7 +12,7 @@ export const BaseRecipe = z.object({
   publishedAt: z.string(),
   source: z.string(),
   servings: Servings,
-  tags: z.array(z.string()),
+  tags: z.array(z.string()).default([]),
 });
 
 export type BaseRecipe = z.infer<typeof BaseRecipe>;

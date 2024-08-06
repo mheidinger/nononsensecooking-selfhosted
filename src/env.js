@@ -12,7 +12,7 @@ export const env = createEnv({
     AWS_SECRET_ACCESS_KEY: z.string(),
     AWS_REGION: z.string(),
     S3_BUCKET_NAME: z.string(),
-    S3_ENDPOINT: z.string(),
+    S3_ENDPOINT: z.string().optional(),
     S3_DOMAIN: z.string(),
   },
 
