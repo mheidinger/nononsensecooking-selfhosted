@@ -1,4 +1,5 @@
 import "server-only";
+
 export const S3RecipeFilesBasePath = "recipes";
 export const S3RecipeImagesBasePath = "images";
 

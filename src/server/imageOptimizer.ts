@@ -1,17 +1,15 @@
 import "server-only";
+
 import sharp from "sharp";
-import {
-  fetchFileAsBuffer,
-  listFiles,
-  type S3File,
-  uploadFile,
-} from "./s3client";
 import {
   getKeyForOptimizedImage,
   getPathForOptimizedImage,
   ImageOptimizedSuffix,
   S3RecipeImagesBasePath,
 } from "./s3Paths";
+import { getS3Client, type S3File } from "./s3client";
+
+const s3Client = getS3Client();
 
 function getIdFromKey(originalImageKey: string): string {
   const parts = originalImageKey.split(".");
@@ -19,7 +17,7 @@ function getIdFromKey(originalImageKey: string): string {
 }
 
 async function getImagesToOptimize() {
-  const imageFiles = await listFiles(S3RecipeImagesBasePath + "/");
+  const imageFiles = await s3Client.listFiles(S3RecipeImagesBasePath + "/");
   return imageFiles
     .map((file) => {
       if (file.key.includes(ImageOptimizedSuffix)) {
@@ -35,7 +33,7 @@ async function getImagesToOptimize() {
 
 async function doOptimization({ key, path }: S3File) {
   try {
-    const imageBuffer = await fetchFileAsBuffer(path);
+    const imageBuffer = await s3Client.fetchFileAsBuffer(path);
 
     const optimizedImage = await sharp(imageBuffer)
       .webp({
@@ -48,7 +46,7 @@ async function doOptimization({ key, path }: S3File) {
       .sharpen()
       .toBuffer();
 
-    await uploadFile(
+    await s3Client.uploadFile(
       getPathForOptimizedImage(getIdFromKey(key)),
       optimizedImage,
     );

@@ -3,25 +3,19 @@ import "server-only";
 import YAML from "yaml";
 import { BaseRecipe, type Recipe } from "../models/Recipe";
 import {
-  deleteFile,
-  fetchFileAsString,
-  fileExists,
-  getSignedGetObjectUrl,
-  getSignedPutObjectUrl,
-  listFiles,
-  uploadFile,
-} from "./s3client";
-import {
   getPathForImage,
   getPathForOptimizedImage,
   getPathForRecipe,
   S3RecipeFilesBasePath,
 } from "./s3Paths";
+import { getS3Client } from "./s3client";
+
+const s3Client = getS3Client();
 
 const SIGNED_IMAGE_URL_TTL = 3600;
 
 async function getRecipeList(): Promise<string[]> {
-  const files = await listFiles(S3RecipeFilesBasePath + "/");
+  const files = await s3Client.listFiles(S3RecipeFilesBasePath + "/");
   const recipeIdList = files.map((file) => file.key.replace(".yaml", ""));
   return recipeIdList;
 }
@@ -40,8 +34,7 @@ export async function getRecipeTags(): Promise<string[]> {
 }
 
 export async function fetchSingleRecipe(id: string): Promise<Recipe> {
-  console.log("Read recipe from S3 for id", id);
-  const file = await fetchFileAsString(getPathForRecipe(id));
+  const file = await s3Client.fetchFileAsString(getPathForRecipe(id));
   const baseRecipe = BaseRecipe.parse(YAML.parse(file));
   const imageUrl = await getRecipeImageUrl(id);
 
@@ -55,14 +48,20 @@ export async function fetchSingleRecipe(id: string): Promise<Recipe> {
 
 async function getRecipeImageUrl(id: string): Promise<string | null> {
   let imagePath = getPathForOptimizedImage(id);
-  if (!(await fileExists(imagePath))) {
+  const optimizedImageExists = await s3Client.fileExists(imagePath);
+  if (!optimizedImageExists) {
     imagePath = getPathForImage(id);
-    if (!(await fileExists(imagePath))) {
+    const imageExists = await s3Client.fileExists(imagePath);
+    if (!imageExists) {
       return null;
     }
   }
 
-  return await getSignedGetObjectUrl(imagePath, SIGNED_IMAGE_URL_TTL * 1.2);
+  return await s3Client.getSignedUrl(
+    imagePath,
+    "get",
+    SIGNED_IMAGE_URL_TTL * 1.2,
+  );
 }
 
 export async function createRecipe(
@@ -71,31 +70,32 @@ export async function createRecipe(
   allowExisting: boolean,
 ): Promise<string> {
   const key = getPathForRecipe(id);
-  if ((await fileExists(key)) && !allowExisting) {
+  const alreadyExists = await s3Client.fileExists(key);
+  if (alreadyExists && !allowExisting) {
     throw new Error("recipe id (name) already exists");
   }
-  await uploadFile(key, JSON.stringify(recipe));
-  return getSignedPutObjectUrl(getPathForImage(id));
+  await s3Client.uploadFile(key, JSON.stringify(recipe));
+  return s3Client.getSignedUrl(getPathForImage(id), "put");
 }
 
 export async function deleteRecipe(id: string) {
   const recipePath = getPathForRecipe(id);
   try {
-    await deleteFile(recipePath);
+    await s3Client.deleteFile(recipePath);
   } catch (error) {
     console.error("Failed to delete recipe with id: ", id);
   }
 
   const imagePath = getPathForImage(id);
   try {
-    await deleteFile(imagePath);
+    await s3Client.deleteFile(imagePath);
   } catch (error) {
     console.error("Failed to delete recipe image with id: ", id);
   }
 
   const optimizedImagePath = getPathForOptimizedImage(id);
   try {
-    await deleteFile(optimizedImagePath);
+    await s3Client.deleteFile(optimizedImagePath);
   } catch (error) {
     console.error("Failed to delete optimized recipe image with id: ", id);
   }
