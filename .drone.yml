@@ -49,7 +49,7 @@ steps:
         - latest
         - ci-${DRONE_BUILD_NUMBER}
       cache_from:
-        - registry-castor.max-heidinger.de/nononsensecooking-selfhosted:ci-${DRONE_BUILD_NUMBER}
+        - ghcr.io/mheidinger/nononsensecooking-selfhosted:latest
       username:
         from_secret: github_username
       password:
