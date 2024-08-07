@@ -25,6 +25,8 @@ steps:
       tags:
         - latest
         - ci-${DRONE_BUILD_NUMBER}
+      cache_from:
+        - registry-castor.max-heidinger.de/nononsensecooking-selfhosted:latest
       username:
         from_secret: tac_username
       password:
@@ -46,6 +48,8 @@ steps:
       tags:
         - latest
         - ci-${DRONE_BUILD_NUMBER}
+      cache_from:
+        - registry-castor.max-heidinger.de/nononsensecooking-selfhosted:ci-${DRONE_BUILD_NUMBER}
       username:
         from_secret: github_username
       password:
