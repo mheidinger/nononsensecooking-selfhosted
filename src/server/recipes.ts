@@ -83,21 +83,25 @@ export async function deleteRecipe(id: string) {
   try {
     await s3Client.deleteFile(recipePath);
   } catch (error) {
-    console.error("Failed to delete recipe with id: ", id);
+    console.error("Failed to delete recipe with id: ", id, error);
   }
 
   const imagePath = getPathForImage(id);
   try {
     await s3Client.deleteFile(imagePath);
   } catch (error) {
-    console.error("Failed to delete recipe image with id: ", id);
+    console.error("Failed to delete recipe image with id: ", id, error);
   }
 
   const optimizedImagePath = getPathForOptimizedImage(id);
   try {
     await s3Client.deleteFile(optimizedImagePath);
   } catch (error) {
-    console.error("Failed to delete optimized recipe image with id: ", id);
+    console.error(
+      "Failed to delete optimized recipe image with id: ",
+      id,
+      error,
+    );
   }
 }
 

@@ -14,7 +14,7 @@ import Ingredient from "./Ingredient";
 
 interface Props {
   initialIngredients?: IngredientModel[];
-  onIngredientsUpdated(ingredients: IngredientModel[]): void;
+  onIngredientsUpdated: (ingredients: IngredientModel[]) => void;
 }
 
 interface IngredientWithID {

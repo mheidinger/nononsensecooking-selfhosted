@@ -17,8 +17,8 @@ import styles from "./GeneralInformation.module.css";
 
 type Props = {
   recipe: BaseRecipe;
-  setRecipe(recipe: BaseRecipe): void;
-  setRecipeImageFile(file?: File): void;
+  setRecipe: (recipe: BaseRecipe) => void;
+  setRecipeImageFile: (file?: File) => void;
   availableTags: string[];
 };
 

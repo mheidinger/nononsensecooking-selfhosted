@@ -1,4 +1,9 @@
+import dotenv from "dotenv";
 import createNextIntlPlugin from "next-intl/plugin";
+
+if (process.env.DOT_FILE_PATH) {
+  dotenv.config({ path: process.env.DOT_FILE_PATH });
+}
 
 /**
  * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.

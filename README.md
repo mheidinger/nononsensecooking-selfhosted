@@ -43,19 +43,12 @@ The following is an example CORS configuration for an AWS S3 bucket:
 
 ```json
 [
-    {
-        "AllowedHeaders": [
-            "*"
-        ],
-        "AllowedMethods": [
-            "GET",
-            "PUT"
-        ],
-        "AllowedOrigins": [
-            "<YOUR_DOMAIN_WHERE_NNC_RUNS>"
-        ],
-        "ExposeHeaders": []
-    }
+  {
+    "AllowedHeaders": ["*"],
+    "AllowedMethods": ["GET", "PUT"],
+    "AllowedOrigins": ["<YOUR_DOMAIN_WHERE_NNC_RUNS>"],
+    "ExposeHeaders": []
+  }
 ]
 ```
 

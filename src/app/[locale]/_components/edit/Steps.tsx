@@ -12,7 +12,7 @@ import Step from "./Step";
 
 interface Props {
   initialSteps?: string[];
-  onStepsUpdated(steps: string[]): void;
+  onStepsUpdated: (steps: string[]) => void;
 }
 
 interface StepWithID {
