@@ -65,9 +65,10 @@ export default function RecipePage({ recipe }: Props) {
         <div></div>
         <div className={styles.image}>
           <DishImage
+            dishName={name}
             imageUrl={imageUrl}
             sizes="(max-width: 400px) 400px, (max-width: 600px) 600px, (max-width: 800px) 800px, (min-width: 801px) 900px"
-            alt=""
+            priority
           />
         </div>
         <IngredientsList ingredients={ingredients} servings={servings} />

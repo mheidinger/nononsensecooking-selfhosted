@@ -21,7 +21,7 @@
     "noUncheckedIndexedAccess": true,
     "paths": {
       "~/*": ["./src/*"],
-      "~components/*": ["./src/app/[locale]/_components/*"]
+      "~components/*": ["./src/app/_components/*"]
     },
     "plugins": [
       { "name": "next" },

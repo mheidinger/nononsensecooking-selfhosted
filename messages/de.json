@@ -97,6 +97,8 @@
       "steps": "Schritte:",
       "tags": "Tags:"
     },
+    "imageAlt": "Bild von {name}",
+    "imagePlaceholderAlt": "Platzhalterbild von {name}",
     "link": {
       "delete": "Rezept löschen",
       "edit": "Rezept bearbeiten"
