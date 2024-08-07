@@ -23,10 +23,10 @@ const DishListItem = ({
       <div className={styles.container}>
         <div className={styles.image}>
           <DishImage
+            dishName={name}
             imageUrl={imageUrl}
             quality={60}
             sizes="(max-width: 600px) 100px, (min-width: 601px) 160px"
-            alt=""
           />
         </div>
         <div className={styles.stats}>

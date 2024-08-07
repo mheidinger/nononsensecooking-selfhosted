@@ -97,6 +97,8 @@
       "steps": "Steps:",
       "tags": "Tags:"
     },
+    "imageAlt": "Image of {name}",
+    "imagePlaceholderAlt": "Placeholder image of {name}",
     "link": {
       "delete": "Delete Recipe",
       "edit": "Edit Recipe"
