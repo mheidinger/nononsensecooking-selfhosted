@@ -35,7 +35,6 @@ steps:
     when:
       branch:
         - deploy
-        - main
       event:
         exclude:
           - pull_request
@@ -57,7 +56,6 @@ steps:
       purge: false
     when:
       branch:
-        - deploy
         - main
       event:
         exclude:
