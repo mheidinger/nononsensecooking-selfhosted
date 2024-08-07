@@ -59,7 +59,7 @@ export default async function RootLayout({
       <body className={styles.body}>
         <NextIntlClientProvider messages={messages}>
           <main className={styles.layout}>
-            <NextTopLoader color="#5686F5" height={5} />
+            <NextTopLoader color="#5686F5" height={5} showSpinner={false} />
             <Header />
             <div className={styles.content}>{children}</div>
             <Footer />

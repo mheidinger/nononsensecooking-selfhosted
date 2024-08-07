@@ -25,6 +25,8 @@ steps:
       tags:
         - latest
         - ci-${DRONE_BUILD_NUMBER}
+      cache_from:
+        - registry-castor.max-heidinger.de/nononsensecooking-selfhosted:latest
       username:
         from_secret: tac_username
       password:
@@ -33,7 +35,6 @@ steps:
     when:
       branch:
         - deploy
-        - main
       event:
         exclude:
           - pull_request
@@ -46,6 +47,8 @@ steps:
       tags:
         - latest
         - ci-${DRONE_BUILD_NUMBER}
+      cache_from:
+        - ghcr.io/mheidinger/nononsensecooking-selfhosted:latest
       username:
         from_secret: github_username
       password:
@@ -53,7 +56,6 @@ steps:
       purge: false
     when:
       branch:
-        - deploy
         - main
       event:
         exclude:
