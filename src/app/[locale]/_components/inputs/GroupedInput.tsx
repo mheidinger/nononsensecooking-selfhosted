@@ -7,10 +7,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export default function GroupedInput({ className, children, ...props }: Props) {
-  const finalClassName = clsx(
-    styles.groupedInput,
-    className,
-  );
+  const finalClassName = clsx(styles.groupedInput, className);
 
   return (
     <div {...props} className={finalClassName}>
