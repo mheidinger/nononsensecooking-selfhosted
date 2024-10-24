@@ -30,7 +30,7 @@
     "nanoid": "^5.0.7",
     "next": "^14.2.5",
     "next-intl": "^3.17.2",
-    "next-safe-action": "7.4.3",
+    "next-safe-action": "7.9.7",
     "nextjs-toploader": "^1.6.12",
     "node-cache": "^5.1.2",
     "react": "^18.3.1",
