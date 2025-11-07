@@ -6,6 +6,7 @@ import { getMessages } from "next-intl/server";
 import NextTopLoader from "nextjs-toploader";
 import Footer from "~components/Footer";
 import Header from "~components/Header";
+import ServiceWorkerRegistration from "~/app/_components/ServiceWorkerRegistration";
 
 import styles from "./layout.module.css";
 
@@ -58,6 +59,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className={styles.body}>
         <NextIntlClientProvider messages={messages}>
+          <ServiceWorkerRegistration />
           <main className={styles.layout}>
             <NextTopLoader color="#5686F5" height={5} showSpinner={false} />
             <Header />
