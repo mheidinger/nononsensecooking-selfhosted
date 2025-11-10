@@ -1,16 +1,19 @@
+import { type Locale } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { cache } from "react";
 import { fetchSingleRecipe } from "~/server/recipes";
 import DeletePage from "./DeletePage";
 
 interface Props {
-  params: { id: string; locale: string };
-  searchParams: Record<string, string | string[] | undefined>;
+  params: Promise<{ id: string; locale: Locale }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }
 
 const fetchRecipe = cache(fetchSingleRecipe);
 
-export async function generateMetadata({ params: { locale } }: Props) {
+export async function generateMetadata(props: Props) {
+  const { locale } = await props.params;
+
   const t = await getTranslations({ locale, namespace: "common" });
 
   return {
@@ -18,8 +21,8 @@ export async function generateMetadata({ params: { locale } }: Props) {
   };
 }
 
-async function getData({ params }: Props) {
-  const recipe = await fetchRecipe(params.id);
+async function getData(id: string) {
+  const recipe = await fetchRecipe(id);
 
   return {
     recipe,
@@ -27,7 +30,8 @@ async function getData({ params }: Props) {
 }
 
 export default async function Page(props: Props) {
-  const data = await getData(props);
+  const { id } = await props.params;
+  const data = await getData(id);
 
   return <DeletePage {...data} />;
 }

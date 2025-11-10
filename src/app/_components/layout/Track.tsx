@@ -17,8 +17,8 @@ export default function Track({
   // Prepare style object with CSS variables
   const style = {
     "--sm": sm,
-    "--md": md ? md : "unset", // Use 'unset' to allow fallback to --sm if --md is not provided
-    "--lg": lg ? lg : "unset", // Use 'unset' to allow fallback to --md or --sm if --lg is not provided
+    "--md": md ?? "unset", // Use 'unset' to allow fallback to --sm if --md is not provided
+    "--lg": lg ?? "unset", // Use 'unset' to allow fallback to --md or --sm if --lg is not provided
   } as React.CSSProperties;
 
   return (

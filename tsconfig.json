@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
+    "allowArbitraryExtensions": true,
     "allowJs": true,
+
     /* Path Aliases */
     "baseUrl": ".",
     "checkJs": true,

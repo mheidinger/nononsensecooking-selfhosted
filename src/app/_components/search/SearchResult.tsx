@@ -1,5 +1,5 @@
+import { Link } from "~/i18n/navigation";
 import { type Recipe } from "~/models/Recipe";
-import { Link } from "~/navigation";
 import IconForDiet from "../recipe/DietIcon";
 
 import styles from "./SearchResult.module.css";

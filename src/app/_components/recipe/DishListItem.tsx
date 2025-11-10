@@ -1,8 +1,8 @@
 import { mdiClockOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import { useTranslations } from "next-intl";
+import { Link } from "~/i18n/navigation";
 import { type Recipe } from "~/models/Recipe";
-import { Link } from "~/navigation";
 import IconForDiet from "./DietIcon";
 import DishImage from "./DishImage";
 import TagSelect from "./TagSelect";

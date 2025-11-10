@@ -17,7 +17,7 @@ export default function Ingredient({ ingredient, servingsMultiplier }: Props) {
 
   return (
     <span>
-      {t(`unit.${unit}`, { amount: adjustedAmount })} {name}
+      {t(`unit.${unit}`, { amount: adjustedAmount ?? "" })} {name}
     </span>
   );
 }

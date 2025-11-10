@@ -10,9 +10,6 @@ if (process.env.DOT_FILE_PATH) {
  */
 const { env } = await import("./src/env.js");
 
-const withNextIntl = createNextIntlPlugin();
-
-/** @type {import("next").NextConfig} */
 const nextConfig = {
   output: "standalone",
   // Required for standalone output
@@ -20,6 +17,7 @@ const nextConfig = {
   reactStrictMode: true,
   images: {
     formats: ["image/avif", "image/webp"],
+    qualities: [60, 80],
     remotePatterns: [
       {
         hostname: env.S3_DOMAIN,
@@ -27,9 +25,10 @@ const nextConfig = {
     ],
   },
   experimental: {
-    serverComponentsExternalPackages: ["@aws-sdk"],
-    instrumentationHook: true,
+    // Provide the path to the messages that you're using in `AppConfig`
+    createMessagesDeclaration: "./messages/en.json",
   },
+  serverExternalPackages: ["@aws-sdk"],
   async headers() {
     return [
       {
@@ -49,4 +48,5 @@ const nextConfig = {
   },
 };
 
+const withNextIntl = createNextIntlPlugin();
 export default withNextIntl(nextConfig);

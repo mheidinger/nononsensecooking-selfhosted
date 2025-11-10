@@ -41,7 +41,7 @@ export default function DietFilterSelect({
         instanceId={instanceId}
         styles={getSelectStylesConfig<DietFilterSelectValue>()}
         components={{
-          Input: (props) => (
+          Input: (props: any) => (
             <components.Input {...props} aria-activedescendant={undefined} />
           ),
         }}

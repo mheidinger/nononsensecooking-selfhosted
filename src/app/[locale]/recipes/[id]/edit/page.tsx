@@ -1,12 +1,15 @@
+import { type Locale } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { fetchSingleRecipe, getRecipeTags } from "~/server/recipes";
 import EditPage from "./EditPage";
 
 interface Props {
-  params: { id: string; locale: string };
+  params: Promise<{ id: string; locale: Locale }>;
 }
 
-export async function generateMetadata({ params: { locale } }: Props) {
+export async function generateMetadata(props: Props) {
+  const { locale } = await props.params;
+
   const t = await getTranslations({ locale, namespace: "common" });
 
   return {
@@ -14,8 +17,7 @@ export async function generateMetadata({ params: { locale } }: Props) {
   };
 }
 
-async function getData({ params }: Props) {
-  const { id } = params;
+async function getData(id: string) {
   const recipe = await fetchSingleRecipe(id);
   const availableTags = await getRecipeTags();
 
@@ -26,7 +28,8 @@ async function getData({ params }: Props) {
 }
 
 export default async function Page(props: Props) {
-  const data = await getData(props);
+  const { id } = await props.params;
+  const data = await getData(id);
 
   return <EditPage {...data} />;
 }

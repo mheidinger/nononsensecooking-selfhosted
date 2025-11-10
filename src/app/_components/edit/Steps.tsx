@@ -26,15 +26,13 @@ export default function Steps({
 }: Props) {
   const t = useTranslations("recipe");
 
-  const [steps, setSteps] = useState<StepWithID[]>([]);
-
-  useEffect(() => {
+  const [steps, setSteps] = useState<StepWithID[]>(() => {
     if (!intialSteps) {
-      setSteps([{ id: nanoid(), text: "" }]);
+      return [{ id: nanoid(), text: "" }];
     } else {
-      setSteps(intialSteps.map((text) => ({ id: nanoid(), text })));
+      return intialSteps.map((text) => ({ id: nanoid(), text }));
     }
-  }, [intialSteps]);
+  });
 
   useEffect(() => {
     onStepsUpdated(steps.map((step) => step.text));

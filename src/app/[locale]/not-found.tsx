@@ -1,13 +1,13 @@
 import { mdiArrowLeft, mdiGithub, mdiPotSteamOutline } from "@mdi/js";
 import Icon from "@mdi/react";
-import { useTranslations } from "next-intl";
+import { type Locale, useTranslations } from "next-intl";
 import { getTranslations } from "next-intl/server";
-import { Link } from "~/navigation";
+import { Link } from "~/i18n/navigation";
 
 import styles from "./not-found.module.css";
 
 interface Props {
-  params: { locale: string };
+  params: { locale: Locale };
 }
 
 export async function generateMetadata({ params: { locale } }: Props) {
