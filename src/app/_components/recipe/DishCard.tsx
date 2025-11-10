@@ -40,7 +40,9 @@ const DishCard = ({
                 title={t("preparationTime.label")}
               />
               <span>
-                {t("preparationTime.inMinutes", { minutes: cookTime })}
+                {t("preparationTime.inMinutes", {
+                  minutes: cookTime.toString(),
+                })}
               </span>
             </span>
             <IconForDiet id={`diet_${id}`} diet={diet} />

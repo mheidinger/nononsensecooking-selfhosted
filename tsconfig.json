@@ -2,32 +2,40 @@
   "compilerOptions": {
     "allowArbitraryExtensions": true,
     "allowJs": true,
-
     /* Path Aliases */
     "baseUrl": ".",
     "checkJs": true,
-
     /* Base Options: */
     "esModuleInterop": true,
     "incremental": true,
-
     "isolatedModules": true,
-
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     /* Bundled projects */
-    "lib": ["dom", "dom.iterable", "ES2022"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "ES2022"
+    ],
     "module": "ESNext",
     "moduleDetection": "force",
     "moduleResolution": "Bundler",
     "noEmit": true,
     "noUncheckedIndexedAccess": true,
     "paths": {
-      "~/*": ["./src/*"],
-      "~components/*": ["./src/app/_components/*"]
+      "~/*": [
+        "./src/*"
+      ],
+      "~components/*": [
+        "./src/app/_components/*"
+      ]
     },
     "plugins": [
-      { "name": "next" },
-      { "name": "typescript-plugin-css-modules" }
+      {
+        "name": "next"
+      },
+      {
+        "name": "typescript-plugin-css-modules"
+      }
     ],
     "resolveJsonModule": true,
     "skipLibCheck": true,
@@ -35,7 +43,9 @@
     "strict": true,
     "target": "es2022"
   },
-  "exclude": ["node_modules"],
+  "exclude": [
+    "node_modules"
+  ],
   "include": [
     ".eslintrc.cjs",
     "next-env.d.ts",
@@ -43,6 +53,7 @@
     "**/*.tsx",
     "**/*.cjs",
     "**/*.js",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts"
   ]
 }

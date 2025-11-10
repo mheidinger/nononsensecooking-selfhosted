@@ -12,7 +12,6 @@ const { env } = await import("./src/env.js");
 
 const nextConfig = {
   output: "standalone",
-  // Required for standalone output
   transpilePackages: ["@t3-oss/env-nextjs", "@t3-oss/env-core"],
   reactStrictMode: true,
   images: {
@@ -24,11 +23,8 @@ const nextConfig = {
       },
     ],
   },
-  experimental: {
-    // Provide the path to the messages that you're using in `AppConfig`
-    createMessagesDeclaration: "./messages/en.json",
-  },
-  serverExternalPackages: ["@aws-sdk"],
+  serverExternalPackages: ["@aws-sdk", "sharp"],
+  reactCompiler: true,
   async headers() {
     return [
       {
@@ -48,5 +44,11 @@ const nextConfig = {
   },
 };
 
-const withNextIntl = createNextIntlPlugin();
+const withNextIntl = createNextIntlPlugin({
+  experimental: {
+    // Provide the path to the messages that you're using in `AppConfig`
+    createMessagesDeclaration: "./messages/en.json",
+  },
+});
+
 export default withNextIntl(nextConfig);

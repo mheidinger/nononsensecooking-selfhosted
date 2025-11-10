@@ -64,7 +64,7 @@ export default function Ingredient({
               : ""
           }
           disabled={ingredient.unit === Unit.enum.none}
-          onKeyPress={(e) => !/[0-9]/.test(e.key) && e.preventDefault()}
+          onKeyDown={(e) => !/[0-9]/.test(e.key) && e.preventDefault()}
           onChange={(event) => {
             if (event.currentTarget.value.length > 0) {
               updateIngredient({

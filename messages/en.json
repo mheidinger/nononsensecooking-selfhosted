@@ -33,7 +33,6 @@
       "latestrecipes": "Latest Recipes",
       "mostpopularrecipes": "Most Popular",
       "nextpage": "Next page",
-      "pageindicator": "Page {currentPage} of {totalPages}",
       "previouspage": "Previous page",
       "recentlyaddedrecipes": "Recently Added",
       "todaysrecipes": "Today's Recipes"

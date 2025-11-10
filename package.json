@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "next build",
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "lint": "next lint",
     "start": "pnpm build && node .next/standalone/server.js",
     "format": "prettier --write ."
@@ -28,7 +28,7 @@
     "fuse.js": "^7.0.0",
     "lodash": "^4.17.21",
     "nanoid": "^5.0.7",
-    "next": "^15.5.6",
+    "next": "^16.0.1",
     "next-intl": "^4.4.0",
     "next-safe-action": "7.4.3",
     "nextjs-toploader": "^1.6.12",
@@ -56,8 +56,9 @@
     "@types/slug": "^5.0.8",
     "@typescript-eslint/eslint-plugin": "^8.0.1",
     "@typescript-eslint/parser": "^8.0.1",
+    "babel-plugin-react-compiler": "^1.0.0",
     "eslint": "^9.39.1",
-    "eslint-config-next": "^16.0.1",
+    "eslint-config-next": "16.0.1",
     "prettier": "^3.3.3",
     "prettier-plugin-organize-imports": "^4.0.0",
     "prettier-plugin-sort-json": "^4.0.0",
@@ -65,8 +66,5 @@
     "typescript-eslint": "^8.46.3",
     "typescript-plugin-css-modules": "^5.1.0"
   },
-  "ct3aMetadata": {
-    "initVersion": "7.36.1"
-  },
-  "packageManager": "pnpm@9.7.0"
+  "packageManager": "pnpm@10.20.0"
 }
