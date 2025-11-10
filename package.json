@@ -7,7 +7,7 @@
     "build": "next build",
     "dev": "next dev",
     "lint": "next lint",
-    "start": "next start",
+    "start": "pnpm build && node .next/standalone/server.js",
     "format": "prettier --write ."
   },
   "dependencies": {

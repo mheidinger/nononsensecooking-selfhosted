@@ -14,6 +14,9 @@ const withNextIntl = createNextIntlPlugin();
 
 /** @type {import("next").NextConfig} */
 const nextConfig = {
+  output: "standalone",
+  // Required for standalone output
+  transpilePackages: ["@t3-oss/env-nextjs", "@t3-oss/env-core"],
   reactStrictMode: true,
   images: {
     formats: ["image/avif", "image/webp"],

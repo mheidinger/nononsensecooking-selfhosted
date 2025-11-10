@@ -16,11 +16,10 @@ COPY . .
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV SKIP_ENV_VALIDATION=1
-ENV S3_DOMAIN=example.com
+ENV S3_DOMAIN="REPLACE_ME_S3_DOMAIN"
 
 RUN corepack enable
 RUN pnpm run build
-RUN pnpm prune --prod
 
 FROM base AS runner
 WORKDIR /app
@@ -31,16 +30,16 @@ ENV NEXT_TELEMETRY_DISABLED=1
 RUN addgroup -g 1001 -S notroot
 RUN adduser -S notroot -u 1001
 
-COPY --from=builder /app/package.json ./
-COPY --from=builder /app/pnpm-lock.yaml ./
 COPY --from=builder /app/public ./public
-COPY --from=builder --chown=notroot:notroot /app/.next ./.next
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/next.config.js ./
-# This is dynamically imported by the next config
-COPY --from=builder /app/src/env.js ./src/
+COPY --from=builder --chown=notroot:notroot /app/.next/standalone ./
+COPY --from=builder --chown=notroot:notroot /app/.next/static ./.next/static
+
+RUN sed -i 's/"REPLACE_ME_S3_DOMAIN"/process.env.S3_DOMAIN/g' ./server.js
 
 USER notroot
 
 EXPOSE 3000
-CMD ["npm", "start"]
+
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
+CMD ["node", "server.js"]
