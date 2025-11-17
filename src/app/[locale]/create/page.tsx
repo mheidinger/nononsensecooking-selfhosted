@@ -1,12 +1,15 @@
+import { type Locale } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { getRecipeTags } from "~/server/recipes";
 import CreatePage from "./CreatePage";
 
 interface Props {
-  params: { locale: string };
+  params: Promise<{ locale: Locale }>;
 }
 
-export async function generateMetadata({ params: { locale } }: Props) {
+export async function generateMetadata(props: Props) {
+  const { locale } = await props.params;
+
   const t = await getTranslations({ locale, namespace: "common" });
 
   return {

@@ -100,7 +100,7 @@ export default function GeneralInformation({
         />
         <Input
           name="recipeServingsLabel"
-          value={recipe.servings.label ? recipe.servings.label : ""}
+          value={recipe.servings.label ?? ""}
           placeholder={tr("servings")}
           onChange={(event) => {
             const newServings = { ...recipe.servings };

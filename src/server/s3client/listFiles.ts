@@ -8,7 +8,7 @@ export async function listFiles(
 ): Promise<S3File[]> {
   const command = new ListObjectsCommand({ Bucket: bucket, Prefix: prefix });
   const results = await client.send(command);
-  const content = results.Contents ? results.Contents : [];
+  const content = results.Contents ?? [];
   return content
     .map((item) => {
       return {

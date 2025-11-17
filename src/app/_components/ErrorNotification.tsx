@@ -16,6 +16,7 @@ const ErrorNotification = ({ message, show, onHide }: Props) => {
 
   useEffect(() => {
     if (show) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsVisible(true);
       const timer = setTimeout(() => {
         setIsVisible(false);

@@ -3,13 +3,14 @@ import { fetchSingleRecipe } from "~/server/recipes";
 import RecipePage from "./RecipePage";
 
 interface Props {
-  params: { id: string };
-  searchParams: Record<string, string | string[] | undefined>;
+  params: Promise<{ id: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }
 
 const fetchRecipe = cache(fetchSingleRecipe);
 
-export async function generateMetadata({ params }: Props) {
+export async function generateMetadata(props: Props) {
+  const params = await props.params;
   const { id } = params;
   const recipe = await fetchRecipe(id);
 
@@ -18,9 +19,7 @@ export async function generateMetadata({ params }: Props) {
   };
 }
 
-async function getData({ params }: Props) {
-  const { id } = params;
-
+async function getData(id: string) {
   const recipe = await fetchRecipe(id);
 
   return {
@@ -29,7 +28,8 @@ async function getData({ params }: Props) {
 }
 
 export default async function Page(props: Props) {
-  const data = await getData(props);
+  const { id } = await props.params;
+  const data = await getData(id);
 
   return <RecipePage {...data} />;
 }

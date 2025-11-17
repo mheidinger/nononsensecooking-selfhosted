@@ -13,8 +13,8 @@ import Ingredients from "./Ingredients";
 import Steps from "./Steps";
 
 import { uploadRecipe } from "~/actions";
+import { useRouter } from "~/i18n/navigation";
 import { Diet } from "~/models/Diet";
-import { useRouter } from "~/navigation";
 import { convertErrorsToMessage } from "~/util";
 import ErrorNotification from "../ErrorNotification";
 import LoadingSpinner from "../LoadingSpinner";

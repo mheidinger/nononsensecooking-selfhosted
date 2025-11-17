@@ -9,7 +9,6 @@ export default function getSelectStylesConfig<T>(
   onlyShow?: boolean,
   getTagColors?: (data: T) => SelectTagColors,
 ) {
-  /* eslint-disable @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-argument */
   const stylesConfig: StylesConfig<T> = {
     input: (styles) => ({
       ...styles,
@@ -65,7 +64,6 @@ export default function getSelectStylesConfig<T>(
       cursor: "pointer",
     }),
   };
-  /* eslint-enable @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-argument */
 
   return stylesConfig;
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { Link, usePathname } from "~/navigation";
+import { Link, usePathname } from "~/i18n/navigation";
 
 import styles from "./Footer.module.css";
 

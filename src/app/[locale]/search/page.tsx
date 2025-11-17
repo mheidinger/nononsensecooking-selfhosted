@@ -1,13 +1,16 @@
+import { type Locale } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { getRecipeTags, searchRecipes } from "~/server/recipes";
 import SearchPage from "./SearchPage";
 
 interface Props {
-  params: { locale: string };
-  searchParams: Record<string, string | string[] | undefined>;
+  params: Promise<{ locale: Locale }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }
 
-export async function generateMetadata({ params: { locale } }: Props) {
+export async function generateMetadata(props: Props) {
+  const { locale } = await props.params;
+
   const t = await getTranslations({ locale, namespace: "common" });
 
   return {
@@ -15,7 +18,7 @@ export async function generateMetadata({ params: { locale } }: Props) {
   };
 }
 
-async function getData({ query }: Props["searchParams"]) {
+async function getData(query: string | string[] | undefined) {
   const searchTerm =
     Array.isArray(query) && query.length > 0
       ? query[0]
@@ -41,8 +44,9 @@ async function getData({ query }: Props["searchParams"]) {
   };
 }
 
-export default async function Page({ searchParams }: Props) {
-  const data = await getData(searchParams);
+export default async function Page(props: Props) {
+  const { query } = await props.searchParams;
+  const data = await getData(query);
 
   return <SearchPage {...data} />;
 }

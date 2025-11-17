@@ -13,8 +13,8 @@ import {
   useState,
 } from "react";
 import { searchRecipes } from "~/actions";
+import { usePathname, useRouter } from "~/i18n/navigation";
 import { type Recipe } from "~/models/Recipe";
-import { usePathname, useRouter } from "~/navigation";
 import SearchResult from "./SearchResult";
 
 import ErrorNotification from "../ErrorNotification";

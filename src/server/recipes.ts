@@ -2,6 +2,7 @@ import Fuse from "fuse.js";
 import "server-only";
 import YAML from "yaml";
 import { BaseRecipe, type Recipe } from "../models/Recipe";
+import { optimizeImage } from "./optimizeImage";
 import {
   getPathForImage,
   getPathForOptimizedImage,
@@ -55,6 +56,8 @@ async function getRecipeImageUrl(id: string): Promise<string | null> {
     if (!imageExists) {
       return null;
     }
+
+    optimizeImage(id);
   }
 
   return await s3Client.getSignedUrl(

@@ -57,6 +57,7 @@ export default function Ingredient({
       <GroupedInput>
         <DragHandle ref={setActivatorNodeRef} {...listeners} />
         <Input
+          type="number"
           name={`ingredient${index}Amount`}
           value={
             ingredient.amount && ingredient.unit !== Unit.enum.none
@@ -64,13 +65,22 @@ export default function Ingredient({
               : ""
           }
           disabled={ingredient.unit === Unit.enum.none}
-          onKeyPress={(e) => !/[0-9]/.test(e.key) && e.preventDefault()}
+          onKeyDown={(e) => {
+            // Block non-numeric keys except navigation/editing keys
+            if (e.key.length === 1 && !/[0-9]/.test(e.key)) {
+              e.preventDefault();
+            }
+          }}
           onChange={(event) => {
-            if (event.currentTarget.value.length > 0) {
-              updateIngredient({
-                ...ingredient,
-                amount: parseInt(event.currentTarget.value),
-              });
+            const value = event.currentTarget.value;
+            if (value.length > 0) {
+              const numValue = parseInt(value, 10);
+              if (!isNaN(numValue) && numValue > 0) {
+                updateIngredient({
+                  ...ingredient,
+                  amount: numValue,
+                });
+              }
             } else {
               updateIngredient({ ...ingredient, amount: undefined });
             }

@@ -22,7 +22,6 @@ export const searchRecipes = actionClient
 export const uploadRecipe = actionClient
   .schema(z.object({ id: z.string().optional(), recipe: BaseRecipe }))
   .action(async ({ parsedInput: { id: providedId, recipe } }) => {
-    // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
     const id = providedId || slug(recipe.name);
     const imagePutURL = await createRecipe(id, recipe, !!providedId);
 

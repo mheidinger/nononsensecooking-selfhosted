@@ -28,19 +28,16 @@ export default function Ingredients({
 }: Props) {
   const t = useTranslations("recipe");
 
-  const [ingredients, setIngredients] = useState<IngredientWithID[]>([]);
-
-  useEffect(() => {
+  const [ingredients, setIngredients] = useState<IngredientWithID[]>(() => {
     if (!initialIngredients) {
-      setIngredients([
-        { id: nanoid(), ingredient: { name: "", unit: Unit.enum.none } },
-      ]);
+      return [{ id: nanoid(), ingredient: { name: "", unit: Unit.enum.none } }];
     } else {
-      setIngredients(
-        initialIngredients.map((ingredient) => ({ id: nanoid(), ingredient })),
-      );
+      return initialIngredients.map((ingredient) => ({
+        id: nanoid(),
+        ingredient,
+      }));
     }
-  }, [initialIngredients, setIngredients]);
+  });
 
   useEffect(() => {
     onIngredientsUpdated(ingredients.map(({ ingredient }) => ingredient));

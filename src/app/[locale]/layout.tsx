@@ -1,13 +1,14 @@
 import "~/styles/globals.css";
 
 import { type Metadata, type Viewport } from "next";
-import { NextIntlClientProvider } from "next-intl";
+import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
+import { notFound } from "next/navigation";
 import NextTopLoader from "nextjs-toploader";
+import ServiceWorkerRegistration from "~/app/_components/ServiceWorkerRegistration";
+import { routing } from "~/i18n/routing";
 import Footer from "~components/Footer";
 import Header from "~components/Header";
-import ServiceWorkerRegistration from "~/app/_components/ServiceWorkerRegistration";
-
 import styles from "./layout.module.css";
 
 export const viewport: Viewport = {
@@ -50,9 +51,16 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RootLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+type Props = {
+  children: React.ReactNode;
+  params: Promise<{ locale: string }>;
+};
+
+export default async function LocaleLayout({ children, params }: Props) {
+  const { locale } = await params;
+  if (!hasLocale(routing.locales, locale)) {
+    notFound();
+  }
   const messages = await getMessages();
 
   return (

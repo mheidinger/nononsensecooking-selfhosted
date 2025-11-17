@@ -77,7 +77,8 @@ export default function TagSelect({
           {...selectProps}
           isMulti
           components={{
-            Input: (props) => (
+            Input: (props: any) => (
+              // @ts-ignore - React 19 compatibility issue with react-select
               <components.Input {...props} aria-activedescendant={undefined} />
             ),
           }}
@@ -87,7 +88,8 @@ export default function TagSelect({
           {...selectProps}
           isMulti
           components={{
-            Input: (props) => (
+            Input: (props: any) => (
+              // @ts-ignore - React 19 compatibility issue with react-select
               <components.Input {...props} aria-activedescendant={undefined} />
             ),
           }}
