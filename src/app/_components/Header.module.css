@@ -55,7 +55,7 @@
   height: 3rem;
   border-radius: var(--rounded);
 
-  @media screen and (min-width: 950px) {
+  @media screen and (min-width: 980px) {
     display: none;
   }
 }
@@ -72,18 +72,14 @@
   padding: 2rem 2rem 2rem 2rem;
   visibility: hidden;
   pointer-events: none;
-  transition: all 0.15s ease-in;
-  transform: scale(0.95);
   opacity: 0;
-  transform-origin: top center;
 
-  @media screen and (min-width: 950px) {
+  @media screen and (min-width: 980px) {
     position: static;
     visibility: visible;
     pointer-events: all;
     padding: 0;
     opacity: 1;
-    transform: scale(1);
     box-shadow: none;
     width: auto;
     top: 0%;
