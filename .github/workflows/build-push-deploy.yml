@@ -59,10 +59,11 @@ jobs:
           webhook_type: "json-extended"
           webhook_url: ${{ secrets.WEBHOOK_URL }}
           webhook_secret: ${{ secrets.WEBHOOK_SECRET }}
+      - name: Wait 30 seconds before second deployment
+        run: sleep 30
       - name: Deploy Second Instance
         uses: distributhor/workflow-webhook@v3
         with:
           webhook_type: "json-extended"
           webhook_url: ${{ secrets.WEBHOOK_URL_2 }}
           webhook_secret: ${{ secrets.WEBHOOK_SECRET }}
- 
