@@ -7,10 +7,11 @@ import { Link } from "~/i18n/navigation";
 import styles from "./not-found.module.css";
 
 interface Props {
-  params: { locale: Locale };
+  params: Promise<{ locale: Locale }>;
 }
 
-export async function generateMetadata({ params: { locale } }: Props) {
+export async function generateMetadata({ params }: Props) {
+  const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "common" });
 
   return {

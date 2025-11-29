@@ -35,7 +35,7 @@
   margin-left: 0.75rem;
   display: none;
 
-  @media screen and (min-width: 400px) {
+  @media screen and (min-width: 420px) {
     display: block;
   }
 
