@@ -31,7 +31,7 @@ export default function SearchBar() {
   const [errorMessage, setErrorMessage] = useState<string | undefined>();
   const [showErrorMessage, setShowErrorMessage] = useState(false);
 
-  const containerRef = useRef<HTMLDivElement | null>(null);
+  const containerRef = useRef<HTMLFormElement | null>(null);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -101,8 +101,13 @@ export default function SearchBar() {
   }
 
   return (
-    <div ref={containerRef}>
-      <form method="GET" onSubmit={onSearch} className={styles.form}>
+    <>
+      <form
+        method="GET"
+        onSubmit={onSearch}
+        className={styles.form}
+        ref={containerRef}
+      >
         <input
           placeholder={t("search.placeholder")}
           name="query"
@@ -133,6 +138,6 @@ export default function SearchBar() {
         show={showErrorMessage}
         onHide={() => setShowErrorMessage(false)}
       />
-    </div>
+    </>
   );
 }
