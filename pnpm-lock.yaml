@@ -66,8 +66,8 @@ importers:
         specifier: ^4.14.9
         version: 4.14.9(@swc/helpers@0.5.23)(@types/react@19.3.0)(next@16.4.3(@babel/core@7.29.7)(@types/node@24.10.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.93.3))(react@19.3.1)
       next-safe-action:
-        specifier: ^8.0.11
-        version: 8.0.11(next@16.4.3(@babel/core@7.29.7)(@types/node@24.10.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.93.3))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        specifier: ^8.7.3
+        version: 8.7.3(next@16.4.3(@babel/core@7.29.7)(@types/node@24.10.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.93.3))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       nextjs-toploader:
         specifier: ^3.9.17
         version: 3.9.17(next@16.4.3(@babel/core@7.29.7)(@types/node@24.10.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.93.3))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
@@ -2570,8 +2570,8 @@ packages:
       '@types/react':
         optional: true
 
-  next-safe-action@8.0.11:
-    resolution: {integrity: sha512-gqJLmnQLAoFCq1kRBopN46New+vx1n9J9Y/qDQLXpv/VqU40AWxDakvshwwnWAt8R0kLvlakNYNLX5PqlXWSMg==}
+  next-safe-action@8.7.3:
+    resolution: {integrity: sha512-tz6wMMBOSGyEclSDChpj5izLLErUbwqcufXN4a6lyD83pgPni9GWVniLH0zEzPWcKIkkyEiQyrjOhWcqxBKy6A==}
     engines: {node: '>=18.17'}
     peerDependencies:
       next: '>= 14.0.0'
@@ -5811,7 +5811,7 @@ snapshots:
     transitivePeerDependencies:
       - '@swc/helpers'
 
-  next-safe-action@8.0.11(next@16.4.3(@babel/core@7.29.7)(@types/node@24.10.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.93.3))(react-dom@19.3.1(react@19.3.1))(react@19.3.1):
+  next-safe-action@8.7.3(next@16.4.3(@babel/core@7.29.7)(@types/node@24.10.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.93.3))(react-dom@19.3.1(react@19.3.1))(react@19.3.1):
     dependencies:
       next: 16.4.3(@babel/core@7.29.7)(@types/node@24.10.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.93.3)
       react: 19.3.1
