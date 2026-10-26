@@ -42,7 +42,7 @@
     "string-to-color": "^2.2.2",
     "use-file-picker": "^2.1.4",
     "yaml": "^2.9.1",
-    "zod": "^4.1.12"
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@smithy/types": "^4.19.0",
