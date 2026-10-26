@@ -54,6 +54,8 @@ The following is an example CORS configuration for an AWS S3 bucket:
 
 ## Contributing
 
+Use Node.js 24 (the exact version is pinned in `.nvmrc`) and run `corepack enable` to use the pnpm version pinned in `package.json`.
+
 To run the service locally, first run `pnpm install`.
 Then start a local MinIO server for the data and configure it like described above.
 
