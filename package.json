@@ -4,10 +4,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "next build",
+    "build": "pnpm typecheck && next build",
     "dev": "next dev",
     "lint": "eslint .",
     "start": "pnpm build && cp -r public .next/standalone/ && cp -r .next/static .next/standalone/.next/ && node .next/standalone/server.js",
+    "typecheck": "next typegen && tsc --noEmit",
     "format": "prettier --write ."
   },
   "dependencies": {
@@ -56,15 +57,15 @@
     "@types/slug": "^5.0.9",
     "@typescript-eslint/eslint-plugin": "^8.72.0",
     "@typescript-eslint/parser": "^8.72.0",
+    "@typescript/native": "npm:typescript@^7.0.2",
     "babel-plugin-react-compiler": "^1.0.0",
     "eslint": "^9.39.5",
     "eslint-config-next": "^16.4.3",
     "prettier": "^3.9.10",
     "prettier-plugin-organize-imports": "^4.3.0",
     "prettier-plugin-sort-json": "^4.2.0",
-    "typescript": "^5.9.3",
-    "typescript-eslint": "^8.72.0",
-    "typescript-plugin-css-modules": "^5.3.0"
+    "typescript": "npm:@typescript/typescript6@^6.0.2",
+    "typescript-eslint": "^8.72.0"
   },
   "packageManager": "pnpm@12.15.0",
   "engines": {

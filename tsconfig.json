@@ -2,8 +2,6 @@
   "compilerOptions": {
     "allowArbitraryExtensions": true,
     "allowJs": true,
-    /* Path Aliases */
-    "baseUrl": ".",
     "checkJs": true,
     /* Base Options: */
     "esModuleInterop": true,
@@ -21,6 +19,7 @@
     "moduleResolution": "Bundler",
     "noEmit": true,
     "noUncheckedIndexedAccess": true,
+    /* Path aliases resolve relative to this config; TS 7 removed baseUrl. */
     "paths": {
       "~/*": [
         "./src/*"
@@ -32,9 +31,6 @@
     "plugins": [
       {
         "name": "next"
-      },
-      {
-        "name": "typescript-plugin-css-modules"
       }
     ],
     "resolveJsonModule": true,
@@ -47,7 +43,6 @@
     "node_modules"
   ],
   "include": [
-    ".eslintrc.cjs",
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",

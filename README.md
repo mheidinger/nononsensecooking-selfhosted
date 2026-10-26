@@ -61,3 +61,18 @@ Then start a local MinIO server for the data and configure it like described abo
 
 Use [the env file](.env.local.example) as template, rename it to `.env.local` and fill with your values.
 Finally run `pnpm dev` and head to `http://localhost:3000`!
+
+### TypeScript
+
+- `pnpm typecheck` generates Next.js route types and checks the project with TypeScript 7's native `tsc`.
+- `pnpm build` runs that check before the production build. Type errors stop the build; Next.js's own additional type check remains enabled.
+- `pnpm lint` runs ESLint, including its type-aware rules.
+
+The compiler is installed as `@typescript/native` (an npm alias for `typescript@^7`).
+The `typescript` dependency aliases `@typescript/typescript6` to provide the legacy compiler API required by ESLint and Prettier's import organizer.
+Next.js's additional type check also resolves this TS 6 package; the explicit build prerequisite ensures application code passes TS 7.
+This follows Microsoft's [side-by-side installation guidance](https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/#running-side-by-side-with-typescript-6.0).
+
+For VS Code, install the [TypeScript native extension](https://marketplace.visualstudio.com/items?itemName=TypeScriptTeam.native-preview).
+Workspace settings enable it instead of pointing the old language service at `typescript/lib`.
+The native language service does not support legacy plugins, so CSS-module-specific completion from `typescript-plugin-css-modules` is no longer configured.

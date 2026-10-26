@@ -42,11 +42,11 @@
     "typescriptreact"
   ],
   "files.insertFinalNewline": true,
+  "js/ts.experimental.useTsgo": true,
   "javascript.format.insertSpaceAfterOpeningAndBeforeClosingEmptyBraces": false,
   "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": false,
   "javascript.preferences.quoteStyle": "double",
   "typescript.format.insertSpaceAfterOpeningAndBeforeClosingEmptyBraces": false,
   "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": false,
-  "typescript.preferences.quoteStyle": "double",
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.preferences.quoteStyle": "double"
 }
