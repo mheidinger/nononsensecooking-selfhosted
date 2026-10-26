@@ -59,36 +59,3 @@ Then start a local MinIO server for the data and configure it like described abo
 
 Use [the env file](.env.local.example) as template, rename it to `.env.local` and fill with your values.
 Finally run `pnpm dev` and head to `http://localhost:3000`!
-
-## Dependency upgrade checkpoint — 2026-10-26
-
-Source: [Renovate Dependency Dashboard #108](https://github.com/mheidinger/nononsensecooking-selfhosted/issues/108), cross-checked with the npm registry.
-
-The first batch updates compatible dependency ranges and the lockfile, including
-Next.js 16.4.3, React 19.3.1, next-intl 4.14.9, AWS SDK 3, and pnpm 10.34.9.
-Docker Actions remain pinned to commit SHAs: Buildx 3.12.0, login 3.7.0, and
-build-push 5.4.0. The lint script now invokes ESLint directly because Next.js 16
-removed `next lint`.
-
-The subsequent Sharp security upgrade updates 0.34.5 → 0.35.5 (libvips 8.18.7).
-Node 22 remains supported, and no application-code changes were required.
-
-### Deferred until after deployment testing
-
-| Area | Next upgrade |
-| --- | --- |
-| Runtime and package manager | Node 22 → 24; pnpm 10 → 12 |
-| Compiler and linting | TypeScript 5 → 7; ESLint 9 → 10 (ESLint 9 is marked unsupported) |
-| Libraries | dotenv 17 → 18; slug 11 → 12; nanoid 5 → 6 |
-| Node typings | Keep 24.x for now; latest is 26.x and should be considered with the runtime target |
-| CI Actions | checkout 4 → 7; Buildx 3 → 4; login 3 → 4; build-push 5 → 7 |
-| Renovate maintenance | Requested config migration; old Dependabot PRs require reconciliation |
-
-### Verification and deployment checks
-
-- Frozen-lockfile installation and production build, including TypeScript checking, passed on Node 22.23.4.
-- Browser smoke testing against isolated local S3-compatible storage passed for the homepage, live search, submitted search, English/German pages, and recipe creation, editing, and deletion.
-- Sharp 0.35.5 smoke testing passed through the production server: S3-backed JPEG → WebP conversion preserved dimensions, colours, EXIF and ICC metadata; subsequent recipe rendering selected the generated image. Next.js image optimization returned valid 256×256 WebP and AVIF output.
-- `pnpm lint` runs but reports two React-hook violations in `src/app/_components/search/SearchBar.tsx`: `react-hooks/use-memo` and `react-hooks/set-state-in-effect`. Search behavior was left unchanged in this dependency-only batch.
-- After the Sharp upgrade, `pnpm audit --prod` reports no known vulnerabilities.
-- Docker image builds, registry pushes, and deployment webhooks were not executed. Verify the deployed application against the real S3/MinIO service, especially image upload, image optimization, and signed image URLs, before starting the larger upgrades.
