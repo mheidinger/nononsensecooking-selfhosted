@@ -9,6 +9,7 @@ import {
   type FormEvent,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from "react";
@@ -30,8 +31,15 @@ export default function SearchBar() {
   const [searchTerm, setSearchTerm] = useState("");
   const [errorMessage, setErrorMessage] = useState<string | undefined>();
   const [showErrorMessage, setShowErrorMessage] = useState(false);
+  const [currentPath, setCurrentPath] = useState(pathname);
 
   const containerRef = useRef<HTMLFormElement | null>(null);
+  const latestRequest = useRef<AbortController | null>(null);
+
+  if (pathname !== currentPath) {
+    setCurrentPath(pathname);
+    setSearchResults([]);
+  }
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -50,52 +58,66 @@ export default function SearchBar() {
     };
   }, []);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const debouncedFetchSearchResults = useCallback(
-    debounce(fetchSearchResults, 250, {
-      maxWait: 1500,
-    }),
+  const fetchSearchResults = useCallback(
+    async (searchTerm: string, signal: AbortSignal) => {
+      const result = await searchRecipes(searchTerm);
+
+      // A newer query, navigation, submission, or unmount makes this response stale.
+      if (signal.aborted) {
+        return;
+      }
+
+      if (
+        !result?.data ||
+        result.validationErrors !== undefined ||
+        result.serverError !== undefined
+      ) {
+        setErrorMessage(result?.serverError ?? "Unknown error occured");
+        setShowErrorMessage(true);
+        return;
+      }
+
+      setSearchResults(result.data);
+    },
     [],
   );
 
+  const debouncedFetchSearchResults = useMemo(
+    () => debounce(fetchSearchResults, 250, { maxWait: 1500 }),
+    [fetchSearchResults],
+  );
+
   useEffect(() => {
-    setSearchResults([]);
-    debouncedFetchSearchResults.cancel();
+    return () => {
+      debouncedFetchSearchResults.cancel();
+      latestRequest.current?.abort();
+    };
   }, [pathname, debouncedFetchSearchResults]);
 
-  async function onChange(event: ChangeEvent<HTMLInputElement>) {
-    setSearchTerm(event.target.value);
-    const searchTerm = encodeURIComponent(event.target.value);
-
-    await debouncedFetchSearchResults(searchTerm);
+  function scheduleSearch(term: string) {
+    latestRequest.current?.abort();
+    const request = new AbortController();
+    latestRequest.current = request;
+    debouncedFetchSearchResults(term, request.signal);
   }
 
-  async function onFocus() {
+  function onChange(event: ChangeEvent<HTMLInputElement>) {
+    const term = event.target.value;
+    setSearchTerm(term);
+    scheduleSearch(term);
+  }
+
+  function onFocus() {
     setIsOpen(true);
     if (searchTerm.length > 0) {
-      await debouncedFetchSearchResults(searchTerm);
+      scheduleSearch(searchTerm);
     }
-  }
-
-  async function fetchSearchResults(searchTerm: string) {
-    console.log("Searching for", searchTerm);
-    const result = await searchRecipes(searchTerm);
-
-    if (
-      !result?.data ||
-      result?.validationErrors !== undefined ||
-      result?.serverError !== undefined
-    ) {
-      setErrorMessage(result?.serverError ?? "Unknown error occured");
-      setShowErrorMessage(true);
-      return;
-    }
-
-    setSearchResults(result.data);
   }
 
   function onSearch(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    debouncedFetchSearchResults.cancel();
+    latestRequest.current?.abort();
     router.push(`/search?query=${encodeURIComponent(searchTerm)}`);
     setSearchResults([]);
   }
