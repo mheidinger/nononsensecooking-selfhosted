@@ -54,7 +54,7 @@ jobs:
     steps:
       # https://github.com/distributhor/workflow-webhook
       - name: Deploy
-        uses: distributhor/workflow-webhook@v3
+        uses: distributhor/workflow-webhook@2381f0e9c7b6bf061fb1405bd0804b8706116369 # v3.0.8
         with:
           webhook_type: "json-extended"
           webhook_url: ${{ secrets.WEBHOOK_URL }}
@@ -62,7 +62,7 @@ jobs:
       - name: Wait 30 seconds before second deployment
         run: sleep 30
       - name: Deploy Second Instance
-        uses: distributhor/workflow-webhook@v3
+        uses: distributhor/workflow-webhook@2381f0e9c7b6bf061fb1405bd0804b8706116369 # v3.0.8
         with:
           webhook_type: "json-extended"
           webhook_url: ${{ secrets.WEBHOOK_URL_2 }}
