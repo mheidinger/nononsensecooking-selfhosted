@@ -27,7 +27,7 @@
     "dotenv": "^18.0.9",
     "fuse.js": "^7.5.0",
     "lodash": "^4.18.1",
-    "nanoid": "^5.1.16",
+    "nanoid": "^6.0.2",
     "next": "^16.4.3",
     "next-intl": "^4.14.9",
     "next-safe-action": "^8.7.3",
