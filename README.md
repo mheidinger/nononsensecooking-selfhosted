@@ -26,6 +26,10 @@ Mainly these are the modifications that have been done so far:
 - Recipe Creation and Modification
 - Recipe Deletion
 
+## Health check
+
+`GET /api/health` returns `200 OK` with the body `ok` and does not access S3. Use it for deployment liveness checks instead of requesting a page that loads recipes or images.
+
 ## Setup
 
 For deploying the application, the docker image from the [GHCR](https://github.com/mheidinger/nononsensecooking-selfhosted/pkgs/container/nononsensecooking-selfhosted) can be used.
