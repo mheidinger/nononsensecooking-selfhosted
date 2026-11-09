@@ -207,7 +207,7 @@ importers:
         version: 2.1.1
       dotenv:
         specifier: ^18.0.9
-        version: 18.0.9
+        version: 18.0.10
       fuse.js:
         specifier: ^7.5.0
         version: 7.5.0
@@ -1749,8 +1749,8 @@ packages:
   dom-helpers@5.2.1:
     resolution: {integrity: sha512-nRCa7CK3VTrM2NmGkIy4cbK7IZlgBE/PYMn55rrXefr5xXDP0LdtfPnblFDoVdcAfslJ7or6iqAUnx0CCGIWQA==}
 
-  dotenv@18.0.9:
-    resolution: {integrity: sha512-3fVOW4cB02R066PUSwn8O4TJyz9NckQl7F81blIbaq9jKBm2tSmOKky7ZHIXzGvkVPXCSn6jkpziBPZdGFs8Tw==}
+  dotenv@18.0.10:
+    resolution: {integrity: sha512-89FAA1xchzK2mxVWdr5F/0rldwiueXs6zJM86rO66EzekR1iBdiXRthyG+m5GvkJaFH3C2LESzamTkgndmLT2A==}
     engines: {node: '>=12'}
     hasBin: true
 
@@ -4335,7 +4335,7 @@ snapshots:
       '@babel/runtime': 7.28.4
       csstype: 3.2.3
 
-  dotenv@18.0.9: {}
+  dotenv@18.0.10: {}
 
   dunder-proto@1.0.1:
     dependencies:
